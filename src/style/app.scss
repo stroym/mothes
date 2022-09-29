@@ -1,0 +1,161 @@
+:root {
+  --color-main: #282424;
+  --color-border: #5f5858;
+  --color-focus-fill: teal;
+  --color-hover: turquoise;
+  --color-active: skyblue;
+  --color-text: #f8f8ff;
+  --color-text-complementary: #000000;
+
+  --border-thin: 2px;
+}
+
+.active-item {
+  background-color: var(--color-active) !important;
+}
+
+.color-pass {
+  background-color: var(--color-border);
+}
+
+.color-pass > * {
+  background-color: var(--color-main);
+}
+
+html, body, #root {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  color: var(--color-text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.75;
+}
+
+[disabled],
+[data-disabled="true"] {
+  cursor: not-allowed !important;
+  outline: none !important;
+  opacity: 0.75;
+}
+
+[data-editable="true"] {
+  cursor: text !important;
+  user-select: text !important;
+}
+
+[data-context="true"] {
+  opacity: 0.6;
+}
+
+[data-visible="false"] {
+  visibility: hidden;
+  display: none !important;
+}
+
+svg {
+  fill: currentColor;
+  pointer-events: none;
+}
+
+.snovy-inner {
+  outline: none !important;
+  border: none !important;
+}
+
+.with-border {
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--color-border);
+
+  //TODO not ideal
+
+  &:is(.top) {
+    border-width: var(----border-thin) 0 0 0;
+  }
+
+  &:is(.right) {
+    border-width: 0 var(----border-thin) 0 0;
+  }
+
+  &:is(.bottom) {
+    border-width: 0 0 var(----border-thin) 0;
+  }
+
+  &:is(.left) {
+    border-width: 0 0 0 var(----border-thin);
+  }
+}
+
+.snovy-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-hover) var(--color-active);
+
+  &:is(.invisible) {
+    scrollbar-width: none;
+    //TODO draw arrow that scrolls on hover/click when scroll is available
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    height: 0.4rem;
+    width: 0.4rem;
+    background-color: var(--color-hover);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-active);
+  }
+}
+
+//TODO optionally keyboard-only-focus, otherwise always?
+.styled-focus {
+  outline: none;
+
+  [data-whatinput="keyboard"] &:focus-within {
+    &,
+    .snovy-inner-focus {
+      border-radius: var(--border-rad);
+      outline: currentColor solid var(--border-thin);
+      outline-offset: calc(var(--border-thin) / -2);
+
+      &:is(.styled-hover-fill) {
+        background-color: var(--color-focus-fill);
+      }
+    }
+  }
+
+  &:is(.with-border):hover {
+    border-radius: var(--border-rad);
+  }
+}
+
+.styled-hover {
+  @extend .styled-focus;
+
+  &:hover {
+    outline: currentColor solid var(--border-thin);
+    outline-offset: calc(var(--border-thin) / -2);
+  }
+}
+
+.styled-hover-fill {
+  @extend .styled-focus;
+
+  &:not([data-disabled=true], [disabled]):not(.color-item, .snovy-color-button):hover {
+    background-color: var(--color-hover) !important;
+    //TODO more control needed (sometimes you want to highlight background, sometimes the svg itself)
+  }
+}

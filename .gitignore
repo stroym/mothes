@@ -1,0 +1,10 @@
+/.vscode
+/.idea
+
+/dist
+/node_modules
+
+.eslintcache
+/build/
+
+yarn-error.log

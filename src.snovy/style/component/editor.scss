@@ -1,0 +1,254 @@
+@import "../mixins";
+@import "../typography";
+
+.snovy-editor {
+  grid-area: centre;
+  position: relative;
+  width: 52vw;
+
+  * {
+    margin: unset;
+  }
+
+
+  //.milkdown,
+  //.source-view {
+  //  //@include scrollbar();
+  //  //@extend .snovy-scroll;
+  //  scrollbar-gutter: stable;
+  //}
+
+  .milkdown,
+  .milkdown-menu-wrapper,
+  .ProseMirror,
+  .editor-content {
+    height: 100%;
+  }
+
+  #source-mode-button {
+    position: absolute;
+    bottom: 0.2em;
+    right: 0.2em;
+    height: 1em;
+    width: 1em;
+    z-index: 10;
+    opacity: 0.5;
+  }
+
+  textarea {
+    width: 100%;
+    resize: none;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding: 1em;
+    margin: unset;
+    color: inherit;
+    overflow: hidden;
+    font-size: $font-small;
+  }
+}
+
+.milkdown-menu-wrapper {
+  position: relative;
+  display: grid;
+  grid-template-rows: min-content 1fr;
+}
+
+.milkdown-menu {
+  @include flex-limits();
+  overflow: hidden !important;
+  display: flex;
+  flex-flow: row wrap !important;
+  align-items: center;
+  justify-content: space-evenly;
+  tab-index: -1;
+  padding: 0.2em 0.4em;
+
+  .disabled,
+  :disabled {
+    display: flex !important;
+    opacity: 0.4;
+  }
+
+  &,
+  :not(.divider) {
+    background-color: var(--neutral) !important;
+  }
+
+  * {
+    margin: unset !important;
+    color: var(--primary) !important;
+  }
+
+  .button {
+    width: 2em;
+    box-sizing: border-box;
+
+    &:is(.active) {
+      color: var(--color-focus-fill) !important;
+    }
+  }
+
+  .divider {
+    height: 1em;
+    margin: 0.1em !important;
+  }
+
+  .menu-selector-list {
+    margin: unset !important;
+    border: 1px solid var(--color-border);
+    z-index: 50 !important;
+    background: rgba(var(--background), 1) !important;
+  }
+
+  :not(.disabled, :disabled) {
+    &:is(.button, .menu-selector-list-item) {
+      &:hover {
+        color: var(--color-hover) !important;
+      }
+
+      [data-whatinput="keyboard"] &:focus-within {
+        color: var(--color-focus-fill) !important;
+      }
+    }
+  }
+}
+
+.milkdown {
+  position: relative;
+
+  .table-tooltip {
+    border: 1px solid var(--color-border);
+
+    .icon {
+      width: 2rem;
+      line-height: 2rem;
+    }
+  }
+}
+
+.ProseMirror {
+  outline: none;
+  white-space: pre-wrap;
+  padding: 0.25em 0.5em;
+
+  del {
+    text-decoration-color: var(--primary);
+    text-decoration-thickness: var(--lineWidth);
+  }
+
+  p {
+    font-size: $font-small;
+    line-height: calc(#{$font-small} * 1.5);
+    margin: unset !important;
+    overflow-wrap: break-word;
+  }
+
+  li {
+    height: $font-medium;
+
+    &:is(.task-list-item) {
+      display: flex;
+
+      & > * {
+        display: flex;
+        align-items: center;
+        padding: unset;
+      }
+
+      label {
+        height: $font-small;
+        width: $font-small;
+        margin-left: -1em;
+        position: unset;
+        align-self: center;
+        justify-content: center;
+      }
+    }
+
+    &::marker {
+      color: var(--primary);
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 3rem !important;
+    margin: 0.5em 0 0.25em 0 !important;
+    text-decoration: underline;
+    text-decoration-color: var(--primary);
+    text-decoration-thickness: var(--lineWidth);
+  }
+
+  span:is(.image) {
+    width: 100%;
+  }
+
+  ul, ol {
+    padding-left: 1em;
+  }
+
+  hr {
+    margin: 0.5em 0;
+    //height: 2px;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  th {
+    border: 1px solid var(--color-border);
+    background-color: var(--neutral) !important;
+    font-weight: bold !important;
+
+    p {
+      font-size: $font-small !important;
+    }
+  }
+
+  td {
+    border: 1px solid var(--color-border);
+
+    p {
+      //font-size: $font-smaller !important;
+    }
+  }
+
+  .code-fence,
+  .mermaid {
+    font-family: 'Fira Code', monospace;
+    font-size: $font-smaller;
+    margin: 1em 0;
+    padding: 1em;
+    border: 1px solid var(--color-border);
+    min-height: 5em;
+
+    pre {
+      margin: unset !important;
+    }
+
+    &:hover {
+      .code-fence_select-wrapper {
+        display: block;
+      }
+    }
+
+    .code-fence_select-wrapper {
+      display: none;
+    }
+
+    .code-fence_value {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin: unset !important;
+      border: 1px solid var(--color-border);
+    }
+
+    .code-fence_select {
+      left: calc(100% - 10.25rem);
+      border: 1px solid var(--color-border);
+    }
+  }
+}

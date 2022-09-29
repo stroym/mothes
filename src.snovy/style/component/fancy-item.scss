@@ -1,0 +1,77 @@
+@import "../mixins";
+
+.snovy-fancy-item {
+  max-width: 100%;
+  padding: 0.2em;
+  overflow: hidden;
+  flex-grow: 1;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  border-radius: $rad-round;
+}
+
+.snovy-fancy-item-part {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  white-space: nowrap;
+  cursor: default;
+  padding: 0.1ch 1ch;
+  border-radius: $rad-round;
+  //flex-basis: 50%;
+}
+
+.snovy-fancy-item-button {
+  width: calc(var(--font-size) * 0.8);
+  height: calc(var(--font-size) * 0.8);
+  margin: 0 0 0 0.2em !important;
+}
+
+.snovy-fancy-item-split {
+  border-radius: $rad-rounded;
+
+  .snovy-fancy-item-part {
+    padding: 0.1ch 0.2ch;
+  }
+
+  :first-child {
+    border-radius: $rad-rounded 0 0 $rad-rounded;
+  }
+
+  :nth-child(2) {
+    border-radius: 0 $rad-rounded $rad-rounded 0;
+  }
+}
+
+.snovy-fancy-item-group {
+  gap: unset;
+  min-width: 100%;
+  flex-grow: 1;
+  flex-flow: column nowrap;
+  align-items: unset;
+  padding-top: 0.1em;
+  border-radius: $rad-rounded;
+
+  .snovy-group-header {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.1em 0;
+  }
+}
+
+.snovy-fancy-container {
+  @include flex-limits();
+  width: 100%;
+  gap: 0.2em;
+  display: flex;
+  flex-flow: row wrap;
+  border-radius: $rad-rounded;
+
+  &:not(:empty) {
+    padding: 0.2em;
+  }
+}

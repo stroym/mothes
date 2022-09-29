@@ -1,0 +1,51 @@
+{
+  "name": "mothes",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "index.html",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stroym/snovy"
+  },
+  "author": "stroym",
+  "license": "GNU GPL V3",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "lint": "eslint '*/**/*.{ts,svelte}'",
+    "lintfix": "eslint '*/**/*.{ts,svelte}' --quiet --fix"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.2",
+    "@tsconfig/recommended": "^1.0.1",
+    "@tsconfig/svelte": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "eslint": "^8.24.0",
+    "eslint-plugin-editorconfig": "^4.0.2",
+    "eslint-plugin-svelte": "^2.9.0",
+    "pre-commit": "^1.2.2",
+    "sass": "^1.57.1",
+    "svelte": "^3.49.0",
+    "svelte-check": "^2.9.1",
+    "svelte-preprocess": "^4.10.7",
+    "ts-key-enum": "^2.0.12",
+    "tslib": "^2.4.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0"
+  },
+  "dependencies": {
+    "dexie": "^3.2.2",
+    "dexie-export-import": "^1.0.3",
+    "file-saver": "^2.0.5",
+    "focus-trap": "^7.0.0",
+    "random-words": "^1.2.0",
+    "resize-observer": "^1.0.4",
+    "svelte-material-icons": "^2.0.4",
+    "tinycolor2": "^1.4.2",
+    "what-input": "^5.2.12"
+  }
+}

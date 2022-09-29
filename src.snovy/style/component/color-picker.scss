@@ -1,0 +1,32 @@
+.snovy-color-picker {
+  padding: 0.5em 1em;
+  display: grid;
+  grid-template-areas: "predefined-colors" "controls";
+  grid-row-gap: 0.5em;
+  place-items: start center;
+  z-index: 50;
+
+  .color-container {
+    grid-area: predefined-colors;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    place-items: center;
+    width: calc(100% + 1em);
+  }
+
+  .color-controls {
+    grid-area: controls;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+
+    .snovy-input-color {
+      margin: 0 0.5em;
+    }
+  }
+}
+
+.color-helper {
+  border-radius: 50%;
+}

@@ -1,0 +1,80 @@
+@import "../mixins";
+
+.snovy-form {
+  outline: none;
+  display: grid;
+  width: 100%;
+  padding: 1em 0.5em;
+  gap: 1em 0.5em;
+
+  .snovy-form-buttons {
+    @include flex-limits();
+    grid-area: buttons;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5em;
+
+    & > .snovy-button {
+      flex-basis: 100%;
+      margin: unset;
+    }
+  }
+
+}
+
+#tag-form {
+  //max-height: 60vh;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas: "category-color category-input category-check" "tag-color tag-input tag-check" "buttons buttons buttons";
+  align-items: center;
+  justify-content: flex-start;
+
+  #category-color-button {
+    grid-area: category-color;
+  }
+
+  #category-input {
+    grid-area: category-input;
+  }
+
+  #category-unique {
+    grid-area: category-check;
+  }
+
+  #tag-color-button {
+    grid-area: tag-color;
+  }
+
+  #tag-input {
+    grid-area: tag-input;
+  }
+
+  #tag-unique {
+    grid-area: tag-check;
+  }
+
+}
+
+#search-form {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.simple-form {
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas: "color input" "buttons buttons";
+  justify-content: flex-start;
+
+  .color-picker-button {
+    grid-area: color;
+  }
+
+  .title-input {
+    grid-area: input;
+  }
+
+}
