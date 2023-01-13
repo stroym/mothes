@@ -1,5 +1,4 @@
 <script lang="ts">
-
   import TabMenuItem from "./TabMenuItem.svelte"
 
   export type Orientation = "left" | "right" | "top" | "bottom"
@@ -9,16 +8,14 @@
   export let spacer: boolean = true
   export let tabs: Array<TabItem> = []
 
-  export let onActiveChange: (active: string) => void
-
-  let activeTab: string = tabs[0]?.id
+  export let active: string = tabs[0]?.id
 
 </script>
 
 <div class="snovy-tab-menu color-pass {orientation}">
   <div class="tab-menu-section tab-menu-start color-pass">
     {#each tabs.filter(it => !it.align || it.align == "start") as tab}
-      <TabMenuItem id={tab.id} icon={tab.icon} active={activeTab == tab.id} on:click={()=>activeTab = tab.id}>
+      <TabMenuItem id={tab.id} icon={tab.icon} active={active == tab.id} on:click={()=>active = tab.id}>
       </TabMenuItem>
     {/each}
     <slot></slot>
@@ -31,7 +28,7 @@
   {#if $$slots['end'] || tabs.find(it => it.align == "end")}
     <div class="tab-menu-section tab-menu-end color-pass">
       {#each tabs.filter(it => it.align == "end") as tab}
-        <TabMenuItem id={tab.id} icon={tab.icon} active={activeTab == tab.id} on:click={()=>activeTab = tab.id}>
+        <TabMenuItem id={tab.id} icon={tab.icon} active={active == tab.id} on:click={()=>active = tab.id}>
         </TabMenuItem>
       {/each}
       <slot name="end"></slot>
@@ -46,19 +43,26 @@
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
-    gap: var(--border-thin);
 
     &:is(.top, .bottom) {
       flex-direction: row;
+
+      :global .snovy-tab-menu-item {
+        padding: 0.4em 0.6em;
+      }
     }
 
     &:is(.left, .right) {
       flex-direction: column;
+
+      :global .snovy-tab-menu-item {
+        padding: 0.6em 0.2em;
+      }
     }
   }
 
   .tab-menu-section {
-  //display: flex; flex-flow: inherit; align-items: stretch; justify-content: space-evenly; overflow: hidden; gap: var(--border-thin);
+    //display: flex; flex-flow: inherit; align-items: stretch; justify-content: space-evenly; overflow: hidden; gap: var(--border-thin);
 
     &.start {
       justify-content: flex-start;

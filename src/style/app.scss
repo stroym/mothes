@@ -11,14 +11,14 @@
 }
 
 .active-item {
-  background-color: var(--color-active) !important;
+  background-color: var(--color-active);
 }
 
 .color-pass {
   background-color: var(--color-border);
 }
 
-.color-pass > * {
+.color-pass > *:not(.active-item) {
   background-color: var(--color-main);
 }
 
