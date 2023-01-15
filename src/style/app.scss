@@ -10,15 +10,16 @@
   --border-thin: 2px;
 }
 
+[data-active = "true"],
 .active-item {
-  background-color: var(--color-active);
+  background-color: var(--color-active)
 }
 
 .color-pass {
   background-color: var(--color-border);
 }
 
-.color-pass > *:not(.active-item) {
+.color-pass > *:not([data-active = "true"], .active-item) {
   background-color: var(--color-main);
 }
 
@@ -54,8 +55,8 @@ html, body, #root {
   opacity: 0.6;
 }
 
-[data-visible="false"] {
-  visibility: hidden;
+[data-collapsed="true"] {
+  visibility: collapse;
   display: none !important;
 }
 

@@ -1,14 +1,13 @@
 <script lang="ts">
-  import Icon from "../Icon.svelte"
+  import Icon from "../helper/Icon.svelte"
 
   export let id: string
   export let title: string = null
   export let icon: string = null
-  export let active: boolean = false
 </script>
 
-<div {...$$restProps} on:click type="button" tabIndex={0}
-     class="snovy-tab-menu-item styled-hover-fill {active ? 'active-item' : ''} {$$restProps.class || ''} {icon ? 'icon' : ''}">
+<div {...$$restProps} title={icon && title} on:click on:keypress type="button" tabIndex={0}
+     class="snovy-tab-menu-item styled-hover-fill {$$restProps.class || ''} {icon ? 'icon' : ''}">
   {#if icon}
     <Icon name="{icon}"></Icon>
   {:else}

@@ -5,46 +5,43 @@
 
   //TODO move active tabs/tab management into a store/context
   const mappings = {
-    notes: {id: "notes", label: "Notes", icon: "notes"},
-    favorites: {id: "favorites", label: "Favorites", icon: "favorite"},
-    search: {id: "search", label: "Search", icon: "search"},
-    archive: {id: "archive", label: "Archive", icon: "archive", align: "end"},
-    resources: {id: "resources", label: "Resources", icon: "resources"},
-    options: {id: "options", label: "Options", icon: "options", align: "end"},
-    detail: {id: "detail", label: "Detail", icon: "detail"},
-    manager: {id: "manager", label: "Manager", icon: "manager"}
+    notes: {id: "notes", title: "Notes", icon: "notes"},
+    favorites: {id: "favorites", title: "Favorites", icon: "favorite"},
+    search: {id: "search", title: "Search", icon: "search"},
+    archive: {id: "archive", title: "Archive", icon: "archive", align: "end"},
+    resources: {id: "resources", title: "Resources", icon: "resources"},
+    options: {id: "options", title: "Options", icon: "options", align: "end"},
+    detail: {id: "detail", title: "Detail", icon: "detail"},
+    manager: {id: "manager", title: "Manager", icon: "manager"}
   }
 
   let leftTab = mappings.notes.id
   let rightTab = mappings.detail.id
+  let leftCollapsed = false
+  let rightCollapsed = false
+
 </script>
 
 <main>
-  <div id="snovy-app" {leftTab} {rightTab}>
-    <TabMenu id="left-menu" orientation="left" bind:active={leftTab} tabs={[
-      mappings.notes,
-      mappings.favorites,
-      mappings.search,
-      mappings.archive,
-      mappings.options,
-      {id: "collapse", icon: "arrow_left", align: "end"}
-    ]}/>
-    <Sidebar id="left-sidebar">
+  <div id="snovy-app" {leftTab} {rightTab} {leftCollapsed} {rightCollapsed}>
+    <TabMenu id="left-menu" style="grid-area: left-menu;" orientation="left" spacer collapsible
+             bind:active={leftTab} bind:collapsed={leftCollapsed}
+             tabs={[mappings.notes, mappings.favorites, mappings.search, mappings.archive, mappings.options]}
+    />
+    <Sidebar id="left-sidebar" style="grid-area: left;" data-collapsed={leftCollapsed}>
       {#if leftTab == mappings.notes.id}
         <List></List>
         <List></List>
       {/if}
     </Sidebar>
-    <div id="editor"></div>
-    <Sidebar id="right-sidebar">
+    <div id="editor" style="grid-area: centre;"></div>
+    <Sidebar id="right-sidebar" style="grid-area: right;" data-collapsed={rightCollapsed}>
       <div style="height: 100%; width: 100%;"></div>
     </Sidebar>
-    <TabMenu id="right-menu" orientation="right" bind:active={rightTab} tabs={[
-      mappings.detail,
-      mappings.manager,
-      mappings.resources,
-      {id: "collapse", icon: "arrow_right", align: "end"}
-    ]}/>
+    <TabMenu id="right-menu" style="grid-area: right-menu;" orientation="right" spacer collapsible
+             bind:active={rightTab} bind:collapsed={rightCollapsed}
+             tabs={[mappings.detail, mappings.manager, mappings.resources]}
+    />
   </div>
 </main>
 
@@ -55,7 +52,7 @@
     display: grid;
     grid-template-columns: minmax(2vw, 1fr) 10fr 30fr 10fr minmax(2vw, 1fr);
     grid-template-rows: 100%;
-    grid-template-areas: "leftmenu left centre right rightmenu";
+    grid-template-areas: "left-menu left centre right right-menu";
     grid-gap: var(--border-thin);
     background-color: var(--color-border);
 

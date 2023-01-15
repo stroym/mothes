@@ -1,37 +1,92 @@
 <script lang="ts">
+  import {onMount} from "svelte"
   import TabMenuItem from "./TabMenuItem.svelte"
+  import {isActionEvent} from "../utils"
 
   export type Orientation = "left" | "right" | "top" | "bottom"
   export type TabItem = { id: string, align?: "start" | "end", icon?: any }
 
   export let orientation: Orientation
-  export let spacer: boolean = true
+  export let spacer: boolean
+  export let collapsible: boolean
+
   export let tabs: Array<TabItem> = []
 
   export let active: string = tabs[0]?.id
+  export let collapsed: boolean
 
+  let startTabs = tabs.filter(it => !it.align || it.align === "start")
+  let endTabs = tabs.filter(it => it.align === "end")
+  let collapseIcon: string
+
+  onMount(() => {collapsible && collapse()})
+
+  function collapse(e?: MouseEvent | KeyboardEvent) {
+    if (e) {
+      if (!isActionEvent(e)) {
+        return
+      }
+
+      collapsed = !collapsed
+    }
+
+    switch (orientation) {
+      case "top":
+        collapseIcon = collapsed ? "arrow_down" : "arrow_up"
+        break
+      case "bottom":
+        collapseIcon = collapsed ? "arrow_up" : "arrow_down"
+        break
+      case "left":
+        collapseIcon = collapsed ? "arrow_left" : "arrow_right"
+        break
+      case "right":
+        collapseIcon = collapsed ? "arrow_right" : "arrow_left"
+        break
+    }
+  }
+
+  function setAsActive(e: MouseEvent | KeyboardEvent, tabId: string) {
+    if (!isActionEvent(e)) {
+      return
+    }
+
+    active = tabId
+
+    if (collapsed) {
+      collapse(e)
+    }
+  }
 </script>
 
-<div class="snovy-tab-menu color-pass {orientation}">
+<div {...$$restProps} class="snovy-tab-menu color-pass {orientation} {$$restProps.class || ''}">
   <div class="tab-menu-section tab-menu-start color-pass">
-    {#each tabs.filter(it => !it.align || it.align == "start") as tab}
-      <TabMenuItem id={tab.id} icon={tab.icon} active={active == tab.id} on:click={()=>active = tab.id}>
+    {#each startTabs as tab}
+      <TabMenuItem id={tab.id} icon={tab.icon} title={tab.title} data-active={active === tab.id}
+                   on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}>
       </TabMenuItem>
     {/each}
-    <slot></slot>
+
+    {#if collapsible && !endTabs}
+      <TabMenuItem on:click={collapse} on:keypress={collapse} icon={collapseIcon}></TabMenuItem>
+    {/if}
   </div>
 
   {#if spacer}
     <div class="tab-menu-spacer"></div>
   {/if}
 
-  {#if $$slots['end'] || tabs.find(it => it.align == "end")}
+  {#if endTabs}
     <div class="tab-menu-section tab-menu-end color-pass">
-      {#each tabs.filter(it => it.align == "end") as tab}
-        <TabMenuItem id={tab.id} icon={tab.icon} active={active == tab.id} on:click={()=>active = tab.id}>
+      {#each endTabs as tab}
+        <TabMenuItem id={tab.id} icon={tab.icon} title={tab.title} data-active={active === tab.id}
+                     on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}>
         </TabMenuItem>
       {/each}
-      <slot name="end"></slot>
+
+      {#if collapsible}
+        <TabMenuItem on:click={collapse} on:keypress={collapse} icon={collapseIcon}></TabMenuItem>
+      {/if}
     </div>
   {/if}
 </div>
@@ -62,7 +117,12 @@
   }
 
   .tab-menu-section {
-    //display: flex; flex-flow: inherit; align-items: stretch; justify-content: space-evenly; overflow: hidden; gap: var(--border-thin);
+    //display: flex;
+    //flex-flow: inherit;
+    //align-items: stretch;
+    //justify-content: space-evenly;
+    // overflow: hidden;
+    // gap: var(--border-thin);
 
     &.start {
       justify-content: flex-start;
