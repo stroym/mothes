@@ -59,7 +59,7 @@
   }
 </script>
 
-<div {...$$restProps} class="snovy-tab-menu color-pass {orientation} {$$restProps.class || ''}">
+<div {...$$restProps} class={"snovy-tab-menu color-pass " + orientation + ($$restProps.class || "")}>
   <div class="tab-menu-section tab-menu-start color-pass">
     {#each startTabs as tab}
       <TabMenuItem id={tab.id} icon={tab.icon} title={tab.title} data-active={active === tab.id}
@@ -102,7 +102,7 @@
     &:is(.top, .bottom) {
       flex-direction: row;
 
-      :global .snovy-tab-menu-item {
+      :global(.snovy-tab-menu-item) {
         padding: 0.4em 0.6em;
       }
     }
@@ -110,7 +110,7 @@
     &:is(.left, .right) {
       flex-direction: column;
 
-      :global .snovy-tab-menu-item {
+      :global(.snovy-tab-menu-item) {
         padding: 0.6em 0.2em;
       }
     }

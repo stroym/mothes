@@ -716,19 +716,20 @@ eslint-plugin-editorconfig@^4.0.2:
     eslint "^8.0.1"
     klona "^2.0.4"
 
-eslint-plugin-svelte@^2.9.0:
-  version "2.9.0"
-  resolved "https://registry.npmjs.org/eslint-plugin-svelte/-/eslint-plugin-svelte-2.9.0.tgz"
-  integrity sha512-ksEf7O+wMK9n3pzEE8+vqP0aCECvr3ahOwCtit8xOEgLtiLENZvymsicIeialT6EgBQHg8L4L7OL0O/0p1AXNg==
+eslint-plugin-svelte@^2.14.1:
+  version "2.14.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-svelte/-/eslint-plugin-svelte-2.14.1.tgz#5abfb256a0672ae97407ca187f591ccb9a127ac0"
+  integrity sha512-7M4QHtbtTjLA2xore4rXBwKshPaycil5AsOwYNyvJdunEEdimrIp6otX6PGpFoAojz+qTb4MZuReaHEj1hX7Wg==
   dependencies:
     debug "^4.3.1"
     eslint-utils "^3.0.0"
-    known-css-properties "^0.25.0"
+    esutils "^2.0.3"
+    known-css-properties "^0.26.0"
     postcss "^8.4.5"
     postcss-load-config "^3.1.4"
     postcss-safe-parser "^6.0.0"
     sourcemap-codec "^1.4.8"
-    svelte-eslint-parser "^0.18.0"
+    svelte-eslint-parser "^0.22.0"
 
 eslint-scope@^5.1.1:
   version "5.1.1"
@@ -846,7 +847,7 @@ estree-walker@^2.0.1:
   resolved "https://registry.npmjs.org/estree-walker/-/estree-walker-2.0.2.tgz"
   integrity sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==
 
-esutils@^2.0.2:
+esutils@^2.0.2, esutils@^2.0.3:
   version "2.0.3"
   resolved "https://registry.npmjs.org/esutils/-/esutils-2.0.3.tgz"
   integrity sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==
@@ -1193,10 +1194,10 @@ klona@^2.0.4:
   resolved "https://registry.npmjs.org/klona/-/klona-2.0.5.tgz"
   integrity sha512-pJiBpiXMbt7dkzXe8Ghj/u4FfXOOa98fPW+bihOJ4SjnoijweJrNThJfd3ifXpXhREjpoF2mZVH1GfS9LV3kHQ==
 
-known-css-properties@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.npmjs.org/known-css-properties/-/known-css-properties-0.25.0.tgz"
-  integrity sha512-b0/9J1O9Jcyik1GC6KC42hJ41jKwdO/Mq8Mdo5sYN+IuRTXs2YFHZC3kZSx6ueusqa95x3wLYe/ytKjbAfGixA==
+known-css-properties@^0.26.0:
+  version "0.26.0"
+  resolved "https://registry.yarnpkg.com/known-css-properties/-/known-css-properties-0.26.0.tgz#008295115abddc045a9f4ed7e2a84dc8b3a77649"
+  integrity sha512-5FZRzrZzNTBruuurWpvZnvP9pum+fe0HcK8z/ooo+U+Hmp4vtbyp1/QDsqmufirXy4egGzbaH/y2uCZf+6W5Kg==
 
 levn@^0.4.1:
   version "0.4.1"
@@ -1785,10 +1786,10 @@ svelte-check@^2.9.1:
     svelte-preprocess "^4.0.0"
     typescript "*"
 
-svelte-eslint-parser@^0.18.0:
-  version "0.18.4"
-  resolved "https://registry.npmjs.org/svelte-eslint-parser/-/svelte-eslint-parser-0.18.4.tgz"
-  integrity sha512-mCl/gsshy11LrFCEsTKlbNHXKCGCpan0vJWoBmorn6En11OWRKsrXEi3RwPKUjjcO3WKOWRfG68L3zpCg1BilQ==
+svelte-eslint-parser@^0.22.0:
+  version "0.22.4"
+  resolved "https://registry.yarnpkg.com/svelte-eslint-parser/-/svelte-eslint-parser-0.22.4.tgz#2ad3d5d835a8e83917a3f30e3292618d3a6073bb"
+  integrity sha512-3ra5jhS9u1LaeqvxuMSKbCiB4WXB4BZODFHDQWdGfGJMC42UMouXH3XppFjdsOPsWNZj/kT/SfyiXbieE/cTnA==
   dependencies:
     eslint-scope "^7.0.0"
     eslint-visitor-keys "^3.0.0"

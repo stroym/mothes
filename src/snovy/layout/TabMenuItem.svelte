@@ -7,7 +7,7 @@
 </script>
 
 <div {...$$restProps} title={icon && title} on:click on:keypress type="button" tabIndex={0}
-     class="snovy-tab-menu-item styled-hover-fill {$$restProps.class || ''} {icon ? 'icon' : ''}">
+     class={`snovy-tab-menu-item styled-hover-fill ${$$restProps.class || ""}`} class:icon>
   {#if icon}
     <Icon name="{icon}"></Icon>
   {:else}
@@ -37,7 +37,7 @@
     }
   }
 
-  :global svg {
+  :global(svg) {
     height: 2em;
     width: 2em;
   }

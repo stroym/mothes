@@ -1,8 +1,8 @@
 <script lang="ts">
 </script>
 
-<div {...$$restProps} class="snovy-sidebar {$$restProps.class || ''}">
-  {#if $$slots['header']}
+<div {...$$restProps} class={`snovy-sidebar ${$$restProps.class || ""}`}>
+  {#if $$slots["header"]}
     <div class="sidebar-header color-pass">
       <slot name="header"></slot>
     </div>
@@ -12,7 +12,7 @@
     <slot></slot>
   </div>
 
-  {#if $$slots['footer']}
+  {#if $$slots["footer"]}
     <div class="sidebar-footer color-pass">
       <slot name="footer"></slot>
     </div>

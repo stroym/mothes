@@ -30,7 +30,7 @@
   import IconSearch from "../assets/icons/search.svg"
   import IconUnique from "../assets/icons/unique.svg"
 
-  export let name: string = ""
+  export let name = ""
 
   const options = {
     add: IconAdd,

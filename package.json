@@ -28,7 +28,7 @@
     "@typescript-eslint/parser": "^5.38.1",
     "eslint": "^8.24.0",
     "eslint-plugin-editorconfig": "^4.0.2",
-    "eslint-plugin-svelte": "^2.9.0",
+    "eslint-plugin-svelte": "^2.14.1",
     "gh-pages": "^4.0.0",
     "pre-commit": "^1.2.2",
     "sass": "^1.57.1",

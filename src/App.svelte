@@ -28,7 +28,7 @@
              bind:active={leftTab} bind:collapsed={leftCollapsed}
              tabs={[mappings.notes, mappings.favorites, mappings.search, mappings.archive, mappings.options]}
     />
-    <Sidebar id="left-sidebar" style="grid-area: left;" data-collapsed={leftCollapsed}>
+    <Sidebar id="left-sidebar" class="aaa" style="grid-area: left;" data-collapsed={leftCollapsed}>
       {#if leftTab == mappings.notes.id}
         <List></List>
         <List></List>
@@ -61,7 +61,7 @@
     }
   }
 
-  :global #left-sidebar .sidebar-body {
+  :global( #left-sidebar .sidebar-body) {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
