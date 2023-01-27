@@ -4,18 +4,34 @@
 
   export let item: Record<string, unknown>
 
+  export let button: { component: any, action: (e) => {} }
+  export let custom: { component: any, props: { onAction: (args) => {} } }
+
   //  pass active as a data-active
   //  pass selected as a data-active
 </script>
 
+<!--note list item = pass button action + icon-->
+<!--color list item = pass button action + icon-->
+
+
+<!--tag list item = -->
+<!--search/favorites list item = pass string representation method (section | note) + pass button action + icon-->
+
+
 <li {...$$restProps} class={`snovy-list-item ${$$restProps.class || ""}`}>
-  {#if preset === "editable"}
+  {#if custom}
+    <svelte:component this={custom.component} {...custom.props} item={item}></svelte:component>
+  {:else if preset === "editable"}
     <!--    <EditableInput placeholder="Title" onValueChange={onValueChange} value={item.toString()}/>-->
   {:else if preset === "simple"}
     <div class="li-simple-content" tabIndex={0}>{item.toString()}</div>
   {/if}
 
-  {item.toString()}
+  <!--possibly a slot?-->
+  {#if button}
+    <button> on:click={button.action}</button>
+  {/if}
 </li>
 
 <!--const ListItem =-->

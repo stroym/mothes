@@ -2,6 +2,8 @@
   import Sidebar from "./snovy/layout/Sidebar.svelte"
   import TabMenu from "./snovy/layout/TabMenu.svelte"
   import List from "./snovy/list/List.svelte"
+  import Note from "./data/model/Note.js"
+  import NoteListItem from "./snovy/list/custom-parts/NoteListItemPart.svelte"
 
   //TODO move active tabs/tab management into a store/context
   const mappings = {
@@ -29,8 +31,14 @@
              tabs={[mappings.notes, mappings.favorites, mappings.search, mappings.archive, mappings.options]}
     />
     <Sidebar id="left-sidebar" class="aaa" style="grid-area: left;" data-collapsed={leftCollapsed}>
-      {#if leftTab == mappings.notes.id}
-        <List></List>
+      {#if leftTab === mappings.notes.id}
+        <List custom={{component: NoteListItem, props:{onAction: (e) => console.log(e)}}}
+              items={[
+          new Note(0, "blob 1", 1, 1),
+          new Note(0, "blob 2", 2, 2),
+          new Note(0, "blob 3", 3, 3),
+        ]}>
+        </List>
         <List></List>
       {/if}
     </Sidebar>
@@ -50,6 +58,7 @@
     height: 100vh;
     width: 100vw;
     display: grid;
+    //FIXME hiding sidebar does not work :)
     grid-template-columns: minmax(2vw, 1fr) 10fr 30fr 10fr minmax(2vw, 1fr);
     grid-template-rows: 100%;
     grid-template-areas: "left-menu left centre right right-menu";

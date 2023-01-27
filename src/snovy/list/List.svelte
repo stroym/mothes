@@ -4,13 +4,17 @@
 
   import ListItem from "./ListItem.svelte"
 
+  export let preset: "editable" | "simple" = "simple"
+  export let button: { component: any, action: (e) => {} }
+  export let custom: { component: any, props: { onAction: (args) => {} } }
+
   export let items: Array<unknown> = []
 </script>
 
 <ol {...$$restProps} class={`snovy-list snovy-scroll ${$$restProps.class || ""}`}
     tabIndex={-1} data-disabled={!items?.length}>
-  {#each items as {id, title}}
-    <ListItem name={id} title={title}/>
+  {#each items as item (item.id)}
+    <ListItem item={item} preset={preset} button={button} custom={custom}/>
   {/each}
   <slot></slot>
 </ol>

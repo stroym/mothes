@@ -1,10 +1,10 @@
 import Tag, {sortTags} from "./Tag"
-import State from "./State"
+import type State from "./State"
 import {dexie} from "../../index"
 import {isArray, isDefined} from "../../util/utils"
 import {Ordered} from "./Base"
-import Category from "./Category"
-import Section from "./Section"
+import type Category from "./Category"
+import type Section from "./Section"
 
 export default class Note extends Ordered {
 
