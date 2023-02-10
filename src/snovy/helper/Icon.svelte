@@ -1,5 +1,6 @@
 <script lang="ts">
 
+  import type {SnovyIcon} from "../snovy-types"
   import IconAdd from "../assets/icons/add.svg"
   import IconArchive from "../assets/icons/archive.svg"
   import IconArchived from "../assets/icons/archived.svg"
@@ -30,7 +31,7 @@
   import IconSearch from "../assets/icons/search.svg"
   import IconUnique from "../assets/icons/unique.svg"
 
-  export let name = ""
+  export let name: SnovyIcon
 
   const options = {
     add: IconAdd,

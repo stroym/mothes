@@ -10,19 +10,6 @@
   --border-thin: 2px;
 }
 
-[data-active = "true"],
-.active-item {
-  background-color: var(--color-active)
-}
-
-.color-pass {
-  background-color: var(--color-border);
-}
-
-.color-pass > *:not([data-active = "true"], .active-item) {
-  background-color: var(--color-main);
-}
-
 html, body, #root {
   margin: 0;
   height: 100vh;
@@ -32,6 +19,24 @@ html, body, #root {
 
 * {
   box-sizing: border-box;
+}
+
+
+.color-pass {
+  background-color: var(--color-border);
+}
+
+.color-pass > * {
+  background-color: var(--color-main);
+}
+
+[data-selected = "true"] {
+  //TODO use hsl and calc to darken --color-active?
+  background-color: deepskyblue;
+}
+
+[data-active = "true"] {
+  background-color: var(--color-active)
 }
 
 *:disabled {

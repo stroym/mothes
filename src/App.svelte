@@ -1,4 +1,5 @@
 <script lang="ts">
+  import "./util/augments.ts"
   import Sidebar from "./snovy/layout/Sidebar.svelte"
   import TabMenu from "./snovy/layout/TabMenu.svelte"
   import List from "./snovy/list/List.svelte"
@@ -32,7 +33,7 @@
     />
     <Sidebar id="left-sidebar" class="aaa" style="grid-area: left;" data-collapsed={leftCollapsed}>
       {#if leftTab === mappings.notes.id}
-        <List custom={{component: NoteListItem, props:{onAction: (e) => console.log(e)}}}
+        <List customizeChildren={{ custom: {component: NoteListItem} }}
               items={[
           new Note(0, "blob 1", 1, 1),
           new Note(0, "blob 2", 2, 2),

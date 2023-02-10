@@ -1,26 +1,27 @@
 <script lang="ts">
 
+  import type {GenericItem} from "../../util/types"
+  import type {CustomizableChild} from "../snovy-types"
+
+  type T = $$Generic<GenericItem>
+
   export let preset: "editable" | "simple" = "simple"
 
-  export let item: Record<string, unknown>
+  export let item: T
 
-  export let button: { component: any, action: (e) => {} }
-  export let custom: { component: any, props: { onAction: (args) => {} } }
+  export let custom: CustomizableChild
 
-  //  pass active as a data-active
-  //  pass selected as a data-active
+  export let onValueChange: (str: string) => void
+
 </script>
 
 <!--note list item = pass button action + icon-->
 <!--color list item = pass button action + icon-->
-
-
-<!--tag list item = -->
+<!--tag list item = two color list items-->
 <!--search/favorites list item = pass string representation method (section | note) + pass button action + icon-->
 
-
-<li {...$$restProps} class={`snovy-list-item ${$$restProps.class || ""}`}>
-  {#if custom}
+<li {...$$restProps} class={`snovy-list-item styled-hover-fill ${$$restProps.class || ""}`} on:click on:contextmenu>
+  {#if custom?.component}
     <svelte:component this={custom.component} {...custom.props} item={item}></svelte:component>
   {:else if preset === "editable"}
     <!--    <EditableInput placeholder="Title" onValueChange={onValueChange} value={item.toString()}/>-->
@@ -28,54 +29,14 @@
     <div class="li-simple-content" tabIndex={0}>{item.toString()}</div>
   {/if}
 
-  <!--possibly a slot?-->
-  {#if button}
-    <button> on:click={button.action}</button>
+  {#if custom?.button}
+    <!--TODO icon button that accepts icon and action-->
+    <button> on:click={custom?.button.action}</button>
   {/if}
+
+  <slot name="remove-button"></slot>
+
 </li>
-
-<!--const ListItem =-->
-<!--<T extends GenericItem>(-->
-<!--  {-->
-<!--    onSelect,-->
-<!--      onContext,-->
-<!--      onValueChange,-->
-<!--      customItem,-->
-<!--      preset,-->
-<!--      onRemove,-->
-<!--    ...props-->
-<!--  }: ListItemProps-->
-<!--  <T>-->
-<!--    ) => {-->
-
-<!--    return (-->
-<!--    <li-->
-<!--    {...props}-->
-<!--    className={makeClassName([LI, STYLED_HOVER_FILL, className], [[I_SELECT, selected], [I_ACTIVE, active]])}-->
-<!--    onClick={e => {!e.isDefaultPrevented() && onSelect(item)}}-->
-<!--    onContextMenu={e => {-->
-<!--    e.stopPropagation()-->
-<!--    onContext && onContext(item)-->
-<!--  }}-->
-<!--    >-->
-<!--    {resolvePreset()}-->
-<!--    {-->
-<!--    customItem && customItem(item, onValueChange)-->
-<!--  }-->
-<!--    {-->
-<!--    onRemove &&-->
-<!--    <Button-->
-<!--    circular preset="remove" border-->
-<!--    onClick={e => {-->
-<!--    e.stopPropagation()-->
-<!--    onRemove(item)-->
-<!--  }}-->
-<!--    />-->
-<!--  }-->
-<!--    </li>-->
-<!--    )-->
-
-<!--  }-->
 
 <style lang="scss">
   .snovy-list-item {
@@ -97,4 +58,8 @@
       outline: none !important;
     }
   }
+
+  .li-simple-content {
+  }
+
 </style>
