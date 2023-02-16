@@ -2,6 +2,53 @@ import "./augments.ts"
 import {onMount} from "svelte"
 import type {Writable} from "svelte/store"
 import {get, writable} from "svelte/store"
+import {Key} from "ts-key-enum"
+
+type MouseEventType = "mouseup" | "click"
+
+export function watchOutsideClick(
+  element: HTMLElement,
+  {otherElements = [], eventType = "mouseup", initialState = false, onToggleOff = () => false}: {
+    otherElements?: Array<HTMLElement>,
+    eventType?: MouseEventType,
+    initialState?: boolean,
+    onToggleOff?: () => void
+  } = {}
+): [Writable<boolean>, () => void] {
+
+  const [toggled, toggle] = useToggle(initialState)
+
+  onMount(
+    () => {
+      document.addEventListener(eventType, handleOutsideClick)
+      document.addEventListener("keydown", handleKey)
+
+      return () => {
+        document.removeEventListener(eventType, handleOutsideClick)
+        document.removeEventListener("keydown", handleKey)
+      }
+    }
+  )
+
+  const toggleOff = () => {
+    toggled.set(false)
+    onToggleOff && onToggleOff()
+  }
+
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (!element?.contains(e.target as Node) && !otherElements?.find(it => it?.contains((e.target as Node)))) {
+      toggleOff()
+    }
+  }
+
+  const handleKey = (e: KeyboardEvent) => {
+    if (e.key == Key.Escape) {
+      toggleOff()
+    }
+  }
+
+  return [toggled, toggle]
+}
 
 export function useMultiSelect<T>(listItems: Array<T>) {
 
@@ -69,4 +116,14 @@ export function useMultiSelect<T>(listItems: Array<T>) {
     resetSelection
   }
 
+}
+
+export function useToggle(initialState?: boolean): [Writable<boolean>, () => void] {
+  let toggled = writable(initialState)
+
+  const toggle = () => {
+    toggled.update(current => !current)
+  }
+
+  return [toggled, toggle]
 }

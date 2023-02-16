@@ -2,6 +2,7 @@
 
   import type {GenericItem} from "../../util/types"
   import type {CustomizableChild} from "../snovy-types"
+  import SnovyInput from "../input/SnovyInput.svelte"
 
   type T = $$Generic<GenericItem>
 
@@ -11,7 +12,7 @@
 
   export let custom: CustomizableChild
 
-  export let onValueChange: (str: string) => void
+  export let onInput: (str: string) => void
 
 </script>
 
@@ -24,7 +25,7 @@
   {#if custom?.component}
     <svelte:component this={custom.component} {...custom.props} item={item}></svelte:component>
   {:else if preset === "editable"}
-    <!--    <EditableInput placeholder="Title" onValueChange={onValueChange} value={item.toString()}/>-->
+    <SnovyInput placeholder="Title" mode="managed" on:input={e => onInput(e.target.value)} value={item.toString()}/>
   {:else if preset === "simple"}
     <div class="li-simple-content" tabIndex={0}>{item.toString()}</div>
   {/if}
@@ -48,11 +49,6 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
-
-    &, & > * {
-      cursor: default;
-      user-select: none;
-    }
 
     & > :first-child {
       outline: none !important;

@@ -21,7 +21,7 @@
   export let onMultiSelect: (selected: Array<T>) => void
   export let onSelect: (active: T | undefined) => void
   export let onContext: (active: T | undefined) => void
-  export let onItemValueChange: (str: string) => void
+  export let onItemInput: (str: string) => void
   export let onItemRemove: (item: T) => void
 
   const {selectedItems, handleItemClick, resetSelection} = useMultiSelect(itemSort ? items.sort(itemSort) : items)
@@ -58,15 +58,12 @@
   {#each items as item (item.id)}
     <ListItem item={item} preset={preset} custom={custom}
               data-active={activeItem?.id === item.id} data-selected={$selectedItems.includes(item)}
-              onValueChange={onItemValueChange}
+              onInput={onItemInput}
               on:click={e => !e.defaultPrevented && handleItemClick(item)}
               on:contextmenu={e => e.stopPropagation() && onContext && onContext(item)}>
       <svelte:fragment slot="remove-button">
         {#if onItemRemove}
-          <button on:click={e => {
-            e.stopPropagation()
-            onItemRemove(item)
-          }}>
+          <button on:click|stopPropagation={e => onItemRemove(item)}>
           </button>
         {/if}
       </svelte:fragment>

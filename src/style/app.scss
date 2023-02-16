@@ -1,3 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 :root {
   --color-main: #282424;
   --color-border: #5f5858;
@@ -7,20 +11,37 @@
   --color-text: #f8f8ff;
   --color-text-complementary: #000000;
 
+  --font-smaller: 1rem;
+  --font-small: 1.5rem;
+  --font-medium: 2rem;
+  --font-big: 3rem;
+
   --border-thin: 2px;
+  --border-width: var(--border-thin);
+
+  --rad-round: 2rem;
+  --rad-rounded: 0.4rem;
 }
 
-html, body, #root {
-  margin: 0;
-  height: 100vh;
+html, body, #app {
   width: 100vw;
+  height: 100vh;
+  margin: 0;
+  box-sizing: border-box;
   color: var(--color-text);
 }
 
-* {
-  box-sizing: border-box;
-}
+#snovy-app * {
+  --border-width: 0;
 
+  //TODO font sizes
+  font-size: var(--font-smaller);
+  font-family: "Roboto", "Montserrat", sans-serif;
+  box-sizing: border-box;
+  border-color: var(--color-border);
+  border-style: solid;
+  border-width: var(--border-width);
+}
 
 .color-pass {
   background-color: var(--color-border);
@@ -46,8 +67,8 @@ html, body, #root {
 
 [disabled],
 [data-disabled="true"] {
-  cursor: not-allowed !important;
   outline: none !important;
+  cursor: not-allowed !important;
   opacity: 0.75;
 }
 
@@ -61,8 +82,8 @@ html, body, #root {
 }
 
 [data-collapsed="true"] {
-  visibility: collapse;
   display: none !important;
+  visibility: collapse;
 }
 
 svg {
@@ -71,37 +92,13 @@ svg {
 }
 
 .snovy-inner {
-  outline: none !important;
   border: none !important;
-}
-
-.with-border {
-  border-style: solid;
-  border-width: 1px;
-  border-color: var(--color-border);
-
-  //TODO not ideal
-
-  &:is(.top) {
-    border-width: var(----border-thin) 0 0 0;
-  }
-
-  &:is(.right) {
-    border-width: 0 var(----border-thin) 0 0;
-  }
-
-  &:is(.bottom) {
-    border-width: 0 0 var(----border-thin) 0;
-  }
-
-  &:is(.left) {
-    border-width: 0 0 0 var(----border-thin);
-  }
+  outline: none !important;
 }
 
 .snovy-scroll {
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: auto;
   scroll-snap-type: y mandatory;
   scrollbar-width: thin;
   scrollbar-color: var(--color-hover) var(--color-active);
@@ -116,8 +113,8 @@ svg {
   }
 
   &::-webkit-scrollbar {
-    height: 0.4rem;
     width: 0.4rem;
+    height: 0.4rem;
     background-color: var(--color-hover);
   }
 
@@ -134,8 +131,8 @@ svg {
     &,
     .snovy-inner-focus {
       border-radius: var(--border-rad);
-      outline: currentColor solid var(--border-thin);
-      outline-offset: calc(var(--border-thin) / -2);
+      outline: currentColor solid var(--border-width);
+      outline-offset: calc(var(--border-width) / -2);
 
       &:is(.styled-hover-fill) {
         background-color: var(--color-focus-fill);
@@ -152,8 +149,8 @@ svg {
   @extend .styled-focus;
 
   &:hover {
-    outline: currentColor solid var(--border-thin);
-    outline-offset: calc(var(--border-thin) / -2);
+    outline: currentColor solid var(--border-width);
+    outline-offset: calc(var(--border-width) / -2);
   }
 }
 

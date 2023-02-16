@@ -7,6 +7,7 @@
   import IconArrowDown from "../assets/icons/arrow_down.svg"
   import IconArrowLeft from "../assets/icons/arrow_left.svg"
   import IconArrowRight from "../assets/icons/arrow_right.svg"
+  import IconBook from "../assets/icons/book.svg"
   import IconArrowUp from "../assets/icons/arrow_up.svg"
   import IconChecked from "../assets/icons/checked.svg"
   import IconCircle from "../assets/icons/circle.svg"
@@ -23,8 +24,8 @@
   import IconImport from "../assets/icons/import.svg"
   import IconLabel from "../assets/icons/label.svg"
   import IconLabelNew from "../assets/icons/label_new.svg"
+  import IconList from "../assets/icons/notes.svg"
   import IconManager from "../assets/icons/manager.svg"
-  import IconNotes from "../assets/icons/notes.svg"
   import IconOptions from "../assets/icons/options.svg"
   import IconRemove from "../assets/icons/remove.svg"
   import IconResources from "../assets/icons/resources.svg"
@@ -41,6 +42,7 @@
     arrow_left: IconArrowLeft,
     arrow_right: IconArrowRight,
     arrow_up: IconArrowUp,
+    book: IconBook,
     checked: IconChecked,
     circle: IconCircle,
     code_off: IconCodeOff,
@@ -56,8 +58,8 @@
     import: IconImport,
     label: IconLabel,
     label_new: IconLabelNew,
+    list: IconList,
     manager: IconManager,
-    notes: IconNotes,
     options: IconOptions,
     remove: IconRemove,
     resources: IconResources,

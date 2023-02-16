@@ -4,11 +4,12 @@
   import TabMenu from "./snovy/layout/TabMenu.svelte"
   import List from "./snovy/list/List.svelte"
   import Note from "./data/model/Note.js"
-  import NoteListItem from "./snovy/list/custom-parts/NoteListItemPart.svelte"
+  import Section from "./data/model/Section.js"
 
   //TODO move active tabs/tab management into a store/context
   const mappings = {
-    notes: {id: "notes", title: "Notes", icon: "notes"},
+    notebooks: {id: "notebooks", title: "Notebooks", icon: "book"},
+    notes: {id: "notes", title: "Notes", icon: "list"},
     favorites: {id: "favorites", title: "Favorites", icon: "favorite"},
     search: {id: "search", title: "Search", icon: "search"},
     archive: {id: "archive", title: "Archive", icon: "archive", align: "end"},
@@ -25,34 +26,36 @@
 
 </script>
 
-<main>
-  <div id="snovy-app" {leftTab} {rightTab} {leftCollapsed} {rightCollapsed}>
-    <TabMenu id="left-menu" style="grid-area: left-menu;" orientation="left" spacer collapsible
-             bind:active={leftTab} bind:collapsed={leftCollapsed}
-             tabs={[mappings.notes, mappings.favorites, mappings.search, mappings.archive, mappings.options]}
-    />
-    <Sidebar id="left-sidebar" class="aaa" style="grid-area: left;" data-collapsed={leftCollapsed}>
-      {#if leftTab === mappings.notes.id}
-        <List customizeChildren={{ custom: {component: NoteListItem} }}
-              items={[
+<div id="snovy-app" {leftTab} {rightTab} {leftCollapsed} {rightCollapsed}>
+  <TabMenu id="left-menu" style="grid-area: left-menu;" orientation="left" spacer collapsible
+           bind:active={leftTab} bind:collapsed={leftCollapsed}
+           tabs={[mappings.notebooks, mappings.notes, mappings.favorites, mappings.search, mappings.archive, mappings.options]}
+  />
+  <Sidebar id="left-sidebar" class="aaa" style="grid-area: left;" data-collapsed={leftCollapsed}>
+    {#if leftTab === mappings.notes.id}
+      <List preset="editable"
+          items={[
+          new Section(0, "sec 1", 1, 1),
+          new Section(0, "sec 2", 2, 2),
+          new Section(0, "sec 3", 3, 3),
+        ]}>
+      </List>
+      <List preset="editable" onItemValueChange={async str => console.log(str)} items={[
           new Note(0, "blob 1", 1, 1),
           new Note(0, "blob 2", 2, 2),
           new Note(0, "blob 3", 3, 3),
-        ]}>
-        </List>
-        <List></List>
-      {/if}
-    </Sidebar>
-    <div id="editor" style="grid-area: centre;"></div>
-    <Sidebar id="right-sidebar" style="grid-area: right;" data-collapsed={rightCollapsed}>
-      <div style="height: 100%; width: 100%;"></div>
-    </Sidebar>
-    <TabMenu id="right-menu" style="grid-area: right-menu;" orientation="right" spacer collapsible
-             bind:active={rightTab} bind:collapsed={rightCollapsed}
-             tabs={[mappings.detail, mappings.manager, mappings.resources]}
-    />
-  </div>
-</main>
+        ]}></List>
+    {/if}
+  </Sidebar>
+  <div id="editor" style="grid-area: centre;"></div>
+  <Sidebar id="right-sidebar" style="grid-area: right;" data-collapsed={rightCollapsed}>
+    <div style="height: 100%; width: 100%;"></div>
+  </Sidebar>
+  <TabMenu id="right-menu" style="grid-area: right-menu;" orientation="right" spacer collapsible
+           bind:active={rightTab} bind:collapsed={rightCollapsed}
+           tabs={[mappings.detail, mappings.manager, mappings.resources]}
+  />
+</div>
 
 <style lang="scss">
   #snovy-app {
