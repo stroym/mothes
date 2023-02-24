@@ -26,54 +26,36 @@
 
 </script>
 
-<div id="snovy-app" {leftTab} {rightTab} {leftCollapsed} {rightCollapsed}>
-  <TabMenu id="left-menu" style="grid-area: left-menu;" orientation="left" spacer collapsible
-           bind:active={leftTab} bind:collapsed={leftCollapsed}
-           tabs={[mappings.notebooks, mappings.notes, mappings.favorites, mappings.search, mappings.archive, mappings.options]}
-  />
-  <Sidebar id="left-sidebar" class="aaa" style="grid-area: left;" data-collapsed={leftCollapsed}>
-    {#if leftTab === mappings.notes.id}
-      <List preset="editable"
+<TabMenu id="left-menu" style="grid-area: left-menu;" orientation="left" spacer collapsible
+         bind:active={leftTab} bind:collapsed={leftCollapsed}
+         tabs={[mappings.notebooks, mappings.notes, mappings.favorites, mappings.search, mappings.archive, mappings.options]}
+/>
+<Sidebar id="left-sidebar" class="aaa" style="grid-area: left;" data-collapsed={leftCollapsed}>
+  {#if leftTab === mappings.notes.id}
+    <List preset="editable"
           items={[
           new Section(0, "sec 1", 1, 1),
           new Section(0, "sec 2", 2, 2),
           new Section(0, "sec 3", 3, 3),
         ]}>
-      </List>
-      <List preset="editable" onItemValueChange={async str => console.log(str)} items={[
+    </List>
+    <List preset="editable" onItemValueChange={async str => console.log(str)} items={[
           new Note(0, "blob 1", 1, 1),
           new Note(0, "blob 2", 2, 2),
           new Note(0, "blob 3", 3, 3),
         ]}></List>
-    {/if}
-  </Sidebar>
-  <div id="editor" style="grid-area: centre;"></div>
-  <Sidebar id="right-sidebar" style="grid-area: right;" data-collapsed={rightCollapsed}>
-    <div style="height: 100%; width: 100%;"></div>
-  </Sidebar>
-  <TabMenu id="right-menu" style="grid-area: right-menu;" orientation="right" spacer collapsible
-           bind:active={rightTab} bind:collapsed={rightCollapsed}
-           tabs={[mappings.detail, mappings.manager, mappings.resources]}
-  />
-</div>
+  {/if}
+</Sidebar>
+<div id="editor" style="grid-area: centre; width: 100%;"></div>
+<Sidebar id="right-sidebar" style="grid-area: right;" data-collapsed={rightCollapsed}>
+  <div style="height: 100%; width: 100%;"></div>
+</Sidebar>
+<TabMenu id="right-menu" style="grid-area: right-menu;" orientation="right" spacer collapsible
+         bind:active={rightTab} bind:collapsed={rightCollapsed}
+         tabs={[mappings.detail, mappings.manager, mappings.resources]}
+/>
 
 <style lang="scss">
-  #snovy-app {
-    height: 100vh;
-    width: 100vw;
-    display: grid;
-    //FIXME hiding sidebar does not work :)
-    grid-template-columns: minmax(2vw, 1fr) 10fr 30fr 10fr minmax(2vw, 1fr);
-    grid-template-rows: 100%;
-    grid-template-areas: "left-menu left centre right right-menu";
-    grid-gap: var(--border-thin);
-    background-color: var(--color-border);
-
-    & > * {
-      background-color: var(--color-main);
-    }
-  }
-
   :global( #left-sidebar .sidebar-body) {
     display: flex;
     flex-flow: row nowrap;
