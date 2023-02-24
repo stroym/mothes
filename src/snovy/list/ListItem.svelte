@@ -42,13 +42,18 @@
 <style lang="scss">
   .snovy-list-item {
     width: 100%;
-    padding: 0.1em;
+    padding: 0.1em 0.2em;
     scroll-snap-align: start;
     border-radius: unset;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
+
+    & :global(.snovy-input) {
+      padding: unset;
+      text-indent: unset;
+    }
 
     & > :first-child {
       outline: none !important;

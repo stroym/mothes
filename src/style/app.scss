@@ -36,7 +36,7 @@ html, body {
   width: 100vw;
   display: grid;
   //FIXME hiding sidebar does not work :)
-  grid-template-columns: minmax(2vw, 1fr) 10fr 30fr 10fr minmax(2vw, 1fr);
+  grid-template-columns: 1fr 19fr 60fr 19fr 1fr;
   grid-template-rows: 100%;
   grid-template-areas: "left-menu left centre right right-menu";
   grid-gap: var(--border-thin);

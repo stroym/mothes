@@ -35,10 +35,11 @@
       display: grid;
       place-content: center;
     }
-  }
 
-  :global(svg) {
-    height: 2em;
-    width: 2em;
+    :global(svg) {
+      //transform: scale(0.9);
+      height: var(--font-medium);
+      width: var(--font-medium);
+    }
   }
 </style>

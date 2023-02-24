@@ -52,8 +52,8 @@
     border: none;
     border-radius: var(--border-rad);
     outline: none;
-    padding: 0.2vh 0;
-    text-indent: 0.4vw;
+    padding: 0.1vh;
+    text-indent: 0.2vw;
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;

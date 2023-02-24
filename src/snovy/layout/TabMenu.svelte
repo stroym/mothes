@@ -103,7 +103,7 @@
       flex-direction: row;
 
       :global(.snovy-tab-menu-item) {
-        padding: 0.4em 0.6em;
+        padding: 0.4em 0.2em;
       }
     }
 
@@ -111,7 +111,7 @@
       flex-direction: column;
 
       :global(.snovy-tab-menu-item) {
-        padding: 0.6em 0.2em;
+        padding: 0.4em 0.2em;
       }
     }
   }
