@@ -26,11 +26,11 @@
 
 </script>
 
-<TabMenu id="left-menu" style="grid-area: left-menu;" orientation="left" spacer collapsible
+<TabMenu id="left-menu" style="grid-area: left-menu;" orientation="left" collapsible
          bind:active={leftTab} bind:collapsed={leftCollapsed}
          tabs={[mappings.notebooks, mappings.notes, mappings.favorites, mappings.search, mappings.archive, mappings.options]}
 />
-<Sidebar id="left-sidebar" class="aaa" style="grid-area: left;" data-collapsed={leftCollapsed}>
+<Sidebar id="left-sidebar" style="grid-area: left;" data-collapsed={leftCollapsed}>
   {#if leftTab === mappings.notes.id}
     <List preset="editable"
           items={[
@@ -43,14 +43,15 @@
           new Note(0, "blob 1", 1, 1),
           new Note(0, "blob 2", 2, 2),
           new Note(0, "blob 3", 3, 3),
-        ]}></List>
+        ]}>
+    </List>
   {/if}
 </Sidebar>
 <div id="editor" style="grid-area: centre; width: 100%;"></div>
 <Sidebar id="right-sidebar" style="grid-area: right;" data-collapsed={rightCollapsed}>
   <div style="height: 100%; width: 100%;"></div>
 </Sidebar>
-<TabMenu id="right-menu" style="grid-area: right-menu;" orientation="right" spacer collapsible
+<TabMenu id="right-menu" style="grid-area: right-menu;" orientation="right" collapsible
          bind:active={rightTab} bind:collapsed={rightCollapsed}
          tabs={[mappings.detail, mappings.manager, mappings.resources]}
 />

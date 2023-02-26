@@ -17,7 +17,7 @@
   --font-big: 3rem;
 
   --border-thin: 2px;
-  --border-width: var(--border-thin);
+  --border-width: 0;
 
   --rad-round: 2rem;
   --rad-rounded: 0.4rem;
@@ -43,8 +43,6 @@ html, body {
   background-color: var(--color-border);
 
   & * {
-    --border-width: 0;
-
     font-size: var(--font-medium);
     font-family: "Roboto", "Montserrat", sans-serif;
     box-sizing: border-box;

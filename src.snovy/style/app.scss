@@ -144,7 +144,7 @@ svg {
 .styled-hover-fill {
   @extend .styled-focus;
 
-  &:not([data-disabled=true], [disabled]):not(.color-item, .snovy-color-button):hover {
+  &:not([data-disabled=true], [disabled]):not(.color-item, .snovy-button.color):hover {
     background-color: var(--color-hover) !important;
     //TODO more control needed (sometimes you want to highlight background, sometimes the svg itself)
   }

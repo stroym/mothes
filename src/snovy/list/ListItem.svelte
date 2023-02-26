@@ -51,6 +51,8 @@
     justify-content: flex-start;
 
     & :global(.snovy-input) {
+      --border-width: 0;
+
       padding: unset;
       text-indent: unset;
     }

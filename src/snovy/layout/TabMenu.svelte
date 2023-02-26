@@ -4,10 +4,9 @@
   import {isActionEvent} from "../utils"
 
   export type Orientation = "left" | "right" | "top" | "bottom"
-  export type TabItem = { id: string, align?: "start" | "end", icon?: any }
+  export type TabItem = { id: string, align?: "start" | "middle" | "end", icon?: any }
 
   export let orientation: Orientation
-  export let spacer: boolean
   export let collapsible: boolean
 
   export let tabs: Array<TabItem> = []
@@ -16,6 +15,7 @@
   export let collapsed: boolean
 
   let startTabs = tabs.filter(it => !it.align || it.align === "start")
+  let middleTabs = tabs.filter(it => it.align === "middle")
   let endTabs = tabs.filter(it => it.align === "end")
   let collapseIcon: string
 
@@ -62,7 +62,7 @@
 <div {...$$restProps} class={`snovy-tab-menu color-pass ${orientation} ${$$restProps.class || ""}`}>
   <div class="tab-menu-section tab-menu-start color-pass">
     {#each startTabs as tab}
-      <TabMenuItem id={tab.id} icon={tab.icon} title={tab.title} data-active={active === tab.id}
+      <TabMenuItem {...tab} data-active={active === tab.id}
                    on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}>
       </TabMenuItem>
     {/each}
@@ -72,14 +72,20 @@
     {/if}
   </div>
 
-  {#if spacer}
-    <div class="tab-menu-spacer"></div>
+  {#if middleTabs}
+    <div class="tab-menu-section tab-menu-end color-pass">
+      {#each middleTabs as tab}
+        <TabMenuItem {...tab} data-active={active === tab.id}
+                     on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}>
+        </TabMenuItem>
+      {/each}
+    </div>
   {/if}
 
   {#if endTabs}
     <div class="tab-menu-section tab-menu-end color-pass">
       {#each endTabs as tab}
-        <TabMenuItem id={tab.id} icon={tab.icon} title={tab.title} data-active={active === tab.id}
+        <TabMenuItem {...tab} data-active={active === tab.id}
                      on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}>
         </TabMenuItem>
       {/each}
@@ -117,12 +123,11 @@
   }
 
   .tab-menu-section {
-    //display: flex;
-    //flex-flow: inherit;
-    //align-items: stretch;
-    //justify-content: space-evenly;
-    // overflow: hidden;
-    // gap: var(--border-thin);
+    display: flex;
+    flex-flow: inherit;
+    align-items: stretch;
+    justify-content: space-evenly;
+    overflow: hidden; //TODO scroll with hint arrow
 
     &.start {
       justify-content: flex-start;
@@ -131,10 +136,5 @@
     &.end {
       justify-content: flex-end;
     }
-  }
-
-  .tab-menu-spacer {
-    flex: 1 1 max-content;
-    background-color: var(--color-main);
   }
 </style>
