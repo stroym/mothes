@@ -47,7 +47,7 @@
     </List>
   {/if}
 </Sidebar>
-<div id="editor" style="grid-area: centre; width: 100%;"></div>
+<div id="editor" style="grid-area: centre;"></div>
 <Sidebar id="right-sidebar" style="grid-area: right;" data-collapsed={rightCollapsed}>
   <div style="height: 100%; width: 100%;"></div>
 </Sidebar>
@@ -63,5 +63,14 @@
     align-items: center;
     justify-content: space-evenly;
     gap: var(--border-thin);
+  }
+
+  :global( #left-menu, #right-menu ) {
+    width: 2vw;
+  }
+
+
+  :global( #left-sidebar, #right-sidebar ) {
+    width: 22vw;
   }
 </style>

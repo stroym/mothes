@@ -42,6 +42,11 @@
 <style lang="scss">
   .snovy-list-item {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    //TODO typical flex shenanigans
+
+    font-size: var(--font-medium);
     padding: 0.1em 0.2em;
     scroll-snap-align: start;
     border-radius: unset;

@@ -55,6 +55,7 @@
   .snovy-input {
     --border-width: var(--border-thin);
 
+    font-size: var(--font-medium);
     background-color: transparent;
     border-radius: var(--border-rad);
     outline: none;

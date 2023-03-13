@@ -9,7 +9,9 @@
 <div {...$$restProps} title={icon && title} on:click on:keypress type="button" tabIndex={0}
      class={`snovy-tab-menu-item styled-hover-fill ${$$restProps.class || ""}`} class:icon>
   {#if icon}
-    <Icon name="{icon}"></Icon>
+    <div class="svg-wrapper">
+      <Icon name="{icon}"></Icon>
+    </div>
   {:else}
     {title ?? id}
   {/if}
@@ -19,6 +21,9 @@
   .snovy-tab-menu-item {
     --border-rad: 0;
 
+    max-height: 100%;
+    max-width: 100%;
+    flex: 1 1 100%;
     border: none;
     outline: none;
     //background-color: transparent;
@@ -29,17 +34,9 @@
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
-    //aspect-ratio: 1 / 1;
 
     &.icon {
-      display: grid;
-      place-content: center;
-    }
-
-    :global(svg) {
-      //transform: scale(0.9);
-      height: var(--font-medium);
-      width: var(--font-medium);
+      font-size: var(--font-medium);
     }
   }
 </style>
