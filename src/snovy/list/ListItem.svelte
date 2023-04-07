@@ -41,7 +41,7 @@
 
 <style lang="scss">
   .snovy-list-item {
-    width: 100%;
+    //width: 100%;
     max-width: 100%;
     min-width: 0;
     //TODO typical flex shenanigans

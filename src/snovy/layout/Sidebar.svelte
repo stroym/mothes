@@ -35,6 +35,7 @@
   }
 
   .sidebar-body {
-    flex: 1 1 100%;
+    //flex: 1 1 100%;
+    height: 100%;
   }
 </style>

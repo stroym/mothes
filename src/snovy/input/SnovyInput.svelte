@@ -60,11 +60,12 @@
     border-radius: var(--border-rad);
     outline: none;
     padding: 0.1vh;
-    text-indent: 0.2vw;
+    text-indent: 0.2vh; //TODO calc based on font size
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-width: 0;
     color: inherit;
 
     &[readonly] {

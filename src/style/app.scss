@@ -11,10 +11,10 @@
   --color-text: #f8f8ff;
   --color-text-complementary: #000000;
 
-  --font-smaller: clamp(0.5rem, 0.5rem + 6vw, 1rem);
-  --font-small: clamp(1rem, 1rem + 2vw, 1.5rem);
-  --font-medium: clamp(1rem, 2rem + 6vw, 3rem);
-  --font-big: clamp(2rem, 2rem + 6vw, 3rem);
+  --font-smaller: clamp(0.5rem, 0.5rem + 4vw, 1rem);
+  --font-small: clamp(1rem, 1rem + 4vw, 1.5rem);
+  --font-medium: clamp(1.5rem, 1.5rem + 4vw, 2.5rem);
+  --font-big: clamp(2rem, 2rem + 4vw, 3rem);
 
   --border-thin: 2px;
   --border-width: 0;
