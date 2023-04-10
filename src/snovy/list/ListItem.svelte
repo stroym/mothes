@@ -3,6 +3,7 @@
   import type {GenericItem} from "../../util/types"
   import type {CustomizableChild} from "../snovy-types"
   import SnovyInput from "../input/SnovyInput.svelte"
+  import SnovyButton from "../input/SnovyButton.svelte";
 
   type T = $$Generic<GenericItem>
 
@@ -31,8 +32,7 @@
   {/if}
 
   {#if custom?.button}
-    <!--TODO icon button that accepts icon and action-->
-    <button> on:click={custom?.button.action}</button>
+    <SnovyButton on:click={custom.button.action} icon={custom.button.icon} circular/>
   {/if}
 
   <slot name="remove-button"></slot>
@@ -53,7 +53,7 @@
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
 
     & :global(.snovy-input) {
       --border-width: 0;

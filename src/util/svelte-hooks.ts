@@ -55,7 +55,8 @@ export function useMultiSelect<T>(listItems: Array<T>) {
   let ctrlMode = writable(false)
   let shiftMode = writable(false)
 
-  let selectedItems: Writable<Array<T>> = writable([listItems.first()])
+  let selectedItems: Writable<Array<T>> = writable(listItems?.isEmpty() ? [] : [listItems.first()])
+  let activeItem: Writable<T> = writable(listItems?.first())
 
   onMount(
     () => {
@@ -73,20 +74,20 @@ export function useMultiSelect<T>(listItems: Array<T>) {
   }
 
   const handleItemClick = (item: T) => {
-    selectedItems.update(currentItems => {
+    selectedItems.update(current => {
       if (get(ctrlMode)) {
-        if (currentItems.includes(item)) {
-          if (currentItems.length > 1) {
-            return Array.from(currentItems).remove(item)
+        if (current.includes(item)) {
+          if (current.length > 1) {
+            return Array.from(current).remove(item)
           }
         } else {
-          return currentItems.concat(item)
+          return current.concat(item)
         }
       } else if (get(shiftMode)) {
-        if (currentItems.includes(item)) {
-          return listItems.slice(listItems.indexOf(currentItems.first()!), listItems.indexOf(item) + 1)
+        if (current.includes(item)) {
+          return listItems.slice(listItems.indexOf(current.first()!), listItems.indexOf(item) + 1)
         } else {
-          const firstIndex = listItems.indexOf(currentItems.first()!)
+          const firstIndex = listItems.indexOf(current.first()!)
           const itemIndex = listItems.indexOf(item)
 
           if (itemIndex > firstIndex) {
@@ -99,18 +100,20 @@ export function useMultiSelect<T>(listItems: Array<T>) {
         return [item]
       }
 
-      return currentItems
+      return current
     })
+
+    activeItem.set(get(selectedItems).first())
   }
 
   const resetSelection = () => {
-    console.log("reset")
     selectedItems.update(it => [it.first()] ?? [])
   }
 
   return {
     shiftMode,
     ctrlMode,
+    activeItem,
     selectedItems,
     handleItemClick,
     resetSelection

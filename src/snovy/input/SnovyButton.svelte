@@ -18,8 +18,9 @@
 
 <button
   {...$$restProps} class={`snovy-button ${fill ? 'styled-hover-fill' : 'styled-hover'} ${$$restProps.class || ""}`}
-  class:icon class:circular class:color={$$props.style.backgroundColor}
+  class:icon class:circular class:color={$$props.style?.backgroundColor}
   bind:this={self}
+  on:click
 >
   {#if icon}
     <SnovyIcon name={icon}/>
@@ -32,18 +33,22 @@
   .snovy-button {
     --border-width: var(--border-thin);
 
+    font-size: var(--font-medium);
     color: inherit;
-    //background-color: transparent;
+    background-color: transparent;
     border: none;
     border-radius: var(--border-rad);
     outline: none;
 
     &.icon {
-
+      font-size: var(--font-medium);
     }
 
     &.circular {
-
+      height: var(--font-medium);
+      width: var(--font-medium);
+      border-radius: 50%;
+      display: grid;
     }
 
   }

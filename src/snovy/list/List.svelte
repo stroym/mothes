@@ -5,7 +5,6 @@
   import {useMultiSelect} from "../../util/svelte-hooks"
   import type {GenericItem} from "../../util/types"
   import type {KeyMapping} from "../../util/utils"
-  import {areArrayContentsIdentical, isArray} from "../../util/utils"
   import {Key} from "ts-key-enum"
   import {useKey} from "../../util/utils.js"
 
@@ -16,48 +15,37 @@
 
   export let items: Array<T> = []
   export let itemSort: (a: T, B: T) => number = undefined
-  export let selected: T | Array<T> = undefined
-  export let defaultSelected: T
+  export let initial: T
   export let onMultiSelect: (selected: Array<T>) => void
   export let onSelect: (active: T | undefined) => void
   export let onContext: (active: T | undefined) => void
   export let onItemInput: (str: string) => void
   export let onItemRemove: (item: T) => void
 
-  const {selectedItems, handleItemClick, resetSelection} = useMultiSelect(itemSort ? items.sort(itemSort) : items)
+  const {
+    activeItem,
+    selectedItems,
+    handleItemClick,
+    resetSelection
+  } = useMultiSelect(itemSort ? items.sort(itemSort) : items)
 
   const keyMap: Array<KeyMapping> = [
     {key: Key.Escape, handler: resetSelection}
   ]
 
-  $: activeItem = $selectedItems.first()
-
-  $: if (defaultSelected && !areArrayContentsIdentical($selectedItems, [defaultSelected])) {
-    selectedItems.set([defaultSelected])
+  $: if (initial) {
+    selectedItems.set([initial])
   }
 
-  $: if (selected && isArray(selected) && !areArrayContentsIdentical($selectedItems, selected)) {
-    selectedItems.set(selected)
-  }
-
-  $: if (isArray(selected)) {
-    if (onMultiSelect && !areArrayContentsIdentical($selectedItems, selected)) {
-      onMultiSelect($selectedItems)
-    }
-
-    if (onSelect && activeItem != selected?.first()) {
-      console.log("select")
-      onSelect(activeItem)
-    }
-  }
-
+  $: onMultiSelect && onMultiSelect($selectedItems)
+  $: onSelect && onSelect($activeItem)
 </script>
 
 <ol {...$$restProps} class={`snovy-list snovy-scroll ${$$restProps.class || ""}`}
     tabIndex={-1} data-disabled={!items?.length} on:keydown={e => useKey(e, keyMap)}>
-  {#each items as item (item.id)}
+  {#each (items ?? []) as item (item.id)}
     <ListItem item={item} preset={preset} custom={custom}
-              data-active={activeItem?.id === item.id} data-selected={$selectedItems.includes(item)}
+              data-active={$activeItem?.id === item.id} data-selected={$selectedItems.includes(item)}
               onInput={onItemInput}
               on:click={e => !e.defaultPrevented && handleItemClick(item)}
               on:contextmenu={e => e.stopPropagation() && onContext && onContext(item)}>

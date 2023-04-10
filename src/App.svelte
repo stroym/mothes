@@ -31,15 +31,15 @@
          tabs={[mappings.notebooks, mappings.notes, mappings.favorites, mappings.search, mappings.archive, mappings.options]}
 />
 <Sidebar id="left-sidebar" style="grid-area: left;" data-collapsed={leftCollapsed}>
-    {#if leftTab === mappings.notes.id}
-        <Selector/>
-    {/if}
+  {#if leftTab === mappings.notes.id}
+    <Selector/>
+  {/if}
 </Sidebar>
 <div id="editor" style="grid-area: centre;"></div>
 <Sidebar id="right-sidebar" style="grid-area: right;" data-collapsed={rightCollapsed}>
-    {#if rightTab === mappings.detail.id}
-        <NoteDetail/>
-    {/if}
+  {#if rightTab === mappings.detail.id}
+    <NoteDetail/>
+  {/if}
 </Sidebar>
 <TabMenu id="right-menu" style="grid-area: right-menu;" orientation="right" collapsible
          bind:active={rightTab} bind:collapsed={rightCollapsed}

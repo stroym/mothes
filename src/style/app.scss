@@ -41,7 +41,7 @@ html, body {
   background-color: var(--color-border);
   justify-content: start;
 
-  & * {
+  & *:not(svg) {
     font-family: "Roboto", "Montserrat", sans-serif;
     border-color: var(--color-border);
     border-style: solid;
