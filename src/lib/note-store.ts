@@ -49,6 +49,7 @@ export async function selectSection(active: Section | undefined) {
 }
 
 export async function selectNote(active: | Note | undefined) {
+  console.log(active)
   if (active) {
     if (active != get(activeNote)) {
       await active.load()

@@ -1,9 +1,9 @@
 <script lang="ts">
 
-  import type {KeyMapping} from "../../util/utils"
+  import type {KeyMapping} from "../../../util/utils"
   import {Key} from "ts-key-enum"
-  import {watchOutsideClick} from "../../util/svelte-hooks"
-  import {useKey} from "../../util/utils.js"
+  import {watchOutsideClick} from "../../../util/svelte-hooks"
+  import {useKey} from "../../../util/utils"
   import {beforeUpdate, createEventDispatcher} from "svelte"
 
   const dispatch = createEventDispatcher()

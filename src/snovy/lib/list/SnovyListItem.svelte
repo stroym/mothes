@@ -1,9 +1,8 @@
 <script lang="ts">
 
-  import type {GenericItem} from "../../util/types"
-  import type {CustomizableChild} from "../snovy-types"
+  import type {GenericItem} from "../../../util/types"
+  import type {ListChildPart} from "../snovy-types"
   import SnovyInput from "../input/SnovyInput.svelte"
-  import SnovyButton from "../input/SnovyButton.svelte";
 
   type T = $$Generic<GenericItem>
 
@@ -11,7 +10,7 @@
 
   export let item: T
 
-  export let custom: CustomizableChild
+  export let custom: ListChildPart<T>
 
   export let onInput: (str: string) => void
 
@@ -22,21 +21,18 @@
 <!--tag list item = two color list items-->
 <!--search/favorites list item = pass string representation method (section | note) + pass button action + icon-->
 
-<li {...$$restProps} class={`snovy-list-item styled-hover-fill ${$$restProps.class || ""}`} on:click on:contextmenu>
-  {#if custom?.component}
-    <svelte:component this={custom.component} {...custom.props} item={item}></svelte:component>
-  {:else if preset === "editable"}
-    <SnovyInput placeholder="Title" mode="managed" on:input={e => onInput(e.target.value)} value={item.toString()}/>
-  {:else if preset === "simple"}
-    <div class="li-simple-content" tabIndex={0}>{item.toString()}</div>
-  {/if}
+<li {...$$restProps} class={`snovy-list-item styled-hover-fill ${$$restProps.class || ""}`} tabIndex={-1}>
+  <div on:click on:contextmenu|stopPropagation>
+    {#if custom}
+      <svelte:component this={custom.part} {...custom.props} item={item}></svelte:component>
+    {:else if preset === "editable"}
+      <SnovyInput placeholder="Title" mode="managed" on:input={e => onInput(e.target.value)} value={item.toString()}/>
+    {:else if preset === "simple"}
+      <div class="li-simple-content" tabIndex={0}>{item.toString()}</div>
+    {/if}
+  </div>
 
-  {#if custom?.button}
-    <SnovyButton on:click={custom.button.action} icon={custom.button.icon} circular/>
-  {/if}
-
-  <slot name="remove-button"></slot>
-
+  <slot name="list-item-button"></slot>
 </li>
 
 <style lang="scss">

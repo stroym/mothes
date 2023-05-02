@@ -74,6 +74,7 @@ export function useMultiSelect<T>(listItems: Array<T>) {
   }
 
   const handleItemClick = (item: T) => {
+    console.log(item)
     selectedItems.update(current => {
       if (get(ctrlMode)) {
         if (current.includes(item)) {

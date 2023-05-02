@@ -1,8 +1,7 @@
 <script lang="ts">
 
-  import SnovyIcon from "../helper/Icon.svelte"
+  import SnovyIcon from "../helper/SnovyIcon.svelte"
   import type {SnovyIconOption} from "../snovy-types"
-
 
   export type Presets = "provided" | "remove" | "add" | "collapse" | "check" | "source"
 
@@ -23,7 +22,7 @@
   on:click
 >
   {#if icon}
-    <SnovyIcon name={icon}/>
+    <SnovyIcon circular={circular} name={icon}/>
   {:else}
     {$$props.value || $$props.defaultValue}
   {/if}
@@ -36,20 +35,13 @@
     font-size: var(--font-medium);
     color: inherit;
     background-color: transparent;
-    border: none;
     border-radius: var(--border-rad);
     outline: none;
+    cursor: pointer;
 
     &.icon {
+      --border-width: 0;
       font-size: var(--font-medium);
     }
-
-    &.circular {
-      height: var(--font-medium);
-      width: var(--font-medium);
-      border-radius: 50%;
-      display: grid;
-    }
-
   }
 </style>

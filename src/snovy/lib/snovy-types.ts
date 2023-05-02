@@ -1,9 +1,15 @@
 export type ListPresets = "simple" | "editable"
 
-export type CustomizableChild = {
-  component?: any, props?: { onAction: (args) => {} }
-  icon?: { icon: SnovyIconOption, color?: string }
-  button?: { icon: SnovyIconOption, action: (e: MouseEvent | KeyboardEvent) => {} }
+export type ListChildPart<T> = {
+  part: any,
+  props?: any
+}
+
+export type ListChildButton<T> = {
+  type: "button" | "toggle",
+  action: (item: T) => void,
+  icon: SnovyIconOption,
+  iconFalse?: SnovyIconOption
 }
 
 export type SnovyIconOption = "add" | "archive" | "archived" | "arrow_down" | "arrow_left" | "arrow_right" | "arrow_up" |
