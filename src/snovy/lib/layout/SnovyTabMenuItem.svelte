@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Icon from "../helper/Icon.svelte"
+  import SnovyIcon from "../helper/SnovyIcon.svelte"
 
   export let id: string
   export let title: string = null
@@ -9,9 +9,7 @@
 <div {...$$restProps} title={icon && title} on:click on:keypress type="button" tabIndex={0}
      class={`snovy-tab-menu-item styled-hover-fill ${$$restProps.class || ""}`} class:icon>
   {#if icon}
-    <div class="svg-wrapper">
-      <Icon name="{icon}"></Icon>
-    </div>
+    <SnovyIcon wrap name="{icon}"></SnovyIcon>
   {:else}
     {title ?? id}
   {/if}

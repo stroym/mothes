@@ -1,11 +1,11 @@
 <script lang="ts">
-  import List from "../../../snovy/list/List.svelte";
+  import SnovyList from "../../../snovy/lib/list/SnovyList.svelte";
 
   import {activeNote} from "../../note-store";
 </script>
 
-<List preset="editable" items={$activeNote?.tags}>
-</List>
+<SnovyList preset="editable" items={$activeNote?.tags}>
+</SnovyList>
 
 <style lang="scss">
 

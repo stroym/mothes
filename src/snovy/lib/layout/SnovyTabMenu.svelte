@@ -1,6 +1,6 @@
 <script lang="ts">
   import {onMount} from "svelte"
-  import TabMenuItem from "./TabMenuItem.svelte"
+  import SnovyTabMenuItem from "./SnovyTabMenuItem.svelte"
   import {isActionEvent} from "../utils"
 
   export type Orientation = "left" | "right" | "top" | "bottom"
@@ -19,7 +19,9 @@
   let endTabs = tabs.filter(it => it.align === "end")
   let collapseIcon: string
 
-  onMount(() => {collapsible && collapse()})
+  onMount(() => {
+    collapsible && collapse()
+  })
 
   function collapse(e?: MouseEvent | KeyboardEvent) {
     if (e) {
@@ -62,22 +64,22 @@
 <div {...$$restProps} class={`snovy-tab-menu color-pass ${orientation} ${$$restProps.class || ""}`}>
   <div class="tab-menu-section tab-menu-start color-pass">
     {#each startTabs as tab}
-      <TabMenuItem {...tab} data-active={active === tab.id}
-                   on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}>
-      </TabMenuItem>
+      <SnovyTabMenuItem {...tab} data-active={active === tab.id}
+                        on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}
+      />
     {/each}
 
     {#if collapsible && !endTabs}
-      <TabMenuItem on:click={collapse} on:keypress={collapse} icon={collapseIcon}></TabMenuItem>
+      <SnovyTabMenuItem on:click={collapse} on:keypress={collapse} icon={collapseIcon}/>
     {/if}
   </div>
 
   {#if middleTabs}
     <div class="tab-menu-section tab-menu-end color-pass">
       {#each middleTabs as tab}
-        <TabMenuItem {...tab} data-active={active === tab.id}
-                     on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}>
-        </TabMenuItem>
+        <SnovyTabMenuItem {...tab} data-active={active === tab.id}
+                          on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}
+        />
       {/each}
     </div>
   {/if}
@@ -85,13 +87,13 @@
   {#if endTabs}
     <div class="tab-menu-section tab-menu-end color-pass">
       {#each endTabs as tab}
-        <TabMenuItem {...tab} data-active={active === tab.id}
-                     on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}>
-        </TabMenuItem>
+        <SnovyTabMenuItem {...tab} data-active={active === tab.id}
+                          on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}>
+        </SnovyTabMenuItem>
       {/each}
 
       {#if collapsible}
-        <TabMenuItem on:click={collapse} on:keypress={collapse} icon={collapseIcon}></TabMenuItem>
+        <SnovyTabMenuItem on:click={collapse} on:keypress={collapse} icon={collapseIcon}></SnovyTabMenuItem>
       {/if}
     </div>
   {/if}

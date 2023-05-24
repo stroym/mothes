@@ -1,13 +1,13 @@
 <script lang="ts">
   import "./util/augments.ts"
-  import Sidebar from "./snovy/layout/Sidebar.svelte"
-  import TabMenu from "./snovy/layout/TabMenu.svelte"
+  import SnovySidebar from "./snovy/lib/layout/SnovySidebar.svelte"
+  import SnovyTabMenu from "./snovy/lib/layout/SnovyTabMenu.svelte"
   import Selector from "./lib/sidebar/left/Selector.svelte";
   import {notebooks} from "./lib/note-store";
   import NoteDetail from "./lib/sidebar/right/NoteDetail.svelte";
 
   //TODO move active tabs/tab management into a store/context
-  const mappings = {
+  const tabs = {
     notebooks: {id: "notebooks", title: "Notebooks", icon: "book"},
     notes: {id: "notes", title: "Notes", icon: "list"},
     favorites: {id: "favorites", title: "Favorites", icon: "favorite"},
@@ -19,31 +19,31 @@
     manager: {id: "manager", title: "Manager", icon: "manager"}
   }
 
-  let leftTab = mappings.notes.id
-  let rightTab = mappings.detail.id
+  let leftTab = tabs.notes.id
+  let rightTab = tabs.detail.id
   let leftCollapsed = false
   let rightCollapsed = false
 
 </script>
 
-<TabMenu id="left-menu" style="grid-area: left-menu;" orientation="left" collapsible
+<SnovyTabMenu id="left-menu" style="grid-area: left-menu;" orientation="left" collapsible
          bind:active={leftTab} bind:collapsed={leftCollapsed}
-         tabs={[mappings.notebooks, mappings.notes, mappings.favorites, mappings.search, mappings.archive, mappings.options]}
+         tabs={[tabs.notebooks, tabs.notes, tabs.favorites, tabs.search, tabs.archive, tabs.options]}
 />
-<Sidebar id="left-sidebar" style="grid-area: left;" data-collapsed={leftCollapsed}>
-  {#if leftTab === mappings.notes.id}
+<SnovySidebar id="left-sidebar" style="grid-area: left;" data-collapsed={leftCollapsed}>
+  {#if leftTab === tabs.notes.id}
     <Selector/>
   {/if}
-</Sidebar>
+</SnovySidebar>
 <div id="editor" style="grid-area: centre;"></div>
-<Sidebar id="right-sidebar" style="grid-area: right;" data-collapsed={rightCollapsed}>
-  {#if rightTab === mappings.detail.id}
+<SnovySidebar id="right-sidebar" style="grid-area: right;" data-collapsed={rightCollapsed}>
+  {#if rightTab === tabs.detail.id}
     <NoteDetail/>
   {/if}
-</Sidebar>
-<TabMenu id="right-menu" style="grid-area: right-menu;" orientation="right" collapsible
+</SnovySidebar>
+<SnovyTabMenu id="right-menu" style="grid-area: right-menu;" orientation="right" collapsible
          bind:active={rightTab} bind:collapsed={rightCollapsed}
-         tabs={[mappings.detail, mappings.manager, mappings.resources]}
+         tabs={[tabs.detail, tabs.manager, tabs.resources]}
 />
 
 <style lang="scss">

@@ -41,16 +41,16 @@ html, body {
   background-color: var(--color-border);
   justify-content: start;
 
-  & *:not(svg) {
-    font-family: "Roboto", "Montserrat", sans-serif;
-    border-color: var(--color-border);
-    border-style: solid;
-    border-width: var(--border-width);
-  }
-
   & > * {
     background-color: var(--color-main);
   }
+}
+
+* {
+  font-family: "Roboto", "Montserrat", sans-serif;
+  border-color: var(--color-border);
+  border-style: solid;
+  border-width: var(--border-width);
 }
 
 .color-pass {
@@ -96,17 +96,31 @@ html, body {
   visibility: collapse;
 }
 
-.svg-wrapper {
-  display: grid;
-  place-content: center;
-  aspect-ratio: 1 / 1;
-}
-
 svg {
   fill: currentColor;
+  border-color: currentColor;
   pointer-events: none;
   height: 100%;
   width: 100%;
+}
+
+.snovy-icon {
+  --border-width: 0;
+
+  display: grid;
+  place-content: center;
+  aspect-ratio: 1 / 1;
+
+  &.circular {
+    height: var(--font-medium);
+
+    svg {
+      --border-width: var(--border-thin);
+      --border-rad: 50%;
+
+      border-radius: var(--border-rad);
+    }
+  }
 }
 
 .snovy-inner {
@@ -180,3 +194,11 @@ svg {
     //TODO more control needed (sometimes you want to highlight background, sometimes the svg itself)
   }
 }
+
+//TODO the button focus/hover isn't really working properly and svg hover doesn't work either - probably keep .circular on parent
+//.snovy-button.styled-hover-fill:focus-within {
+//  svg {
+//    fill: var(--color-hover);
+//    border-color: var(--color-hover);
+//  }
+//}
