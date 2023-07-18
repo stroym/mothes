@@ -74,7 +74,7 @@ export function useMultiSelect<T>(listItems: Array<T>) {
   }
 
   const handleItemClick = (item: T) => {
-    console.log(item)
+    //TODO do not update when one item is active and it is clicked
     selectedItems.update(current => {
       if (get(ctrlMode)) {
         if (current.includes(item)) {

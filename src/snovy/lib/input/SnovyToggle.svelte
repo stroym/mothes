@@ -1,7 +1,7 @@
 <script lang="ts">
 
   import type {SnovyIconOption} from "../snovy-types"
-  import SnovyButton from "./SnovyButton.svelte";
+  import SnovyButton from "./SnovyButton.svelte"
 
   export let toggled: boolean
   export let icon: SnovyIconOption
@@ -29,9 +29,9 @@
     background-color: transparent;
     border: unset;
 
-    input {
-      visibility: hidden;
-      display: none;
-    }
+    //input {
+    //  visibility: hidden;
+    //  display: none;
+    //}
   }
 </style>

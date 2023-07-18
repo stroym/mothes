@@ -166,8 +166,19 @@ svg {
       outline: currentColor solid var(--border-width);
       outline-offset: calc(var(--border-width) / -2);
 
-      &:is(.styled-hover-fill) {
+      &.styled-hover-fill {
         background-color: var(--color-focus-fill);
+
+        & > .snovy-icon {
+          svg {
+            fill: var(--color-hover);
+            border-color: var(--color-hover);
+          }
+        }
+
+        & > .styled-hover-fill {
+          background-color: unset;
+        }
       }
     }
   }
@@ -191,14 +202,25 @@ svg {
 
   &:not([data-disabled=true], [disabled]):not(.color-item, .snovy-color-button):hover {
     background-color: var(--color-hover) !important;
-    //TODO more control needed (sometimes you want to highlight background, sometimes the svg itself)
+
+    & > .styled-hover-fill {
+      background-color: unset;
+    }
+
+    & .styled-hover-fill:focus {
+      svg {
+        fill: var(--color-focus-fill);
+        border-color: var(--color-focus-fill);
+      }
+    }
+  }
+
+  & .styled-hover-fill:hover {
+    svg {
+      fill: var(--color-focus-fill);
+      border-color: var(--color-focus-fill);
+    }
   }
 }
 
-//TODO the button focus/hover isn't really working properly and svg hover doesn't work either - probably keep .circular on parent
-//.snovy-button.styled-hover-fill:focus-within {
-//  svg {
-//    fill: var(--color-hover);
-//    border-color: var(--color-hover);
-//  }
-//}
+//TODO consolidate this focus hover nightmare

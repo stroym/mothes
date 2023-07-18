@@ -7,8 +7,8 @@
   import type {KeyMapping} from "../../../util/utils"
   import {useKey} from "../../../util/utils"
   import {Key} from "ts-key-enum"
-  import SnovyToggle from "../input/SnovyToggle.svelte";
-  import SnovyButton from "../input/SnovyButton.svelte";
+  import SnovyToggle from "../input/SnovyToggle.svelte"
+  import SnovyButton from "../input/SnovyButton.svelte"
 
   type T = $$Generic<GenericItem>
 
@@ -18,7 +18,7 @@
 
   export let items: Array<T> = []
   export let itemSort: (a: T, B: T) => number = undefined
-  export let initial: T
+  export let initial: T = null
   export let onMultiSelect: (selected: Array<T>) => void
   export let onSelect: (active: T | undefined) => void
   export let onContext: (active: T | undefined) => void
@@ -35,11 +35,10 @@
     {key: Key.Escape, handler: resetSelection}
   ]
 
-  $: if (initial) {
-    selectedItems.set([initial])
+  $: {
+    activeItem.set(initial)
   }
 
-  //FIXME on button click the selection wants to revert to the first item in list for some reason
   $: onMultiSelect && onMultiSelect($selectedItems)
   $: onSelect && onSelect($activeItem)
 </script>
@@ -51,26 +50,26 @@
                    data-active={$activeItem === item} data-selected={$selectedItems.includes(item)}
                    onInput={onItemInput}
                    on:click={e => {
-                       console.log({list: e})
-                       if(!e.defaultPrevented) {
+                       if (!e.defaultPrevented) {
                           handleItemClick(item)
                        }
                    }}
                    on:contextmenu={e => onContext && onContext(item)}>
+      <!--      TODO the buttons dont change icons properly on any other instance except the first-->
       <svelte:fragment slot="list-item-button">
         {#if childButton?.type === 'button'}
           <SnovyButton on:click={e => childButton.action(item)} icon={childButton.icon} circular/>
         {:else if childButton?.type === 'toggle'}
           <SnovyToggle on:click={e => {
+            //FIXME i think i need to manage the fav state somewhere - i might have to pass around str refs to the field and method... but there has to be a better way
               e.preventDefault()
               e.stopPropagation()
-              console.log(e)
               childButton.action(item)
-          }} toggled={item.favorite}
-                       icon={childButton.icon} iconFalse={childButton.iconFalse} circular
+          }} toggled={childButton.toggled(item)} icon={childButton.icon} iconFalse={childButton.iconFalse} circular
           />
         {/if}
       </svelte:fragment>
+
     </SnovyListItem>
   {/each}
   <slot></slot>

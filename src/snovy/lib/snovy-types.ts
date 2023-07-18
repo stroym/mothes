@@ -9,7 +9,8 @@ export type ListChildButton<T> = {
   type: "button" | "toggle",
   action: (item: T) => void,
   icon: SnovyIconOption,
-  iconFalse?: SnovyIconOption
+  iconFalse?: SnovyIconOption,
+  toggled?: (item: T) => boolean
 }
 
 export type SnovyIconOption = "add" | "archive" | "archived" | "arrow_down" | "arrow_left" | "arrow_right" | "arrow_up" |

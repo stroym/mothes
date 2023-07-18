@@ -3,12 +3,28 @@
   import type {GenericItem} from "../../../util/types"
   import type {ListChildPart} from "../snovy-types"
   import SnovyInput from "../input/SnovyInput.svelte"
+  import {createEventDispatcher} from "svelte"
 
   type T = $$Generic<GenericItem>
 
   export let preset: "editable" | "simple" = "simple"
 
   export let item: T
+
+  const dispatch = createEventDispatcher()
+
+  let hasBeenClicked = false
+
+  function handleClick(e: MouseEvent) {
+    if (hasBeenClicked) return
+
+    hasBeenClicked = true
+    setTimeout(() => {
+      hasBeenClicked = false
+    }, 200)
+
+    dispatch("click", e)
+  }
 
   export let custom: ListChildPart<T>
 
@@ -22,7 +38,7 @@
 <!--search/favorites list item = pass string representation method (section | note) + pass button action + icon-->
 
 <li {...$$restProps} class={`snovy-list-item styled-hover-fill ${$$restProps.class || ""}`} tabIndex={-1}>
-  <div on:click on:contextmenu|stopPropagation>
+  <div on:click={handleClick} on:contextmenu|stopPropagation>
     {#if custom}
       <svelte:component this={custom.part} {...custom.props} item={item}></svelte:component>
     {:else if preset === "editable"}

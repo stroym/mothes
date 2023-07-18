@@ -2,9 +2,11 @@
   import "./util/augments.ts"
   import SnovySidebar from "./snovy/lib/layout/SnovySidebar.svelte"
   import SnovyTabMenu from "./snovy/lib/layout/SnovyTabMenu.svelte"
-  import Selector from "./lib/sidebar/left/Selector.svelte";
-  import {notebooks} from "./lib/note-store";
-  import NoteDetail from "./lib/sidebar/right/NoteDetail.svelte";
+  import Selector from "./lib/sidebar/left/Selector.svelte"
+  import {loadNotebooks} from "./lib/note-store"
+  import NoteDetail from "./lib/sidebar/right/NoteDetail.svelte"
+  import {dexie} from "./index"
+  import {onMount} from "svelte"
 
   //TODO move active tabs/tab management into a store/context
   const tabs = {
@@ -24,11 +26,16 @@
   let leftCollapsed = false
   let rightCollapsed = false
 
+  onMount(
+    async () => {
+      await dexie.notebooks.toArray().then(it => loadNotebooks(it))
+    }
+  )
 </script>
 
 <SnovyTabMenu id="left-menu" style="grid-area: left-menu;" orientation="left" collapsible
-         bind:active={leftTab} bind:collapsed={leftCollapsed}
-         tabs={[tabs.notebooks, tabs.notes, tabs.favorites, tabs.search, tabs.archive, tabs.options]}
+              bind:active={leftTab} bind:collapsed={leftCollapsed}
+              tabs={[tabs.notebooks, tabs.notes, tabs.favorites, tabs.search, tabs.archive, tabs.options]}
 />
 <SnovySidebar id="left-sidebar" style="grid-area: left;" data-collapsed={leftCollapsed}>
   {#if leftTab === tabs.notes.id}
@@ -42,8 +49,8 @@
   {/if}
 </SnovySidebar>
 <SnovyTabMenu id="right-menu" style="grid-area: right-menu;" orientation="right" collapsible
-         bind:active={rightTab} bind:collapsed={rightCollapsed}
-         tabs={[tabs.detail, tabs.manager, tabs.resources]}
+              bind:active={rightTab} bind:collapsed={rightCollapsed}
+              tabs={[tabs.detail, tabs.manager, tabs.resources]}
 />
 
 <style lang="scss">
