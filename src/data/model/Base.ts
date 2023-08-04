@@ -13,7 +13,9 @@ export abstract class Table {
     this.updatedAt = this.createdAt
   }
 
-  static compareById = (a: Table, b: Table) => { return a.id - b.id}
+  static compareById = (a: Table, b: Table) => {
+    return a.id - b.id
+  }
 
   abstract save(): Promise<this>
 
@@ -32,7 +34,9 @@ export abstract class Titled extends Table implements WithTitle {
     this.title = title
   }
 
-  static compareByTitle = (a: Titled, b: Titled) => {return a.title.localeCompare(b.title, navigator.language)}
+  static compareByTitle = (a: Titled, b: Titled) => {
+    return a.title.localeCompare(b.title, navigator.language)
+  }
 
   toString(): string {
     return this.title
@@ -54,7 +58,9 @@ export abstract class Ordered extends Titled {
     this.order = order
   }
 
-  static compareByOrder = (a: Ordered, b: Ordered) => {return a.order - b.order}
+  static compareByOrder = (a: Ordered, b: Ordered) => {
+    return a.order - b.order
+  }
 
   async updateOrder(newOrder: number) {
     this.order = newOrder
@@ -140,4 +146,11 @@ async function moveBy<T extends Ordered>(items: Array<T>, from: number, amount: 
       await item.updateOrder(item.order + amount)
     }
   }
+}
+
+export interface Toggleable {
+
+  snvToggle: () => Promise<boolean> | boolean
+  snvToggled: () => boolean
+
 }

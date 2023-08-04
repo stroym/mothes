@@ -1,24 +1,41 @@
+<script lang="ts" context="module">
+
+  import type {SnovyIconOption} from "../snovy-types";
+
+  export type ListPresets = "simple" | "editable"
+
+  export type ItemPart = {
+    part: any,
+    props?: any
+  }
+
+  export type ItemButton = {
+    type: "button" | "toggle",
+    icon: SnovyIconOption | Array<SnovyIconOption>,
+    action?: (item: unknown) => void
+  }
+</script>
+
 <script lang="ts">
 
+  import {Key} from "ts-key-enum"
   import SnovyListItem from "./SnovyListItem.svelte"
-  import type {ListChildButton, ListChildPart, ListPresets} from "../snovy-types"
+  import SnovyToggle from "../input/SnovyToggle.svelte"
+  import SnovyButton from "../input/SnovyButton.svelte"
   import {useMultiSelect} from "../../../util/svelte-hooks"
   import type {GenericItem} from "../../../util/types"
   import type {KeyMapping} from "../../../util/utils"
-  import {useKey} from "../../../util/utils"
-  import {Key} from "ts-key-enum"
-  import SnovyToggle from "../input/SnovyToggle.svelte"
-  import SnovyButton from "../input/SnovyButton.svelte"
+  import {isArray, useKey} from "../../../util/utils"
 
   type T = $$Generic<GenericItem>
 
   export let preset: ListPresets = "simple"
-  export let custom: ListChildPart<T>
-  export let childButton: ListChildButton<T>
+  export let custom: ItemPart
+  export let buttonOptions: ItemButton
 
   export let items: Array<T> = []
   export let itemSort: (a: T, B: T) => number = undefined
-  export let initial: T = null
+  export let initial: T = undefined
   export let onMultiSelect: (selected: Array<T>) => void
   export let onSelect: (active: T | undefined) => void
   export let onContext: (active: T | undefined) => void
@@ -41,11 +58,12 @@
 
   $: onMultiSelect && onMultiSelect($selectedItems)
   $: onSelect && onSelect($activeItem)
+
 </script>
 
 <ol {...$$restProps} class={`snovy-list snovy-scroll ${$$restProps.class || ""}`}
     tabIndex={-1} data-disabled={!items?.length} on:keydown={e => useKey(e, keyMap)}>
-  {#each (items ?? []) as item (item.id)}
+  {#each items as item, i (`${i}-${item}`)}
     <SnovyListItem item={item} preset={preset} custom={custom}
                    data-active={$activeItem === item} data-selected={$selectedItems.includes(item)}
                    onInput={onItemInput}
@@ -57,16 +75,10 @@
                    on:contextmenu={e => onContext && onContext(item)}>
       <!--      TODO the buttons dont change icons properly on any other instance except the first-->
       <svelte:fragment slot="list-item-button">
-        {#if childButton?.type === 'button'}
-          <SnovyButton on:click={e => childButton.action(item)} icon={childButton.icon} circular/>
-        {:else if childButton?.type === 'toggle'}
-          <SnovyToggle on:click={e => {
-            //FIXME i think i need to manage the fav state somewhere - i might have to pass around str refs to the field and method... but there has to be a better way
-              e.preventDefault()
-              e.stopPropagation()
-              childButton.action(item)
-          }} toggled={childButton.toggled(item)} icon={childButton.icon} iconFalse={childButton.iconFalse} circular
-          />
+        {#if buttonOptions?.type === 'button' && !isArray(buttonOptions.icon)}
+          <SnovyButton on:click={e => buttonOptions.action(item)} icon={buttonOptions.icon} circular/>
+        {:else if buttonOptions?.type === 'toggle' && isArray(buttonOptions.icon)}
+          <SnovyToggle target={item} icons={buttonOptions.icon}/>
         {/if}
       </svelte:fragment>
 

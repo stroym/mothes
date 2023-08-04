@@ -2,11 +2,11 @@ import Tag, {sortTags} from "./Tag"
 import type State from "./State"
 import {dexie} from "../../index"
 import {isArray, isDefined} from "../../util/utils"
-import {Ordered} from "./Base"
+import {Ordered, type Toggleable} from "./Base"
 import type Category from "./Category"
 import type Section from "./Section"
 
-export default class Note extends Ordered {
+export default class Note extends Ordered implements Toggleable {
 
   sectionId: number
   section?: Section
@@ -25,7 +25,9 @@ export default class Note extends Ordered {
   }
 
   async delete() {
-    return dexie.transaction("rw", dexie.notes, () => {dexie.notes.delete(this.id)})
+    return dexie.transaction("rw", dexie.notes, () => {
+      dexie.notes.delete(this.id)
+    })
       .then(_result => true).catch(_result => false)
   }
 
@@ -122,6 +124,14 @@ export default class Note extends Ordered {
     })
 
     return Array.from(grouped.entries())
+  }
+
+  async snvToggle() {
+    return await this.star();
+  }
+
+  snvToggled() {
+    return this.favorite;
   }
 
 }

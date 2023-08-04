@@ -7,11 +7,13 @@
 <!--TODO context menu-->
 
 <SnovyList
-  preset="editable" items={$activeNotebook?.sections} onSelect={selectSection} initial={$activeSection}
+  preset="editable" items={$activeNotebook?.sections} initial={$activeSection}
+  onSelect={selectSection} onItemInput={async str => await $activeSection.updateTitle(str)}
 />
-<SnovyList preset="editable" items={$activeSection?.notes} onSelect={selectNote} initial={$activeSection?.notes?.first()}
-           childButton={{type: "toggle", toggled: note => note.favorite, action: async note => await note.star(), icon: "favorite_fill", iconFalse: "favorite"}}
-           onItemInput={async str => await $activeNote.updateTitle(str)}
+<SnovyList
+  preset="editable" items={$activeSection?.notes} initial={$activeSection?.notes?.first()}
+  onSelect={selectNote} onItemInput={async str => await $activeNote.updateTitle(str)}
+  buttonOptions={{type: "toggle", icon: ["favorite_fill", "favorite"]}}
 />
 
 <style lang="scss">

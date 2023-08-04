@@ -2,23 +2,29 @@
 
   import type {SnovyIconOption} from "../snovy-types"
   import SnovyButton from "./SnovyButton.svelte"
+  import type {Toggleable} from "../../../data/model/Base";
+  import SnovyIcon from "../helper/SnovyIcon.svelte";
 
-  export let toggled: boolean
-  export let icon: SnovyIconOption
-  export let iconFalse: SnovyIconOption = null //the icon doesn't necessarily change when toggling
+  export let target: Toggleable
+  export let icons: Array<SnovyIconOption>
+
+  let toggled: boolean
+
+  $: {
+    toggled = target.snvToggled()
+  }
 
 </script>
 
-<SnovyButton class="snovy-toggle" circular fill icon={toggled ? icon: iconFalse} on:click/>
-
-<!--<label class="snovy-toggle icon styled-hover-fill">-->
-<!--  {#if toggled}-->
-<!--    <SnovyIcon circular wrap name={icon}/>-->
-<!--  {:else}-->
-<!--    <SnovyIcon circular wrap name={iconFalse}/>-->
-<!--  {/if}-->
-<!--  <input type="checkbox" on:change on:click|preventDefault|stopPropagation bind:checked={toggled}/>-->
-<!--</label>-->
+<label class="snovy-toggle icon styled-hover-fill" tabindex="0">
+  {#if toggled}
+    <SnovyIcon circular wrap name={icons.at(0)}/>
+  {:else}
+    <SnovyIcon circular wrap name={icons.at(-1)}/>
+  {/if}
+  <input type="checkbox" on:change bind:checked={toggled}
+         on:click|preventDefault|stopPropagation={async () => {toggled = await target.snvToggle()}}/>
+</label>
 
 <style lang="scss">
   .snovy-toggle {
@@ -28,10 +34,15 @@
     color: inherit;
     background-color: transparent;
     border: unset;
+    outline: unset;
 
-    //input {
-    //  visibility: hidden;
-    //  display: none;
-    //}
+    input {
+      visibility: hidden;
+      display: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 </style>
