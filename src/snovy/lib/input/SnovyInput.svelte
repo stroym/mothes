@@ -57,7 +57,7 @@
 
     font-size: var(--font-medium);
     background-color: transparent;
-    border-radius: var(--border-rad);
+    border-radius: var(--button-border-rad);
     outline: none;
     padding: 0.1vh;
     text-indent: 0.2vh; //TODO calc based on font size

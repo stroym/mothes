@@ -29,6 +29,17 @@ html, body {
   color: var(--color-text);
 }
 
+dialog {
+  color: var(--color-text);
+}
+
+input[type="file"] {
+  display: none;
+  visibility: hidden;
+}
+
+//TODO somewhat opaque dialog backdrop
+
 #snovy-app {
   box-sizing: border-box;
   height: 100svh;
@@ -51,6 +62,7 @@ html, body {
   border-color: var(--color-border);
   border-style: solid;
   border-width: var(--border-width);
+  box-sizing: border-box;
 }
 
 .color-pass {
@@ -116,11 +128,17 @@ svg {
 
     svg {
       --border-width: var(--border-thin);
-      --border-rad: 50%;
+      --button-border-rad: 50%;
 
-      border-radius: var(--border-rad);
+      border-radius: var(--button-border-rad);
     }
   }
+}
+
+.border {
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--color-border);
 }
 
 .snovy-inner {
@@ -162,7 +180,7 @@ svg {
   [data-whatinput="keyboard"] &:focus-within {
     &,
     .snovy-inner-focus {
-      border-radius: var(--border-rad);
+      border-radius: var(--button-border-rad);
       outline: currentColor solid var(--border-width);
       outline-offset: calc(var(--border-width) / -2);
 
@@ -184,7 +202,7 @@ svg {
   }
 
   &:is(.with-border):hover {
-    border-radius: var(--border-rad);
+    border-radius: var(--button-border-rad);
   }
 }
 

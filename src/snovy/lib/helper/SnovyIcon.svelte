@@ -67,8 +67,8 @@
     unique: IconUnique,
   }
 
-  export let wrap: boolean
-  export let circular: boolean
+  export let wrap: boolean = false
+  export let circular: boolean = false
 
 </script>
 

@@ -17,7 +17,7 @@
 
 <style lang="scss">
   .snovy-tab-menu-item {
-    --border-rad: 0;
+    --button-border-rad: 0;
 
     max-height: 100%;
     max-width: 100%;

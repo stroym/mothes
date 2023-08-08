@@ -7,6 +7,9 @@
   import NoteDetail from "./lib/sidebar/right/NoteDetail.svelte"
   import {dexie} from "./index"
   import {onMount} from "svelte"
+  import Options from "./lib/sidebar/left/Options.svelte";
+  import {fetchThemes} from "./data/Database";
+  import {initOptions, setOptions} from "./lib/stores/options-store";
 
   //TODO move active tabs/tab management into a store/context
   const tabs = {
@@ -26,8 +29,22 @@
   let leftCollapsed = false
   let rightCollapsed = false
 
+  let optionsRef: Options = null
+
+  // TODO there's probably a cleaner way to do this
+  $: {
+    if (optionsRef && leftTab != tabs.options.id) {
+      optionsRef?.dialog?.close()
+    }
+  }
+
   onMount(
     async () => {
+      dexie.transaction("rw", [dexie.options, dexie.themes, dexie.notebooks], async () => {
+        await fetchThemes()
+        await initOptions().then(options => setOptions(options))
+      })
+
       await dexie.notebooks.toArray().then(it => loadNotebooks(it))
     }
   )
@@ -52,6 +69,9 @@
               bind:active={rightTab} bind:collapsed={rightCollapsed}
               tabs={[tabs.detail, tabs.manager, tabs.resources]}
 />
+{#if leftTab === tabs.options.id}
+  <Options bind:this={optionsRef}/>
+{/if}
 
 <style lang="scss">
   :global( #left-sidebar .sidebar-body) {
