@@ -94,11 +94,6 @@ input[type="file"] {
   opacity: 0.75;
 }
 
-[data-editable="true"] {
-  cursor: text !important;
-  user-select: text !important;
-}
-
 [data-context="true"] {
   opacity: 0.6;
 }

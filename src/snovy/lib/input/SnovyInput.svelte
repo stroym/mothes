@@ -12,7 +12,7 @@
   export let mode: "simple" | "managed" | "color" = "simple"
   export let value = ""
 
-  const [editable, toggle] = watchOutsideClick(self, {initialState: mode !== "managed"})
+  const [editable, toggle] = watchOutsideClick(self, {watch: mode === "managed"})
   const keyMap: Array<KeyMapping> = []
 
   if (mode === "managed") {
@@ -37,13 +37,14 @@
 
 {#if mode === "color"}
   <input
-    {...$$restProps} class={`snovy-input styled-focus ${$$restProps.class || ""}`} autoComplete="off"
-    type="color"
+    {...$$restProps} class={`snovy-input snovy-input-color styled-focus ${$$restProps.class || ""}`} autoComplete="off"
+    type="color" readonly={!$editable}
+    bind:value
   />
 {:else}
   <input
     {...$$restProps} class={`snovy-input styled-focus ${$$restProps.class || ""}`} autoComplete="off"
-    type="text" readonly={!$editable} data-editable={$editable}
+    type="text" readonly={!$editable}
     bind:this={self} bind:value
     on:input on:change on:focus={e => setTimeout(() => self?.setSelectionRange(-1, -1), 1) && dispatch("focus", e)}
     on:dblclick={e => mode === "managed" && toggle()}
@@ -68,6 +69,10 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     color: inherit;
+
+    &.snovy-input-color {
+      cursor: pointer;
+    }
 
     &[readonly] {
       cursor: default;

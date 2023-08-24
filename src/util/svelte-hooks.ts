@@ -8,24 +8,29 @@ type MouseEventType = "mouseup" | "click"
 
 export function watchOutsideClick(
   element: HTMLElement,
-  {otherElements = [], eventType = "mouseup", initialState = false, onToggleOff = () => false}: {
+  {otherElements = [], eventType = "mouseup", initialState = false, onToggleOff = () => false, watch = true}: {
     otherElements?: Array<HTMLElement>,
     eventType?: MouseEventType,
     initialState?: boolean,
-    onToggleOff?: () => void
+    onToggleOff?: () => void,
+    watch?: boolean
   } = {}
 ): [Writable<boolean>, () => void] {
 
-  const [toggled, toggle] = useToggle(initialState)
+  const [toggled, toggle] = useToggle(!watch || initialState)
 
   onMount(
     () => {
-      document.addEventListener(eventType, handleOutsideClick)
-      document.addEventListener("keydown", handleKey)
+      if (watch) {
+        document.addEventListener(eventType, handleOutsideClick)
+        document.addEventListener("keydown", handleKey)
+      }
 
       return () => {
-        document.removeEventListener(eventType, handleOutsideClick)
-        document.removeEventListener("keydown", handleKey)
+        if (watch) {
+          document.removeEventListener(eventType, handleOutsideClick)
+          document.removeEventListener("keydown", handleKey)
+        }
       }
     }
   )

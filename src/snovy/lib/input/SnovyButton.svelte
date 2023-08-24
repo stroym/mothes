@@ -11,10 +11,10 @@
 
   let self: HTMLButtonElement = null
 
-  export let icon: SnovyIconOption
+  export let icon: SnovyIconOption = null
 
   export let circular: boolean = false
-  export let border: boolean = false
+  export let border: boolean = true
   export let fill: boolean = false
   export let color: string = ""
 

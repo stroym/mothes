@@ -76,7 +76,7 @@
       <!--      TODO the buttons dont change icons properly on any other instance except the first-->
       <svelte:fragment slot="list-item-button">
         {#if buttonOptions?.type === 'button' && !isArray(buttonOptions.icon)}
-          <SnovyButton on:click={e => buttonOptions.action(item)} icon={buttonOptions.icon} circular/>
+          <SnovyButton on:click={e => buttonOptions.action(item)} icon={buttonOptions.icon} circular border={false}/>
         {:else if buttonOptions?.type === 'toggle' && isArray(buttonOptions.icon)}
           <SnovyToggle target={item} icons={buttonOptions.icon}/>
         {/if}

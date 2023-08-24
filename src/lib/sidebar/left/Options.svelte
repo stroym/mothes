@@ -6,10 +6,11 @@
   import generate from "../../../data/Generator";
   import {exportData, fetchThemes, importData} from "../../../data/Database";
   import {onMount} from "svelte";
-  import type {Theme} from "../../../data/model/options/Theme";
+  import {Theme} from "../../../data/model/options/Theme";
   import {defaults} from "../../../data/model/options/Defaults";
-  import {activeOptions} from "../../stores/options-store";
+  import {activeOptions, activeTheme} from "../../stores/options-store";
   import type Options from "../../../data/model/options/Options";
+  import SnovyInput from "../../../snovy/lib/input/SnovyInput.svelte";
 
   export let dialog: HTMLDialogElement = null
   let importInput: HTMLInputElement = null
@@ -89,6 +90,63 @@
     location.reload()
   }
 
+  let root = document.documentElement;
+
+  const updateVar = (name: string, varName: string, value: string) => {
+    $activeTheme[name] = value
+    root.style.setProperty(name, value)
+  }
+
+  const themeInputs = [
+    {
+      label: "Primary text color",
+      currentColor: $activeTheme.textPrimary,
+      setColor: value => updateVar("textPrimary", "", value)
+    },
+    {
+      label: "Secondary text color",
+      currentColor: $activeTheme.textSecondary,
+      setColor: value => updateVar("textSecondary", "", value)
+    },
+    {
+      label: "Primary color",
+      currentColor: $activeTheme.primary,
+      setColor: value => updateVar("primary", "", value)
+    },
+    {
+      label: "Accent color",
+      currentColor: $activeTheme.accent,
+      setColor: value => updateVar("accent", "", value)
+    },
+    {
+      label: "Border color",
+      currentColor: $activeTheme.border,
+      setColor: value => updateVar("border", "", value)
+    },
+    {
+      label: "Hover color",
+      currentColor: $activeTheme.hover,
+      setColor: value => updateVar("hover", "", value)
+    },
+    {
+      label: "Active Color",
+      currentColor: $activeTheme.activeItem,
+      setColor: value => updateVar("activeItem", "", value)
+    },
+  ]
+
+  let currentTitle: string
+
+  const createTheme = () => {
+    dexie.themes.put(Theme.makeFrom($activeTheme, currentTitle))
+  }
+
+  const deleteTheme = () => {
+    // const tempThemes = Array.from(themes)
+    // setCurrentTheme(tempThemes.deleteAndGet(currentTheme)!)
+    // setThemes(tempThemes)
+  }
+
 </script>
 
 <svelte:options accessors/>
@@ -97,29 +155,56 @@
   <div id="import-export" class="options-container">
     <SnovyLabel value="Import">
       <svelte:fragment slot="after">
-        <SnovyButton icon="import" border on:click={() => importInput?.click()}/>
+        <SnovyButton icon="import" on:click={() => importInput?.click()}/>
         <input bind:this={importInput} type="file" accept="application/json"
                on:change={e => importData(e.target.files)}
         />
       </svelte:fragment>
     </SnovyLabel>
     <SnovyLabel value="Export">
-      <SnovyButton slot="after" icon="export" border on:click={exportData}/>
+      <SnovyButton slot="after" icon="export" on:click={exportData}/>
     </SnovyLabel>
     <SnovyLabel value="Mock">
-      <SnovyButton slot="after" icon="add" border on:click={mockData}/>
+      <SnovyButton slot="after" icon="add" on:click={mockData}/>
     </SnovyLabel>
     <SnovyLabel value="Drop">
-      <SnovyButton slot="after" icon="remove" border on:click={purgeData}/>
+      <SnovyButton slot="after" icon="remove" on:click={purgeData}/>
     </SnovyLabel>
   </div>
 
-  <!--  <ThemeManager themes={themes} setThemes={setThemes} currentTheme={theme} setCurrentTheme={setTheme}/>-->
+  <form id="theme-options" class="snovy-options-container snovy-scroll" on:submit={e => e.preventDefault()}
+        tabIndex={-1}>
+    <div class="snovy-input-group">
+      <!--        <ComboBox<Theme>-->
+      <!--        label={{value: "Active theme"}} items={themes} selected={currentTheme}-->
+      <!--        onSelect={value => value && setCurrentTheme(value)}-->
+      <!--        options={{allowDeselect: false}}-->
+      <!--        borders={{main: true, dropdown: true}}-->
+      <!--        />-->
+
+      <SnovyLabel value="Theme title"/>
+      <SnovyInput value={currentTitle}/>
+
+      {#each themeInputs as ti}
+        <SnovyLabel value={ti.label}/>
+        <SnovyInput mode="color" value={ti.currentColor} on:change={e => ti.setColor(e.target.value)}/>
+      {/each}
+    </div>
+    <div class="snovy-button-group">
+      <SnovyButton value="Delete theme" on:click={() => deleteTheme()}/>
+      <SnovyButton value="Reset theme" on:click={() => false}/>
+      <SnovyButton
+        type="submit" value="Save theme"
+        onClick={async () => await $activeTheme.updateTitle(currentTitle)}
+      />
+      <SnovyButton type="submit" value="Create theme" on:click={() => createTheme()}/>
+    </div>
+  </form>
 
   <div id="control-buttons">
-    <SnovyButton value="Restore defaults" border onClick={restore}/>
-    <SnovyButton value="Cancel" border onClick={cancel}/>
-    <SnovyButton type="submit" value="Save" border onClick={submit}/>
+    <SnovyButton value="Restore defaults" onClick={restore}/>
+    <SnovyButton value="Cancel" onClick={cancel}/>
+    <SnovyButton type="submit" value="Save" onClick={submit}/>
   </div>
 </dialog>
 
