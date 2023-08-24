@@ -19,7 +19,7 @@
     search: {id: "search", title: "Search", icon: "search"},
     archive: {id: "archive", title: "Archive", icon: "archive", align: "end"},
     resources: {id: "resources", title: "Resources", icon: "resources"},
-    options: {id: "options", title: "Options", icon: "options", align: "end"},
+    options: {id: "options", title: "Options", icon: "options", align: "end", toggle: true},
     detail: {id: "detail", title: "Detail", icon: "detail"},
     manager: {id: "manager", title: "Manager", icon: "manager"}
   }

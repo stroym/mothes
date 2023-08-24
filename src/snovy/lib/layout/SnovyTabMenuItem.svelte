@@ -1,9 +1,10 @@
 <script lang="ts">
   import SnovyIcon from "../helper/SnovyIcon.svelte"
+  import type {SnovyIconOption} from "../snovy-types";
 
   export let id: string
   export let title: string = null
-  export let icon: string = null
+  export let icon: SnovyIconOption = null
 </script>
 
 <div {...$$restProps} title={icon && title} on:click on:keypress type="button" tabIndex={0}

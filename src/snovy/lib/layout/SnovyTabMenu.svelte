@@ -1,10 +1,14 @@
+<script lang="ts" context="module">
+
+  export type Orientation = "left" | "right" | "top" | "bottom"
+  export type TabItem = { id: string, align?: "start" | "middle" | "end", icon?: any, overlay?: boolean }
+
+</script>
+
 <script lang="ts">
   import {onMount} from "svelte"
   import SnovyTabMenuItem from "./SnovyTabMenuItem.svelte"
   import {isActionEvent} from "../utils"
-
-  export type Orientation = "left" | "right" | "top" | "bottom"
-  export type TabItem = { id: string, align?: "start" | "middle" | "end", icon?: any }
 
   export let orientation: Orientation
   export let collapsible: boolean
@@ -13,6 +17,8 @@
 
   export let active: string = tabs[0]?.id
   export let collapsed: boolean
+
+  let previous: string = active
 
   let startTabs = tabs.filter(it => !it.align || it.align === "start")
   let middleTabs = tabs.filter(it => it.align === "middle")
@@ -48,12 +54,17 @@
     }
   }
 
-  function setAsActive(e: MouseEvent | KeyboardEvent, tabId: string) {
+  function setAsActive(e: MouseEvent | KeyboardEvent, tab: TabItem) {
     if (!isActionEvent(e)) {
       return
     }
 
-    active = tabId
+    if (tab.overlay && active == tab.id) {
+      active = previous
+    } else {
+      previous = active
+      active = tab.id
+    }
 
     if (collapsed) {
       collapse(e)
@@ -65,7 +76,7 @@
   <div class="tab-menu-section tab-menu-start color-pass">
     {#each startTabs as tab}
       <SnovyTabMenuItem {...tab} data-active={active === tab.id}
-                        on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}
+                        on:click={e => setAsActive(e, tab)} on:keypress={e => setAsActive(e, tab)}
       />
     {/each}
 
@@ -78,7 +89,7 @@
     <div class="tab-menu-section tab-menu-end color-pass">
       {#each middleTabs as tab}
         <SnovyTabMenuItem {...tab} data-active={active === tab.id}
-                          on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}
+                          on:click={e => setAsActive(e, tab)} on:keypress={e => setAsActive(e, tab)}
         />
       {/each}
     </div>
@@ -88,7 +99,7 @@
     <div class="tab-menu-section tab-menu-end color-pass">
       {#each endTabs as tab}
         <SnovyTabMenuItem {...tab} data-active={active === tab.id}
-                          on:click={e => setAsActive(e, tab.id)} on:keypress={e => setAsActive(e, tab.id)}>
+                          on:click={e => setAsActive(e, tab)} on:keypress={e => setAsActive(e, tab)}>
         </SnovyTabMenuItem>
       {/each}
 
