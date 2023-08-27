@@ -4,27 +4,51 @@ import type {TextColorPair} from "../../../util/colors"
 
 export class Theme extends Titled implements TextColorPair {
 
-  primary: string
+  static readonly VAR_NAMES: Map<string, string> = new Map<string, string>([
+    ["textPrimary", "--color-text"],
+    ["textSecondary", "--color-text-complementary"],
+    ["primary", "--color-main"],
+    ["accent", "--color-accent"],
+    ["border", "--color-border"],
+    ["hover", "--color-hover"],
+    ["focus", "--color-focus"],
+    ["active", "--color-active"],
+  ])
 
   textPrimary: string
   textSecondary: string
 
-  accent: string
+  primary: string
+  accent: string //TODO currently unused - possibly to be removed
   border: string
   hover: string
+  focus: string
+  active: string
 
-  activeItem: string
-
-  constructor(title: string, primary: string, textPrimary: string, textSecondary: string, accent: string,
-              border: string, hover: string, activeItem: string, id?: number) {
+  constructor(title: string, textPrimary: string, textSecondary: string, primary: string, accent: string,
+              border: string, hover: string, focus: string, active: string, id?: number) {
     super(title, id)
-    this.primary = primary
     this.textPrimary = textPrimary
     this.textSecondary = textSecondary
+    this.primary = primary
     this.accent = accent
     this.border = border
     this.hover = hover
-    this.activeItem = activeItem
+    this.focus = focus
+    this.active = active
+  }
+
+  setCss() {
+    let root = document.documentElement;
+
+    root.style.setProperty(Theme.VAR_NAMES.get("textPrimary"), this.textPrimary)
+    root.style.setProperty(Theme.VAR_NAMES.get("textSecondary"), this.textSecondary)
+    root.style.setProperty(Theme.VAR_NAMES.get("primary"), this.primary)
+    root.style.setProperty(Theme.VAR_NAMES.get("accent"), this.accent)
+    root.style.setProperty(Theme.VAR_NAMES.get("border"), this.border)
+    root.style.setProperty(Theme.VAR_NAMES.get("hover"), this.hover)
+    root.style.setProperty(Theme.VAR_NAMES.get("focus"), this.focus)
+    root.style.setProperty(Theme.VAR_NAMES.get("active"), this.active)
   }
 
   static makeFrom(source: Theme, title: string, colors?: {
@@ -35,22 +59,24 @@ export class Theme extends Titled implements TextColorPair {
     accent?: string
     border?: string
     hover?: string
-    activeItem?: string
+    focus?: string
+    active?: string
   }) {
     return new Theme(
       title,
-      colors?.primary ? colors.primary : source.primary,
       colors?.textPrimary ? colors.textPrimary : source.textPrimary,
       colors?.textSecondary ? colors.textSecondary : source.textSecondary,
+      colors?.primary ? colors.primary : source.primary,
       colors?.accent ? colors.accent : source.accent,
       colors?.border ? colors.border : source.border,
       colors?.hover ? colors.hover : source.hover,
-      colors?.activeItem ? colors.activeItem : source.activeItem
+      colors?.focus ? colors.focus : source.focus,
+      colors?.active ? colors.active : source.active
     )
   }
 
   static makeEmpty() {
-    return new Theme("", "", "", "", "", "", "", "")
+    return new Theme("", "", "", "", "", "", "", "", "")
   }
 
   async delete() {

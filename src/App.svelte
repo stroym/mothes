@@ -17,9 +17,9 @@
     notes: {id: "notes", title: "Notes", icon: "list"},
     favorites: {id: "favorites", title: "Favorites", icon: "favorite"},
     search: {id: "search", title: "Search", icon: "search"},
-    archive: {id: "archive", title: "Archive", icon: "archive", align: "end"},
+    archive: {id: "archive", title: "Archive", icon: "archived", align: "end"},
     resources: {id: "resources", title: "Resources", icon: "resources"},
-    options: {id: "options", title: "Options", icon: "options", align: "end", toggle: true},
+    options: {id: "options", title: "Options", icon: "options", align: "end", overlay: true},
     detail: {id: "detail", title: "Detail", icon: "detail"},
     manager: {id: "manager", title: "Manager", icon: "manager"}
   }

@@ -3,13 +3,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 :root {
-  --color-main: #282424;
-  --color-border: #5f5858;
-  --color-focus-fill: teal;
-  --color-hover: turquoise;
-  --color-active: skyblue;
   --color-text: #f8f8ff;
   --color-text-complementary: #000000;
+  --color-main: #282424;
+  --color-accent: #ffffff;
+  --color-border: #5f5858;
+  --color-hover: #40e0d0;
+  --color-focus: #008080;
+  --color-active: #87ceeb;
 
   --font-smaller: clamp(0.5rem, 0.5rem + 4vw, 1rem);
   --font-small: clamp(1rem, 1rem + 4vw, 1.5rem);
@@ -180,7 +181,7 @@ svg {
       outline-offset: calc(var(--border-width) / -2);
 
       &.styled-hover-fill {
-        background-color: var(--color-focus-fill);
+        background-color: var(--color-focus);
 
         & > .snovy-icon {
           svg {
@@ -222,16 +223,16 @@ svg {
 
     & .styled-hover-fill:focus {
       svg {
-        fill: var(--color-focus-fill);
-        border-color: var(--color-focus-fill);
+        fill: var(--color-focus);
+        border-color: var(--color-focus);
       }
     }
   }
 
   & .styled-hover-fill:hover {
     svg {
-      fill: var(--color-focus-fill);
-      border-color: var(--color-focus-fill);
+      fill: var(--color-focus);
+      border-color: var(--color-focus);
     }
   }
 }

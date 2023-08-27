@@ -17,6 +17,7 @@ export const setOptions = async (newOptions: Options) => {
   await dexie.themes.get(newOptions.themeId)
     .then(async (loaded) => {
       if (loaded) {
+        loaded.setCss()
         activeTheme.set(loaded)
       } else {
         throw Error(`Theme with id ${newOptions.themeId} not found!`)
@@ -26,6 +27,7 @@ export const setOptions = async (newOptions: Options) => {
       console.error(`Error while fetching theme! Reverting to default theme...\n${error}`)
 
       const backup = (await fetchThemes()).first()!
+      backup.setCss()
       activeTheme.set(backup)
       newOptions.themeId = backup.id
     })
