@@ -67,7 +67,7 @@
     align-items: center;
     justify-content: space-between;
 
-    & :global(.snovy-input) {
+    :global(.snovy-input) {
       --border-width: 0;
 
       padding: unset;

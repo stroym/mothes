@@ -124,9 +124,9 @@ svg {
 
     svg {
       --border-width: var(--border-thin);
-      --button-border-rad: 50%;
+      --border-rad: 50%;
 
-      border-radius: var(--button-border-rad);
+      border-radius: var(--border-rad);
     }
   }
 }
@@ -176,7 +176,7 @@ svg {
   [data-whatinput="keyboard"] &:focus-within {
     &,
     .snovy-inner-focus {
-      border-radius: var(--button-border-rad);
+      border-radius: var(--border-rad);
       outline: currentColor solid var(--border-width);
       outline-offset: calc(var(--border-width) / -2);
 
@@ -198,7 +198,7 @@ svg {
   }
 
   &:is(.with-border):hover {
-    border-radius: var(--button-border-rad);
+    border-radius: var(--border-rad);
   }
 }
 

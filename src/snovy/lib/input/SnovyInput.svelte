@@ -40,6 +40,7 @@
     {...$$restProps} class={`snovy-input snovy-input-color styled-focus ${$$restProps.class || ""}`} autoComplete="off"
     type="color" readonly={!$editable}
     bind:value
+    on:input on:change
   />
 {:else}
   <input
@@ -55,13 +56,14 @@
 <style lang="scss">
   .snovy-input {
     --border-width: var(--border-thin);
+    --border-rad: var(--rad-rounded);
 
     font-size: var(--font-medium);
     background-color: transparent;
-    border-radius: var(--button-border-rad);
+    border-radius: var(--border-rad);
     outline: none;
-    padding: 0.1vh;
-    text-indent: 0.2vh; //TODO calc based on font size
+    padding: 0.05em;
+    text-indent: 0.1em; //TODO calc based on font size
     width: 100%;
     max-width: 100%;
     min-width: 0;
@@ -72,6 +74,22 @@
 
     &.snovy-input-color {
       cursor: pointer;
+      padding: unset;
+
+      &::-moz-color-swatch {
+        border: unset;
+        border-radius: unset;
+        padding: unset;
+      }
+
+      &::-webkit-color-swatch {
+        border: unset;
+        border-radius: unset;
+      }
+
+      &::-webkit-color-swatch-wrapper {
+        padding: unset;
+      }
     }
 
     &[readonly] {

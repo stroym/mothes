@@ -11,11 +11,13 @@
 
   let self: HTMLButtonElement = null
 
+  export let disabled: boolean = false
+
   export let icon: SnovyIconOption = null
 
   export let circular: boolean = false
   export let border: boolean = true
-  export let fill: boolean = false
+  export let fill: boolean = true
   export let color: string = ""
 
 </script>
@@ -23,7 +25,7 @@
 <button
   {...$$restProps} class={`snovy-button ${fill ? 'styled-hover-fill' : 'styled-hover'} ${$$restProps.class || ""}`}
   class:icon class:circular class:border class:color={$$props.style?.backgroundColor}
-  bind:this={self}
+  bind:this={self} disabled={disabled}
   on:click
 >
   {#if icon}
@@ -36,12 +38,12 @@
 <style lang="scss">
   .snovy-button {
     --border-width: var(--border-thin);
-    --button-border-rad: var(--rad-rounded);
+    --border-rad: var(--rad-rounded);
 
     font-size: var(--font-medium);
     color: inherit;
     background-color: transparent;
-    border-radius: var(--button-border-rad);
+    border-radius: var(--border-rad);
     outline: none;
     cursor: pointer;
     padding: 0.25em;
@@ -59,7 +61,7 @@
     }
 
     &.circular {
-      --button-border-rad: 50%;
+      --border-rad: 50%;
       border-radius: var(--rad-rounded);
     }
 

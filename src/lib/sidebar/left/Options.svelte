@@ -8,7 +8,7 @@
   import {onMount} from "svelte";
   import {Theme} from "../../../data/model/options/Theme";
   import {defaults} from "../../../data/model/options/Defaults";
-  import {activeOptions} from "../../stores/options-store";
+  import {activeOptions, activeTheme} from "../../stores/options-store";
   import type Options from "../../../data/model/options/Options";
   import SnovyInput from "../../../snovy/lib/input/SnovyInput.svelte";
 
@@ -38,10 +38,10 @@
   )
 
   const submit = async () => {
-    await theme.save()
+    theme = await theme.save()
     options.themeId = theme.id
     activeOptions.set(await options.save())
-    //update current options etc.
+    activeTheme.set(theme)
   }
 
   const restore = async () => {
@@ -61,8 +61,7 @@
 
       options = defaultOptions
       themes = newThemes
-      theme = firstTheme
-      theme.setCss()
+      setActiveTheme(firstTheme)
     })
   }
 
@@ -70,8 +69,7 @@
     themes = await fetchThemes()
 
     options = $activeOptions.clone()
-    theme = themes.find(it => it.id === options.themeId)
-    theme.setCss()
+    setActiveTheme(themes.find(it => it.id === options.themeId))
   }
 
   const mockData = async () => {
@@ -84,19 +82,15 @@
     location.reload()
   }
 
-  let currentTitle: string
-
-  const createTheme = () => {
-    dexie.themes.put(Theme.makeFrom(theme, currentTitle))
-  }
-
-  const updateTheme = () => {
-  }
-
   const deleteTheme = () => {
     // const tempThemes = Array.from(themes)
     // setCurrentTheme(tempThemes.deleteAndGet(currentTheme)!)
     // setThemes(tempThemes)
+  }
+
+  const setActiveTheme = (th: Theme) => {
+    theme = th
+    theme.setCss()
   }
 
   let root = document.documentElement;
@@ -132,17 +126,17 @@
   <form id="theme-options" class="snovy-options-container snovy-scroll" on:submit={e => e.preventDefault()}
         tabIndex={-1}>
     <div class="snovy-input-group">
-      <!--        <ComboBox<Theme>-->
-      <!--        label={{value: "Active theme"}} items={themes} selected={currentTheme}-->
-      <!--        onSelect={value => value && setCurrentTheme(value)}-->
-      <!--        options={{allowDeselect: false}}-->
-      <!--        borders={{main: true, dropdown: true}}-->
-      <!--        />-->
-
-      <SnovyLabel value="Theme title"/>
-      <SnovyInput value={currentTitle}/>
-
       {#if theme}
+        <!--        <ComboBox<Theme>-->
+        <!--        label={{value: "Active theme"}} items={themes} selected={currentTheme}-->
+        <!--        onSelect={value => value && setCurrentTheme(value)}-->
+        <!--        options={{allowDeselect: false}}-->
+        <!--        borders={{main: true, dropdown: true}}-->
+        <!--        />-->
+
+        <SnovyLabel value="Theme title"/>
+        <SnovyInput value={theme.title} on:change={e => theme.title = e.target.value}/>
+
         <SnovyLabel value="Primary text color"/>
         <SnovyInput mode="color" value={theme.textPrimary} on:change={e => updateThemeVar("textPrimary", e)}/>
 
@@ -169,17 +163,20 @@
       {/if}
     </div>
     <div class="snovy-button-group">
-      <SnovyButton value="Delete theme" on:click={() => deleteTheme()}/>
-      <SnovyButton value="Reset theme" on:click={() => false}/>
-      <SnovyButton type="submit" value="Save theme" onClick={async () => updateTheme()}/>
-      <SnovyButton type="submit" value="Create theme" on:click={() => createTheme()}/>
+      <SnovyButton type="submit" value="Create" on:click={() => dexie.themes.put(Theme.makeFrom(theme, theme.title))}/>
+      <SnovyButton value="Delete" on:click={() => deleteTheme()}/>
+      <SnovyButton
+        value="Restore"
+        disabled={theme && defaults.themes.every(it => it.title !== theme.title)}
+        on:click={() => setActiveTheme(defaults.themes.find(it => it.title === theme.title))}
+      />
     </div>
   </form>
 
   <div id="control-buttons">
-    <SnovyButton value="Restore defaults" onClick={restore}/>
-    <SnovyButton value="Cancel" onClick={cancel}/>
-    <SnovyButton type="submit" value="Save" onClick={submit}/>
+    <SnovyButton value="Restore defaults" on:click={async () => await restore()}/>
+    <SnovyButton value="Cancel" on:click={async () => await cancel()}/>
+    <SnovyButton type="submit" value="Save" on:click={async () => await submit()}/>
   </div>
 </dialog>
 
@@ -221,7 +218,7 @@
       .snovy-input-group {
         grid-area: inputs;
         display: grid;
-        grid-template-columns: min-content 50%;
+        grid-template-columns: min-content fit-content(50%);
         grid-auto-rows: min-content;
         gap: 0.5em;
         justify-content: space-between;
@@ -229,16 +226,17 @@
         .snovy-input-color {
           width: unset;
         }
+
+        :global input {
+          font-size: var(--font-small);
+        }
       }
 
       .snovy-button-group {
         grid-area: buttons;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-
-        .snovy-button {
-          margin: 0.2em;
-        }
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5em;
       }
     }
 

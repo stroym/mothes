@@ -39,7 +39,7 @@ export default class Options extends Table {
   }
 
   clone() {
-    return Object.assign({...this}, this)
+    return Object.create(this)
   }
 
 }
