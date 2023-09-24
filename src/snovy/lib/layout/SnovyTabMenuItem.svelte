@@ -1,6 +1,6 @@
 <script lang="ts">
+  import type {SnovyIconOption} from "../helper/SnovyIcon.svelte";
   import SnovyIcon from "../helper/SnovyIcon.svelte"
-  import type {SnovyIconOption} from "../snovy-types";
 
   export let id: string
   export let title: string = null
@@ -35,7 +35,9 @@
     white-space: nowrap;
 
     &.icon {
-      font-size: var(--font-medium);
+      font-size: var(--font-small);
+      display: grid;
+      place-content: center;
     }
   }
 </style>

@@ -9,7 +9,7 @@
   import {onMount} from "svelte"
   import SnovyTabMenuItem from "./SnovyTabMenuItem.svelte"
   import {isActionEvent} from "../utils"
-  import type {SnovyIconOption} from "../snovy-types";
+  import type {SnovyIconOption} from "../helper/SnovyIcon.svelte";
 
   export let orientation: Orientation
   export let collapsible: boolean

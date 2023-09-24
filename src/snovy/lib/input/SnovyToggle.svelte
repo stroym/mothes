@@ -1,6 +1,6 @@
 <script lang="ts">
 
-  import type {SnovyIconOption} from "../snovy-types"
+  import type {SnovyIconOption} from "../helper/SnovyIcon.svelte"
   import type {Toggleable} from "../../../data/model/Base";
   import SnovyIcon from "../helper/SnovyIcon.svelte";
 

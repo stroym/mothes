@@ -5,9 +5,10 @@
 
 </script>
 
-<label {...$$restProps} class={`snovy-label ${$$restProps.class || ""}`} class:column>
+<label {...$$restProps} class={`snovy-label ${$$restProps.class || ""}`} class:column for={$$restProps.for}>
   <slot name="before"/>
   <span>{value}</span>
+  <slot></slot>
   <slot name="after"/>
 </label>
 

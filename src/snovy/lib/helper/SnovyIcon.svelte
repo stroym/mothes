@@ -1,6 +1,12 @@
+<script lang="ts" context="module">
+  export type SnovyIconOption = "add" | "archive" | "archived" | "arrow_down" | "arrow_left" | "arrow_right" | "arrow_up" |
+    "checked" | "circle" | "code_off" | "collapsed" | "detail" | "edit" | "expanded" | "export" | "favorite" |
+    "favorite_fill" | "filter" | "help" | "import" | "label" | "label_new" | "manager" | "notes" | "options" |
+    "remove" | "resources" | "search" | "unique"
+</script>
+
 <script lang="ts">
 
-  import type {SnovyIconOption} from "../snovy-types"
   import IconAdd from "../../assets/icons/add.svg"
   import IconArchive from "../../assets/icons/archive.svg"
   import IconArchived from "../../assets/icons/archived.svg"
@@ -34,6 +40,7 @@
 
   export let name: SnovyIconOption
 
+  //TODO enforce keys matching with the type
   const options = {
     add: IconAdd,
     archive: IconArchive,

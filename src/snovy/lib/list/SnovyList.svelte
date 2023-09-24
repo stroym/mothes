@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
 
-  import type {SnovyIconOption} from "../snovy-types";
+  import type {SnovyIconOption} from "../helper/SnovyIcon.svelte";
 
   export type ListPresets = "simple" | "editable"
 
@@ -76,7 +76,7 @@
       <!--      TODO the buttons dont change icons properly on any other instance except the first-->
       <svelte:fragment slot="list-item-button">
         {#if buttonOptions?.type === 'button' && !isArray(buttonOptions.icon)}
-          <SnovyButton on:click={e => buttonOptions.action(item)} icon={buttonOptions.icon} circular border={false}/>
+          <SnovyButton on:click={e => buttonOptions.action(item)} icon={buttonOptions.icon} circular/>
         {:else if buttonOptions?.type === 'toggle' && isArray(buttonOptions.icon)}
           <SnovyToggle target={item} icons={buttonOptions.icon}/>
         {/if}

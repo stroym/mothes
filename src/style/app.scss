@@ -26,7 +26,6 @@
 
 html, body {
   margin: 0;
-  box-sizing: border-box;
   color: var(--color-text);
 }
 
@@ -42,7 +41,6 @@ input[type="file"] {
 //TODO somewhat opaque dialog backdrop
 
 #snovy-app {
-  box-sizing: border-box;
   height: 100svh;
   width: 100vw;
   display: grid;
@@ -63,6 +61,11 @@ input[type="file"] {
   border-color: var(--color-border);
   border-style: solid;
   border-width: var(--border-width);
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -123,7 +126,7 @@ svg {
     height: var(--font-medium);
 
     svg {
-      --border-width: var(--border-thin);
+      --border-width: inherit;
       --border-rad: 50%;
 
       border-radius: var(--border-rad);
@@ -131,6 +134,7 @@ svg {
   }
 }
 
+//TODO unify this
 .border {
   border-style: solid;
   border-width: 1px;

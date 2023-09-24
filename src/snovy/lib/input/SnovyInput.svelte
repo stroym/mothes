@@ -63,7 +63,7 @@
     border-radius: var(--border-rad);
     outline: none;
     padding: 0.05em;
-    text-indent: 0.1em; //TODO calc based on font size
+    text-indent: 0.2em;
     width: 100%;
     max-width: 100%;
     min-width: 0;

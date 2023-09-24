@@ -7,7 +7,7 @@
 <script lang="ts">
 
   import SnovyIcon from "../helper/SnovyIcon.svelte"
-  import type {SnovyIconOption} from "../snovy-types"
+  import type {SnovyIconOption} from "../helper/SnovyIcon.svelte"
 
   let self: HTMLButtonElement = null
 
@@ -62,7 +62,6 @@
 
     &.circular {
       --border-rad: 50%;
-      border-radius: var(--rad-rounded);
     }
 
     &.icon {

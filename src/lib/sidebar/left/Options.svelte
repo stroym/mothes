@@ -11,6 +11,7 @@
   import {activeOptions, activeTheme} from "../../stores/options-store";
   import type Options from "../../../data/model/options/Options";
   import SnovyInput from "../../../snovy/lib/input/SnovyInput.svelte";
+  import SnovyCombobox from "../../../snovy/lib/input/SnovyCombobox.svelte";
 
   export let dialog: HTMLDialogElement = null
   let importInput: HTMLInputElement = null
@@ -123,8 +124,7 @@
     </SnovyLabel>
   </div>
 
-  <form id="theme-options" class="snovy-options-container snovy-scroll" on:submit={e => e.preventDefault()}
-        tabIndex={-1}>
+  <form id="theme-options" class="snovy-options-container snovy-scroll" on:submit={e => e.preventDefault()} tabIndex={-1}>
     <div class="snovy-input-group">
       {#if theme}
         <!--        <ComboBox<Theme>-->
@@ -134,32 +134,32 @@
         <!--        borders={{main: true, dropdown: true}}-->
         <!--        />-->
 
-        <SnovyLabel value="Theme title"/>
-        <SnovyInput value={theme.title} on:change={e => theme.title = e.target.value}/>
+        <SnovyLabel for="theme-title-input" value="Theme title"/>
+        <SnovyCombobox id="theme-title" value={theme.title} on:change={e => theme.title = e.target.value}/>
 
-        <SnovyLabel value="Primary text color"/>
-        <SnovyInput mode="color" value={theme.textPrimary} on:change={e => updateThemeVar("textPrimary", e)}/>
+        <SnovyLabel for="theme-text-color-1" value="Primary text color"/>
+        <SnovyInput id="theme-text-color-1" mode="color" value={theme.textPrimary} on:change={e => updateThemeVar("textPrimary", e)}/>
 
-        <SnovyLabel value="Secondary text color"/>
-        <SnovyInput mode="color" value={theme.textSecondary} on:change={e => updateThemeVar("textSecondary", e)}/>
+        <SnovyLabel for="theme-text-color-2" value="Secondary text color"/>
+        <SnovyInput id="theme-text-color-2" mode="color" value={theme.textSecondary} on:change={e => updateThemeVar("textSecondary", e)}/>
 
-        <SnovyLabel value="Primary color"/>
-        <SnovyInput mode="color" value={theme.primary} on:change={e => updateThemeVar("primary", e)}/>
+        <SnovyLabel for="theme-color-1" value="Primary color"/>
+        <SnovyInput id="theme-color-1" mode="color" value={theme.primary} on:change={e => updateThemeVar("primary", e)}/>
 
-        <SnovyLabel value="Accent color"/>
-        <SnovyInput mode="color" value={theme.accent} on:change={e => updateThemeVar("accent", e)}/>
+        <SnovyLabel for="theme-color-2" value="Accent color"/>
+        <SnovyInput id="theme-color-2" mode="color" value={theme.accent} on:change={e => updateThemeVar("accent", e)}/>
 
-        <SnovyLabel value="Border color"/>
-        <SnovyInput mode="color" value={theme.border} on:change={e => updateThemeVar("border", e)}/>
+        <SnovyLabel for="theme-color-3" value="Border color"/>
+        <SnovyInput id="theme-color-3" mode="color" value={theme.border} on:change={e => updateThemeVar("border", e)}/>
 
-        <SnovyLabel value="Hover color"/>
-        <SnovyInput mode="color" value={theme.hover} on:change={e => updateThemeVar("hover", e)}/>
+        <SnovyLabel for="theme-color-4" value="Hover color"/>
+        <SnovyInput id="theme-color-4" mode="color" value={theme.hover} on:change={e => updateThemeVar("hover", e)}/>
 
-        <SnovyLabel value="Focus color"/>
-        <SnovyInput mode="color" value={theme.hover} on:change={e => updateThemeVar("hover", e)}/>
+        <SnovyLabel for="theme-color-5" value="Focus color"/>
+        <SnovyInput id="theme-color-5" mode="color" value={theme.focus} on:change={e => updateThemeVar("focus", e)}/>
 
-        <SnovyLabel value="Active Color"/>
-        <SnovyInput mode="color" value={theme.active} on:change={e => updateThemeVar("activeItem", e)}/>
+        <SnovyLabel for="theme-color-6" value="Active Color"/>
+        <SnovyInput id="theme-color-6" mode="color" value={theme.active} on:change={e => updateThemeVar("activeItem", e)}/>
       {/if}
     </div>
     <div class="snovy-button-group">
@@ -218,7 +218,7 @@
       .snovy-input-group {
         grid-area: inputs;
         display: grid;
-        grid-template-columns: min-content fit-content(50%);
+        grid-template-columns: 3fr 2fr;
         grid-auto-rows: min-content;
         gap: 0.5em;
         justify-content: space-between;
@@ -227,7 +227,7 @@
           width: unset;
         }
 
-        :global input {
+        :global .snovy-input {
           font-size: var(--font-small);
         }
       }

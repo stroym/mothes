@@ -1,7 +1,13 @@
+<script lang="ts" context="module">
+  export type ListChildPart<T> = {
+    part: any,
+    props?: any
+  }
+</script>
+
 <script lang="ts">
 
   import type {GenericItem} from "../../../util/types"
-  import type {ListChildPart} from "../snovy-types"
   import SnovyInput from "../input/SnovyInput.svelte"
   import {createEventDispatcher} from "svelte"
 
