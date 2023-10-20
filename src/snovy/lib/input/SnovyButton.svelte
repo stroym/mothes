@@ -36,7 +36,8 @@
 </button>
 
 <style lang="scss">
-  .snovy-button {
+  //share core style with .snovy-toggle
+  :global .snovy-button {
     --border-width: var(--border-thin);
     --border-rad: var(--rad-rounded);
 
@@ -46,6 +47,17 @@
     border-radius: var(--border-rad);
     outline: none;
     cursor: pointer;
+
+    &.circular {
+      --border-rad: 50%;
+    }
+
+    &.icon {
+      --border-width: 0;
+    }
+  }
+
+  .snovy-button {
     padding: 0.25em;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -54,19 +66,7 @@
     &:is(.circular, .icon) {
       padding: unset;
       margin: unset;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    &.circular {
-      --border-rad: 50%;
-    }
-
-    &.icon {
-      --border-width: 0;
-      font-size: var(--font-medium);
+      overflow: unset;
     }
   }
 </style>

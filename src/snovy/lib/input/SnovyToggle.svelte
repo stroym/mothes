@@ -4,44 +4,37 @@
   import type {Toggleable} from "../../../data/model/Base";
   import SnovyIcon from "../helper/SnovyIcon.svelte";
 
-  export let target: Toggleable
+  export let border: boolean = true
+
+  export let target: Toggleable = undefined
   export let icons: Array<SnovyIconOption>
 
-  let toggled: boolean
+  export let value: boolean
 
   $: {
-    toggled = target.snvToggled()
+    value = target?.snvToggled() ?? value
   }
-
 </script>
 
-<label class="snovy-toggle icon styled-hover-fill" tabindex="0">
-  {#if toggled}
-    <SnovyIcon circular wrap name={icons.at(0)}/>
+<label class="snovy-toggle snovy-button styled-hover-fill icon circular"
+       class:border class:color={$$props.style?.backgroundColor}
+       tabindex="0"
+>
+  {#if value}
+    <SnovyIcon circular name={icons.at(0)}/>
   {:else}
-    <SnovyIcon circular wrap name={icons.at(-1)}/>
+    <SnovyIcon circular name={icons.at(-1)}/>
   {/if}
-  <input type="checkbox" on:change bind:checked={toggled}
-         on:click|preventDefault|stopPropagation={async () => {toggled = await target.snvToggle()}}/>
+  <input type="checkbox" on:change bind:checked={value}
+         on:click|preventDefault|stopPropagation={async () => {value = await target?.snvToggle() ?? !value}}/>
 </label>
 
 <style lang="scss">
   .snovy-toggle {
-    --border-width: var(--border-thin);
+  }
 
-    font-size: var(--font-medium);
-    color: inherit;
-    background-color: transparent;
-    border: unset;
-    outline: unset;
-
-    input {
-      visibility: hidden;
-      display: none;
-    }
-
-    &:hover {
-      cursor: pointer;
-    }
+  input {
+    visibility: hidden;
+    display: none;
   }
 </style>

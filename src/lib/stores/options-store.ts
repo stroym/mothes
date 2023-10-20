@@ -7,10 +7,15 @@ import type Options from "../../data/model/options/Options";
 export const activeOptions = writable(defaults.options)
 export const activeTheme = writable(defaults.themes.first())
 
+//TODO actually use the transaction... or don't bother with it at all
 export const initOptions = async () => {
-  return dexie.options.toArray().then(async (options) => {
-    return options.isEmpty() ? await defaults.options.save() : await options.first()!.load()
-  });
+  await dexie.transaction("rw", [dexie.options, dexie.themes], async () => {
+    await fetchThemes()
+
+   await setOptions(await dexie.options.toArray().then(async (options) => {
+      return options.isEmpty() ? await defaults.options.save() : await options.first().load()
+    }));
+  })
 }
 
 export const setOptions = async (newOptions: Options) => {

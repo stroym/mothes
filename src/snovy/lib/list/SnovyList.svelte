@@ -63,7 +63,7 @@
 
 <ol {...$$restProps} class={`snovy-list snovy-scroll ${$$restProps.class || ""}`}
     tabIndex={-1} data-disabled={!items?.length} on:keydown={e => useKey(e, keyMap)}>
-  {#each items as item, i (`${i}-${item}`)}
+  {#each (items ?? []) as item, i (`${i}-${item}`)}
     <SnovyListItem item={item} preset={preset} custom={custom}
                    data-active={$activeItem === item} data-selected={$selectedItems.includes(item)}
                    onInput={onItemInput}

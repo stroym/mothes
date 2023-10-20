@@ -24,7 +24,7 @@
     manager: {id: "manager", title: "Manager", icon: "manager"}
   }
 
-  let leftTab = tabs.notes.id
+  let leftTab = tabs.options.id
   let rightTab = tabs.detail.id
   let leftCollapsed = false
   let rightCollapsed = false
@@ -40,10 +40,7 @@
 
   onMount(
     async () => {
-      dexie.transaction("rw", [dexie.options, dexie.themes, dexie.notebooks], async () => {
-        await fetchThemes()
-        await initOptions().then(options => setOptions(options))
-      })
+      await initOptions()
 
       await dexie.notebooks.toArray().then(it => loadNotebooks(it))
     }

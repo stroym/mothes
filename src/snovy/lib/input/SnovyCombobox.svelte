@@ -2,11 +2,14 @@
 
   import SnovyInput from "./SnovyInput.svelte";
   import SnovyButton from "./SnovyButton.svelte";
+  import SnovyToggle from "./SnovyToggle.svelte";
 
   export let value = ""
 
   export let options: { allowDeselect?: boolean } = {}
-  export let reset: () => void
+  export let reset: () => void = () => false
+
+  let isOpen: boolean = false
 
 </script>
 
@@ -18,14 +21,14 @@
   />
 
   <!--{#if options.allowDeselect}-->
-    <SnovyButton icon="remove" circular on:click={()=> reset()}>
+    <SnovyButton icon="remove" circular fill on:click={()=> reset()}>
 
     </SnovyButton>
   <!--{/if}-->
 
-  <SnovyButton icon="collapsed" circular>
+  <SnovyToggle value={isOpen} icons={['expanded', 'collapsed']}>
 
-  </SnovyButton>
+  </SnovyToggle>
 
   <slot name="spawn-button"/>
 

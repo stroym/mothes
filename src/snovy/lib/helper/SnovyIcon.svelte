@@ -74,11 +74,10 @@
     unique: IconUnique,
   }
 
-  export let wrap: boolean = false
   export let circular: boolean = false
 
 </script>
 
-<div class="snovy-icon" class:circular class:wrap>
+<div class="snovy-icon" class:circular>
   <svelte:component this={options[name]}/>
 </div>
