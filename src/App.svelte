@@ -3,13 +3,9 @@
   import SnovySidebar from "./snovy/lib/layout/SnovySidebar.svelte"
   import SnovyTabMenu from "./snovy/lib/layout/SnovyTabMenu.svelte"
   import Selector from "./lib/sidebar/left/Selector.svelte"
-  import {loadNotebooks} from "./lib/note-store"
   import NoteDetail from "./lib/sidebar/right/NoteDetail.svelte"
-  import {dexie} from "./index"
-  import {onMount} from "svelte"
   import Options from "./lib/sidebar/left/Options.svelte";
-  import {fetchThemes} from "./data/Database";
-  import {initOptions, setOptions} from "./lib/stores/options-store";
+  import {loadDexie} from "./lib/stores/options-store";
 
   //TODO move active tabs/tab management into a store/context
   const tabs = {
@@ -38,37 +34,32 @@
     }
   }
 
-  onMount(
-    async () => {
-      await initOptions()
-
-      await dexie.notebooks.toArray().then(it => loadNotebooks(it))
-    }
-  )
 </script>
 
-<SnovyTabMenu id="left-menu" style="grid-area: left-menu;" orientation="left" collapsible
-              bind:active={leftTab} bind:collapsed={leftCollapsed}
-              tabs={[tabs.notebooks, tabs.notes, tabs.favorites, tabs.search, tabs.archive, tabs.options]}
-/>
-<SnovySidebar id="left-sidebar" style="grid-area: left;" data-collapsed={leftCollapsed}>
-  {#if leftTab === tabs.notes.id}
-    <Selector/>
+{#await loadDexie() then _data}
+  <SnovyTabMenu id="left-menu" style="grid-area: left-menu;" orientation="left" collapsible
+                bind:active={leftTab} bind:collapsed={leftCollapsed}
+                tabs={[tabs.notebooks, tabs.notes, tabs.favorites, tabs.search, tabs.archive, tabs.options]}
+  />
+  <SnovySidebar id="left-sidebar" style="grid-area: left;" data-collapsed={leftCollapsed}>
+    {#if leftTab === tabs.notes.id}
+      <Selector/>
+    {/if}
+  </SnovySidebar>
+  <div id="editor" style="grid-area: centre;"></div>
+  <SnovySidebar id="right-sidebar" style="grid-area: right;" data-collapsed={rightCollapsed}>
+    {#if rightTab === tabs.detail.id}
+      <NoteDetail/>
+    {/if}
+  </SnovySidebar>
+  <SnovyTabMenu id="right-menu" style="grid-area: right-menu;" orientation="right" collapsible
+                bind:active={rightTab} bind:collapsed={rightCollapsed}
+                tabs={[tabs.detail, tabs.manager, tabs.resources]}
+  />
+  {#if leftTab === tabs.options.id}
+    <Options bind:this={optionsRef}/>
   {/if}
-</SnovySidebar>
-<div id="editor" style="grid-area: centre;"></div>
-<SnovySidebar id="right-sidebar" style="grid-area: right;" data-collapsed={rightCollapsed}>
-  {#if rightTab === tabs.detail.id}
-    <NoteDetail/>
-  {/if}
-</SnovySidebar>
-<SnovyTabMenu id="right-menu" style="grid-area: right-menu;" orientation="right" collapsible
-              bind:active={rightTab} bind:collapsed={rightCollapsed}
-              tabs={[tabs.detail, tabs.manager, tabs.resources]}
-/>
-{#if leftTab === tabs.options.id}
-  <Options bind:this={optionsRef}/>
-{/if}
+{/await}
 
 <style lang="scss">
   :global( #left-sidebar .sidebar-body) {

@@ -4,11 +4,11 @@
   import SnovyLabel from "../../../snovy/lib/input/SnovyLabel.svelte";
   import {dexie} from "../../../index";
   import generate from "../../../data/Generator";
-  import {exportData, fetchThemes, importData} from "../../../data/Database";
+  import {exportData, importData} from "../../../data/Database";
   import {onMount} from "svelte";
-  import {Theme} from "../../../data/model/options/Theme";
+  import Theme from "../../../data/model/options/Theme";
   import {defaults} from "../../../data/model/options/Defaults";
-  import {activeOptions, activeTheme} from "../../stores/options-store";
+  import {activeOptions, activeTheme, availableThemes} from "../../stores/options-store";
   import type Options from "../../../data/model/options/Options";
   import SnovyInput from "../../../snovy/lib/input/SnovyInput.svelte";
   import SnovyCombobox from "../../../snovy/lib/input/SnovyCombobox.svelte";
@@ -18,14 +18,10 @@
 
   let themes: Array<Theme> = []
   let options: Options = $activeOptions.clone()
-  let theme: Theme = undefined
+  let theme: Theme = $activeTheme.clone()
 
   onMount(
-    async () => {
-      themes = await fetchThemes()
-
-      theme = themes.find(it => it.id == options.themeId)
-
+    () => {
       return () => {
         if (JSON.stringify($activeOptions) !== JSON.stringify(options)) {
           if ((confirm("You have unsaved changes. Would you like to save them?"))) {
@@ -67,7 +63,7 @@
   }
 
   const cancel = async () => {
-    themes = await fetchThemes()
+    themes = [...$availableThemes]
 
     options = $activeOptions.clone()
     setActiveTheme(themes.find(it => it.id === options.themeId))

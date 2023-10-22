@@ -7,8 +7,7 @@ import Tag from "./model/Tag"
 import Note from "./model/Note"
 import Section from "./model/Section"
 import Options from "./model/options/Options"
-import {Theme} from "./model/options/Theme"
-import {defaults} from "./model/options/Defaults"
+import Theme from "./model/options/Theme"
 import {saveAs} from "file-saver"
 import {dexie} from "../index"
 
@@ -77,20 +76,6 @@ class Database extends Dexie {
     return "++id,".concat(names.join(",")).concat(createdAt + ",", updatedAt)
   }
 
-}
-
-export const fetchThemes = async () => {
-  return dexie.themes.toArray().then(async (loadedThemes) => {
-    if (loadedThemes.isEmpty()) {
-      for (const theme of defaults.themes) {
-        await theme.save()
-      }
-
-      return await dexie.themes.toArray()
-    } else {
-      return loadedThemes
-    }
-  })
 }
 
 export const importData = async (files: FileList | null, replaceData = false) => {

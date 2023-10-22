@@ -2,7 +2,7 @@ import {Titled} from "../Base"
 import {dexie} from "../../../index"
 import type {TextColorPair} from "../../../util/colors"
 
-export class Theme extends Titled implements TextColorPair {
+export default class Theme extends Titled implements TextColorPair {
 
   static readonly VAR_NAMES: Map<string, string> = new Map<string, string>([
     ["textPrimary", "--color-text"],
@@ -80,7 +80,9 @@ export class Theme extends Titled implements TextColorPair {
   }
 
   async delete() {
-    return dexie.transaction("rw", dexie.themes, () => {dexie.themes.delete(this.id)})
+    return dexie.transaction("rw", dexie.themes, () => {
+      dexie.themes.delete(this.id)
+    })
       .then(_result => true).catch(_result => false)
   }
 
@@ -99,7 +101,7 @@ export class Theme extends Titled implements TextColorPair {
   }
 
   clone() {
-    return Object.create(this)
+    return Object.assign(Object.create(Theme), this)
   }
 
 }

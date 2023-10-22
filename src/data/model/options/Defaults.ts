@@ -1,4 +1,4 @@
-import {Theme} from "./Theme"
+import Theme from "./Theme"
 import Options from "./Options"
 
 const options = new Options(-1, false)
