@@ -62,7 +62,7 @@
 
 </script>
 
-<ol {...$$restProps} class={`snovy-list snovy-scroll ${$$restProps.class || ""}`}
+<ol {...$$restProps} class="snovy-list snovy-scroll {$$restProps.class || ''}"
     tabIndex={-1} data-disabled={!items?.length} on:keydown={e => useKey(e, keyMap)}>
   {#each (items ?? []) as item, i (`${i}-${item}`)}
     <SnovyListItem item={item} preset={preset} custom={custom}
@@ -76,9 +76,9 @@
                    on:contextmenu={e => onContext && onContext(item)}>
       <!--      TODO the buttons dont change icons properly on any other instance except the first-->
       <svelte:fragment slot="list-item-button">
-        {#if buttonOptions?.type === 'button' && !isArray(buttonOptions.icon)}
+        {#if buttonOptions?.type === "button" && !isArray(buttonOptions.icon)}
           <SnovyButton {...buttonOptions.props} on:click={e => buttonOptions.action(item)} icon={buttonOptions.icon} circular/>
-        {:else if buttonOptions?.type === 'toggle' && isArray(buttonOptions.icon)}
+        {:else if buttonOptions?.type === "toggle" && isArray(buttonOptions.icon)}
           <SnovyToggle {...buttonOptions.props} target={item} icons={buttonOptions.icon}/>
         {/if}
       </svelte:fragment>

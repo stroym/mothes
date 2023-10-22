@@ -86,6 +86,11 @@ input[type="file"] {
   background-color: var(--color-active)
 }
 
+[data-visible="false"] {
+  visibility: hidden;
+  display: none !important;
+}
+
 *:disabled {
   cursor: not-allowed !important;
   opacity: 0.75;

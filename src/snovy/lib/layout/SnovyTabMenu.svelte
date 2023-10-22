@@ -73,7 +73,7 @@
   }
 </script>
 
-<div {...$$restProps} class={`snovy-tab-menu color-pass ${orientation} ${$$restProps.class || ""}`}>
+<div {...$$restProps} class="snovy-tab-menu color-pass {orientation} {$$restProps.class || ''}">
   <div class="tab-menu-section tab-menu-start color-pass">
     {#each startTabs as tab}
       <SnovyTabMenuItem {...tab} data-active={active === tab.id}

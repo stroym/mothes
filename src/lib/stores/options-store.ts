@@ -1,4 +1,4 @@
-import {get, writable} from 'svelte/store';
+import {get, writable} from "svelte/store";
 import {dexie} from "../../index";
 import {defaults} from "../../data/model/options/Defaults";
 import {loadNotebooks} from "../note-store";

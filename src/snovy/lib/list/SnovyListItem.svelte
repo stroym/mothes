@@ -43,7 +43,7 @@
 <!--tag list item = two color list items-->
 <!--search/favorites list item = pass string representation method (section | note) + pass button action + icon-->
 
-<li {...$$restProps} class={`snovy-list-item styled-hover-fill ${$$restProps.class || ""}`} tabIndex={-1}>
+<li {...$$restProps} class="snovy-list-item styled-hover-fill {$$restProps.class || ''}" tabIndex={-1}>
   <div on:click={handleClick} on:contextmenu|stopPropagation>
     {#if custom}
       <svelte:component this={custom.part} {...custom.props} item={item}></svelte:component>

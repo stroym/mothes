@@ -37,14 +37,14 @@
 
 {#if mode === "color"}
   <input
-    {...$$restProps} class={`snovy-input snovy-input-color styled-focus ${$$restProps.class || ""}`} autoComplete="off"
+    {...$$restProps} class="snovy-input snovy-input-color styled-focus {$$restProps.class || ''}" autoComplete="off"
     type="color" readonly={!$editable}
     bind:value
     on:input on:change
   />
 {:else}
   <input
-    {...$$restProps} class={`snovy-input styled-focus ${$$restProps.class || ""}`} autoComplete="off"
+    {...$$restProps} class="snovy-input styled-focus {$$restProps.class || ''}" autoComplete="off"
     type="text" readonly={!$editable}
     bind:this={self} bind:value
     on:input on:change on:focus={e => setTimeout(() => self?.setSelectionRange(-1, -1), 1) && dispatch("focus", e)}

@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<div {...$$restProps} class={`snovy-sidebar ${$$restProps.class || ""}`}>
+<div {...$$restProps} class="snovy-sidebar {$$restProps.class || ''}">
   {#if $$slots["header"]}
     <div class="sidebar-header color-pass">
       <slot name="header"></slot>

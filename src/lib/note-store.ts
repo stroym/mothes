@@ -1,9 +1,7 @@
-import {get, writable} from 'svelte/store';
+import {get, writable} from "svelte/store";
 import type Notebook from "../data/model/Notebook";
 import type Section from "../data/model/Section";
 import type Note from "../data/model/Note";
-import {dexie} from "../index";
-import {liveQuery} from "dexie";
 import type Tag from "../data/model/Tag";
 import {Table} from "../data/model/Base";
 

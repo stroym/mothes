@@ -8,7 +8,7 @@
 </script>
 
 <div {...$$restProps} title={icon && title} on:click on:keypress type="button" tabIndex={0}
-     class={`snovy-tab-menu-item styled-hover-fill ${$$restProps.class || ""}`} class:icon>
+     class="snovy-tab-menu-item styled-hover-fill {$$restProps.class || ''}" class:icon>
   {#if icon}
     <SnovyIcon wrap name="{icon}"></SnovyIcon>
   {:else}

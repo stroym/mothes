@@ -6,17 +6,37 @@
 
   export let value = ""
 
+  export let border = true
   export let options: { allowDeselect?: boolean } = {}
   export let reset: () => void = () => false
 
   let isOpen: boolean = false
 
+  const onClick = (e) => {
+    console.log(e)
+
+    isOpen = !isOpen
+  }
+
+  const onFocus = (e) => {
+    console.log(e)
+
+    isOpen = !isOpen
+  }
+
+  const onBlur = (e) => {
+    console.log(e)
+
+    isOpen = false
+  }
+
 </script>
 
-<div {...$$restProps} class='snovy-combo-box ${$$restProps.class || ""}'>
+<div {...$$restProps} class="snovy-combo-box {$$restProps.class || ''}">
   <SnovyInput
-    id={$$restProps.id ? $$restProps.id + '-input' : null}
+    id={$$restProps.id ? $$restProps.id + "-input" : null}
     on:input on:change
+    on:click={onClick} on:focus={onFocus} on:blur={onBlur}
     bind:value
   />
 
@@ -26,12 +46,22 @@
     </SnovyButton>
   <!--{/if}-->
 
-  <SnovyToggle value={isOpen} icons={['expanded', 'collapsed']}>
+  <SnovyToggle value={isOpen} icons={["expanded", "collapsed"]}>
 
   </SnovyToggle>
 
   <slot name="spawn-button"/>
 
+</div>
+
+<div
+  {...$$restProps}
+  class="snovy-dropdown snovy-absolute snovy-scroll {$$restProps.class || ''}" class:border
+  data-visible={isOpen}
+>
+  <ol>
+
+  </ol>
 </div>
 
 <!--TODO probably render tag groups etc. a la native optgroup = no prefixing/mixing group and tag into a single element-->
