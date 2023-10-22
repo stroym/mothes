@@ -12,7 +12,8 @@
   export type ItemButton = {
     type: "button" | "toggle",
     icon: SnovyIconOption | Array<SnovyIconOption>,
-    action?: (item: unknown) => void
+    action?: (item: unknown) => void,
+    props?: any
   }
 </script>
 
@@ -76,9 +77,9 @@
       <!--      TODO the buttons dont change icons properly on any other instance except the first-->
       <svelte:fragment slot="list-item-button">
         {#if buttonOptions?.type === 'button' && !isArray(buttonOptions.icon)}
-          <SnovyButton on:click={e => buttonOptions.action(item)} icon={buttonOptions.icon} circular/>
+          <SnovyButton {...buttonOptions.props} on:click={e => buttonOptions.action(item)} icon={buttonOptions.icon} circular/>
         {:else if buttonOptions?.type === 'toggle' && isArray(buttonOptions.icon)}
-          <SnovyToggle target={item} icons={buttonOptions.icon}/>
+          <SnovyToggle {...buttonOptions.props} target={item} icons={buttonOptions.icon}/>
         {/if}
       </svelte:fragment>
 

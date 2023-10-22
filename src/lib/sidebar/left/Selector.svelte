@@ -13,7 +13,7 @@
 <SnovyList
   preset="editable" items={$activeSection?.notes} initial={$activeSection?.notes?.first()}
   onSelect={selectNote} onItemInput={async str => await $activeNote.updateTitle(str)}
-  buttonOptions={{type: "toggle", icon: ["favorite_fill", "favorite"]}}
+  buttonOptions={{type: "toggle", icon: ["favorite_fill", "favorite"], props: {border: false}}}
 />
 
 <style lang="scss">
