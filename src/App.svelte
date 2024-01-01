@@ -4,8 +4,8 @@
   import SnovyTabMenu from "./snovy/lib/layout/SnovyTabMenu.svelte"
   import Selector from "./lib/sidebar/left/Selector.svelte"
   import NoteDetail from "./lib/sidebar/right/NoteDetail.svelte"
-  import Options from "./lib/sidebar/left/Options.svelte";
-  import {loadDexie} from "./lib/stores/options-store";
+  import Options from "./lib/sidebar/left/Options.svelte"
+  import {loadDexie} from "./lib/stores/options-store"
 
   //TODO move active tabs/tab management into a store/context
   const tabs = {

@@ -1,52 +1,79 @@
+<script lang="ts" context="module">
+  export type ComboOptions = {
+    selectPreviousOnEsc?: boolean
+    resetOnSelect?: boolean
+    wideDropdown?: boolean
+    allowDeselect?: boolean
+  }
+
+  export const defaultOptions: ComboOptions = {
+    selectPreviousOnEsc: true,
+    resetOnSelect: false,
+    wideDropdown: false,
+    allowDeselect: true
+  }
+</script>
+
 <script lang="ts">
 
-  import SnovyInput from "./SnovyInput.svelte";
-  import SnovyButton from "./SnovyButton.svelte";
-  import SnovyToggle from "./SnovyToggle.svelte";
+  import SnovyInput from "./SnovyInput.svelte"
+  import SnovyButton from "./SnovyButton.svelte"
+  import SnovyToggle from "./SnovyToggle.svelte"
+  import type {GenericItem} from "../../../util/types"
+  import {useDropdown} from "../../../util/hooks/positional-hooks"
+  import {hideAbsoluteOnMovement} from "../../../util/hooks/misc-hooks"
+  import SnovyList from "../list/SnovyList.svelte"
+
+  type T = $$Generic<GenericItem>
 
   export let value = ""
 
   export let border = true
-  export let options: { allowDeselect?: boolean } = {}
+  export let options: ComboOptions = defaultOptions //TODO compositing props
   export let reset: () => void = () => false
 
   let isOpen: boolean = false
 
-  const onClick = (e) => {
-    console.log(e)
+  export let items: Array<T> | undefined = []
+  export let itemSort: (a: T, B: T) => number = undefined
 
-    isOpen = !isOpen
+  let dropdownItems: Array<T> = []
+
+  let comboRef: HTMLDivElement = null
+  let dropdownRef: HTMLDivElement = null
+
+  let dropdownStyle = ""
+
+  $: {
+    const overflowStyle = useDropdown(dropdownRef, comboRef, isOpen, () => isOpen = false, dropdownItems.length,
+      {itemNesting: 1, maxItems: 12, offset: border ? 1 : 0, useParentWidth: options.wideDropdown}
+    )
+
+    if (isOpen) {
+      dropdownStyle = Object.entries(overflowStyle()).filter(it => Boolean(it[1])).join(";").replaceAll(",", ":")
+    }
   }
 
-  const onFocus = (e) => {
-    console.log(e)
-
-    isOpen = !isOpen
-  }
-
-  const onBlur = (e) => {
-    console.log(e)
-
-    isOpen = false
-  }
+  hideAbsoluteOnMovement(() => isOpen = false)
 
 </script>
 
-<div {...$$restProps} class="snovy-combo-box {$$restProps.class || ''}">
+<!--todo on click outside-->
+<!--todo keynav - most of it probabl directly on list?-->
+<div {...$$restProps} class="snovy-combo-box {$$restProps.class || ''}" bind:this={comboRef}>
   <SnovyInput
     id={$$restProps.id ? $$restProps.id + "-input" : null}
-    on:input on:change
-    on:click={onClick} on:focus={onFocus} on:blur={onBlur}
+    on:input on:change on:click={e => isOpen = !isOpen}
     bind:value
   />
 
-  <!--{#if options.allowDeselect}-->
+  {#if options.allowDeselect}
     <SnovyButton icon="remove" circular fill on:click={()=> reset()}>
 
     </SnovyButton>
-  <!--{/if}-->
+  {/if}
 
-  <SnovyToggle value={isOpen} icons={["expanded", "collapsed"]}>
+  <SnovyToggle bind:value={isOpen} icons={["expanded", "collapsed"]}>
 
   </SnovyToggle>
 
@@ -55,17 +82,16 @@
 </div>
 
 <div
-  {...$$restProps}
+  {...$$restProps} style={dropdownStyle} data-visible={isOpen}
   class="snovy-dropdown snovy-absolute snovy-scroll {$$restProps.class || ''}" class:border
-  data-visible={isOpen}
+  bind:this={dropdownRef}
 >
-  <ol>
-
-  </ol>
+  <SnovyList class="snovy-dropdown-content" items={items}></SnovyList>
 </div>
 
-<!--TODO probably render tag groups etc. a la native optgroup = no prefixing/mixing group and tag into a single element-->
+<!--TODO spawn-->
 
+<!--TODO probably render tag groups etc. a la native optgroup = no prefixing/mixing group and tag into a single element-->
 
 <style lang="scss">
   .snovy-combo-box {
@@ -111,4 +137,13 @@
     }
 
   }
+
+  :global .snovy-dropdown-content {
+    list-style: none;
+    background-color: var(--color-main);
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-small) !important;
+  }
+
 </style>

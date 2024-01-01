@@ -26,7 +26,7 @@
     <SnovyIcon circular name={icons.at(-1)}/>
   {/if}
   <input type="checkbox" on:change bind:checked={value}
-         on:click|preventDefault|stopPropagation={async () => {value = await target?.snvToggle() ?? !value}}/>
+         on:click|preventDefault|stopPropagation={async () => {value = target ? await target.snvToggle() : !value}}/>
 </label>
 
 <style lang="scss">

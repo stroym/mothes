@@ -2,7 +2,7 @@
 
   import type {KeyMapping} from "../../../util/utils"
   import {Key} from "ts-key-enum"
-  import {watchOutsideClick} from "../../../util/svelte-hooks"
+  import {watchOutsideClick} from "../../../util/hooks/misc-hooks"
   import {useKey} from "../../../util/utils"
   import {beforeUpdate, createEventDispatcher} from "svelte"
 
@@ -47,8 +47,8 @@
     {...$$restProps} class="snovy-input styled-focus {$$restProps.class || ''}" autoComplete="off"
     type="text" readonly={!$editable}
     bind:this={self} bind:value
-    on:input on:change on:focus={e => setTimeout(() => self?.setSelectionRange(-1, -1), 1) && dispatch("focus", e)}
-    on:dblclick={e => mode === "managed" && toggle()}
+    on:input on:change on:focus={e => setTimeout(() => self?.setSelectionRange(-1, -1), 1) && dispatch("focus", e)} on:blur
+    on:click on:dblclick={e => mode === "managed" && toggle()}
     on:keydown={e => useKey(e, keyMap)}
   />
 {/if}

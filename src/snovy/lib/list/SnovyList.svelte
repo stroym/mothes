@@ -23,7 +23,7 @@
   import SnovyListItem from "./SnovyListItem.svelte"
   import SnovyToggle from "../input/SnovyToggle.svelte"
   import SnovyButton from "../input/SnovyButton.svelte"
-  import {useMultiSelect} from "../../../util/svelte-hooks"
+  import {useMultiSelect} from "../../../util/hooks/misc-hooks"
   import type {GenericItem} from "../../../util/types"
   import type {KeyMapping} from "../../../util/utils"
   import {isArray, useKey} from "../../../util/utils"
@@ -31,16 +31,16 @@
   type T = $$Generic<GenericItem>
 
   export let preset: ListPresets = "simple"
-  export let custom: ItemPart
+  export let custom: ItemPart = undefined
   export let buttonOptions: ItemButton
 
   export let items: Array<T> = []
   export let itemSort: (a: T, B: T) => number = undefined
   export let initial: T = undefined
-  export let onMultiSelect: (selected: Array<T>) => void
+  export let onMultiSelect: (selected: Array<T>) => void = undefined
   export let onSelect: (active: T | undefined) => void
-  export let onContext: (active: T | undefined) => void
-  export let onItemInput: (str: string) => void
+  export let onContext: (active: T | undefined) => void = undefined
+  export let onItemInput: (str: string) => void = undefined
 
   const {
     activeItem,
@@ -100,5 +100,6 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    font-size: var(--font-medium);
   }
 </style>

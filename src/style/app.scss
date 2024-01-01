@@ -49,7 +49,7 @@ input[type="file"] {
   grid-template-areas: "left-menu left centre right right-menu";
   grid-gap: var(--border-thin);
   background-color: var(--color-border);
-  justify-content: start;
+  justify-content: flex-start;
 
   & > * {
     background-color: var(--color-main);
@@ -176,6 +176,11 @@ svg {
   &::-webkit-scrollbar-thumb {
     background-color: var(--color-active);
   }
+}
+
+.snovy-absolute {
+  max-height: 100vh;
+  max-width: 100vw;
 }
 
 //TODO optionally keyboard-only-focus, otherwise always?

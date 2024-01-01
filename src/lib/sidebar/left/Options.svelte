@@ -1,22 +1,22 @@
 <script lang="ts">
 
-  import SnovyButton from "../../../snovy/lib/input/SnovyButton.svelte";
-  import SnovyLabel from "../../../snovy/lib/input/SnovyLabel.svelte";
-  import {dexie} from "../../../index";
-  import generate from "../../../data/Generator";
-  import {exportData, importData} from "../../../data/Database";
-  import {onMount} from "svelte";
-  import Theme from "../../../data/model/options/Theme";
-  import {defaults} from "../../../data/model/options/Defaults";
-  import {activeOptions, activeTheme, availableThemes} from "../../stores/options-store";
-  import type Options from "../../../data/model/options/Options";
-  import SnovyInput from "../../../snovy/lib/input/SnovyInput.svelte";
-  import SnovyCombobox from "../../../snovy/lib/input/SnovyCombobox.svelte";
+  import SnovyButton from "../../../snovy/lib/input/SnovyButton.svelte"
+  import SnovyLabel from "../../../snovy/lib/input/SnovyLabel.svelte"
+  import {dexie} from "../../../index"
+  import generate from "../../../data/Generator"
+  import {exportData, importData} from "../../../data/Database"
+  import {onMount} from "svelte"
+  import Theme from "../../../data/model/options/Theme"
+  import {defaults} from "../../../data/model/options/Defaults"
+  import {activeOptions, activeTheme, availableThemes} from "../../stores/options-store"
+  import type Options from "../../../data/model/options/Options"
+  import SnovyInput from "../../../snovy/lib/input/SnovyInput.svelte"
+  import SnovyCombobox from "../../../snovy/lib/input/SnovyCombobox.svelte"
 
   export let dialog: HTMLDialogElement = null
   let importInput: HTMLInputElement = null
 
-  let themes: Array<Theme> = []
+  let themes: Array<Theme> = $availableThemes
   let options: Options = $activeOptions.clone()
   let theme: Theme = $activeTheme.clone()
 
@@ -131,7 +131,7 @@
         <!--        />-->
 
         <SnovyLabel for="theme-title-input" value="Theme title"/>
-        <SnovyCombobox id="theme-title" value={theme.title} on:change={e => theme.title = e.target.value}/>
+        <SnovyCombobox id="theme-title" items={themes} value={theme.title} on:change={e => theme.title = e.target.value}/>
 
         <SnovyLabel for="theme-text-color-1" value="Primary text color"/>
         <SnovyInput id="theme-text-color-1" mode="color" value={theme.textPrimary} on:change={e => updateThemeVar("textPrimary", e)}/>
@@ -188,7 +188,7 @@
     grid-template-rows: 1fr 10%;
     gap: 0.5em 1em;
     justify-items: center;
-    align-items: start;
+    align-items: flex-start;
 
     #import-export {
       grid-area: 1 / 1 / span 1 / span 1;
@@ -238,7 +238,7 @@
 
     #control-buttons {
       grid-area: 2 / 5 / span 1 / span 2;
-      justify-self: end;
+      justify-self: flex-end;
       align-self: center;
       gap: 1em;
 

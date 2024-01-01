@@ -1,4 +1,4 @@
-import "./augments.ts"
+import "../augments.ts"
 import {onMount} from "svelte"
 import type {Writable} from "svelte/store"
 import {get, writable} from "svelte/store"
@@ -6,6 +6,7 @@ import {Key} from "ts-key-enum"
 
 type MouseEventType = "mouseup" | "click"
 
+// todo see https://svelte.dev/repl/0ace7a508bd843b798ae599940a91783?version=3.16.7, https://svelte.dev/docs/component-directives
 export function watchOutsideClick(
   element: HTMLElement,
   {otherElements = [], eventType = "mouseup", initialState = false, onToggleOff = () => false, watch = true}: {
@@ -53,6 +54,22 @@ export function watchOutsideClick(
   }
 
   return [toggled, toggle]
+}
+
+export function hideAbsoluteOnMovement(hide: () => void) {
+
+  onMount(
+    () => {
+      window.addEventListener("resize", hide)
+      window.addEventListener("scroll", hide, true)
+
+      return () => {
+        window.removeEventListener("resize", hide)
+        window.removeEventListener("scroll", hide, true)
+      }
+    }
+  )
+
 }
 
 export function useMultiSelect<T>(listItems: Array<T>) {
