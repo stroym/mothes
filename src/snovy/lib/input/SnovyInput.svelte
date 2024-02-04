@@ -11,7 +11,9 @@
 
   export let mode: "simple" | "managed" | "color" = "simple"
   export let value = ""
+  //TODO expose readOnly
 
+  //TODO this fells a bit excessive
   const [editable, toggle] = watchOutsideClick(self, {watch: mode === "managed"})
   const keyMap: Array<KeyMapping> = []
 

@@ -1,15 +1,9 @@
-<script lang="ts" context="module">
-  export type ListChildPart<T> = {
-    part: any,
-    props?: any
-  }
-</script>
-
 <script lang="ts">
 
   import type {GenericItem} from "../../../util/types"
   import SnovyInput from "../input/SnovyInput.svelte"
   import {createEventDispatcher} from "svelte"
+  import type {ItemPart} from "./SnovyList.svelte"
 
   type T = $$Generic<GenericItem>
 
@@ -32,7 +26,7 @@
     dispatch("click", e)
   }
 
-  export let custom: ListChildPart<T>
+  export let customItem: ItemPart<T> = undefined
 
   export let onInput: (str: string) => void
 
@@ -45,8 +39,8 @@
 
 <li {...$$restProps} class="snovy-list-item styled-hover-fill {$$restProps.class || ''}" tabIndex={-1}>
   <div on:click={handleClick} on:contextmenu|stopPropagation>
-    {#if custom}
-      <svelte:component this={custom.part} {...custom.props} item={item}></svelte:component>
+    {#if customItem}
+      <svelte:component this={customItem.part} {...customItem.props} item={item}></svelte:component>
     {:else if preset === "editable"}
       <SnovyInput placeholder="Title" mode="managed" on:input={e => onInput(e.target.value)} value={item.toString()}/>
     {:else if preset === "simple"}

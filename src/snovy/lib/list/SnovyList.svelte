@@ -4,7 +4,7 @@
 
   export type ListPresets = "simple" | "editable"
 
-  export type ItemPart = {
+  export type ItemPart<T> = {
     part: any,
     props?: any
   }
@@ -31,8 +31,8 @@
   type T = $$Generic<GenericItem>
 
   export let preset: ListPresets = "simple"
-  export let custom: ItemPart = undefined
-  export let buttonOptions: ItemButton
+  export let customItem: ItemPart<T> = undefined
+  export let buttonOptions: ItemButton = undefined
 
   export let items: Array<T> = []
   export let itemSort: (a: T, B: T) => number = undefined
@@ -65,7 +65,7 @@
 <ol {...$$restProps} class="snovy-list snovy-scroll {$$restProps.class || ''}"
     tabIndex={-1} data-disabled={!items?.length} on:keydown={e => useKey(e, keyMap)}>
   {#each (items ?? []) as item, i (`${i}-${item}`)}
-    <SnovyListItem item={item} preset={preset} custom={custom}
+    <SnovyListItem item={item} preset={preset} customItem={customItem}
                    data-active={$activeItem === item} data-selected={$selectedItems.includes(item)}
                    onInput={onItemInput}
                    on:click={e => {

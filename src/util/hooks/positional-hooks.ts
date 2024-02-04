@@ -1,8 +1,10 @@
-//TODO before flipping the dropdown, downsize up to prefItems/2 and only then start flipping/checking the better direction and downsizing
 import {combineOptions, getChild} from "../utils"
 import {install, ResizeObserver} from "resize-observer"
 import {get, writable} from "svelte/store"
+import {onMount} from "svelte"
+import {watchOutsideClick} from "./misc-hooks"
 
+//TODO before flipping the dropdown, downsize up to prefItems/2 and only then start flipping/checking the better direction and downsizing
 export function useDropdown(
   dropdownRef: HTMLElement,
   comboRef: HTMLElement,
@@ -72,9 +74,9 @@ export function useDropdown(
     })
   }
 
-  //TODO ideally this should work...
-  // useHideAbsolute(close)
+  useHideAbsolute(close)
   useSize(dropdownRef, visible, updatePosition)
+  watchOutsideClick(dropdownRef, {otherElements: [comboRef]}) //FIXME not working
 
   return () => {
     const pos = get(position)
@@ -143,6 +145,25 @@ export function useSize(
 
   return size
 }
+
+export function useHideAbsolute(hide: () => void, parent?: HTMLElement) {
+
+  onMount(
+    () => {
+      window.addEventListener("resize", hide)
+      window.addEventListener("scroll", hide)
+      parent?.addEventListener("scroll", hide)
+
+      return () => {
+        window.removeEventListener("resize", hide)
+        window.removeEventListener("scroll", hide)
+        parent?.removeEventListener("scroll", hide)
+      }
+    }
+  )
+
+}
+
 
 type Position = {
   left?: number,
