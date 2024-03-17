@@ -13,15 +13,16 @@
 
   const dispatch = createEventDispatcher()
 
-  let hasBeenClicked = false
+  // TODO why did I do this, exactly?
+  // let hasBeenClicked = false
 
   function handleClick(e: MouseEvent) {
-    if (hasBeenClicked) return
-
-    hasBeenClicked = true
-    setTimeout(() => {
-      hasBeenClicked = false
-    }, 200)
+    // if (hasBeenClicked) return
+    //
+    // hasBeenClicked = true
+    // setTimeout(() => {
+    //   hasBeenClicked = false
+    // }, 10)
 
     dispatch("click", e)
   }
