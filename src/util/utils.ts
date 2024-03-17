@@ -13,20 +13,23 @@ export function isType<T>(arg: unknown, prop: string): arg is T {
 }
 
 export type KeyMapping = {
-  key: Key | string,
+  key: Key | string | Array<Key> | Array<string>,
   handler: () => void,
-  condition?: boolean,
+  condition?: () => boolean,
   modifiers?: { ctrl?: boolean, alt?: boolean, shift?: boolean }
 }
 
 export function useKey(e: KeyboardEvent, keyMappings: Array<KeyMapping>) {
-  const mapping = keyMappings.find(it => it.key.toLowerCase() == e.key.toLowerCase())
+  const mapping = keyMappings.sort((a, b) => Number(b.condition?.()) - Number(a.condition?.())).find(it => {
+    if (isArray(it.key)) {
+      return it.key.some(it => it.toLowerCase() == e.key.toLowerCase())
+    } else {
+      return it.key.toLowerCase() == e.key.toLowerCase()
+    }
+  })
 
   if (mapping) {
-    if (mapping.modifiers &&
-      (mapping.modifiers.ctrl && !e.ctrlKey ||
-        mapping.modifiers.alt && e.altKey ||
-        mapping.modifiers.shift && !e.shiftKey)) {
+    if (mapping.modifiers && (mapping.modifiers.ctrl && !e.ctrlKey || mapping.modifiers.alt && e.altKey || mapping.modifiers.shift && !e.shiftKey)) {
       return
     }
 
@@ -84,6 +87,20 @@ export function areArrayContentsIdentical<T>(array1: Array<T> | null | undefined
   } else {
     return false
   }
+}
+
+const dashPattern = /\p{Diacritic}|-\s/gu
+
+export function areStringsSimilar(a: string, b: string) {
+  return findStringSimilarityIndex(a, b) > -1
+}
+
+export function findStringSimilarityIndex(a: string, b: string) {
+  if (a === b || !a || !b) {
+    return -1
+  }
+
+  return a.toLowerCase().normalize("NFKD").replace(dashPattern, "").indexOf(b.toLowerCase().normalize("NFKD").replace(dashPattern, ""))
 }
 
 export function combineOptions<T>(passedOptions: T | undefined, defaultOptions: T): T {

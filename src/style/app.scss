@@ -86,6 +86,10 @@ input[type="file"] {
   background-color: var(--color-active)
 }
 
+[data-highlighted = "true"] {
+  background-color: var(--color-hover)
+}
+
 [data-visible="false"] {
   visibility: hidden;
   display: none !important;

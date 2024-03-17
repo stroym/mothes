@@ -23,7 +23,7 @@
 </script>
 
 <button
-  {...$$restProps} class="snovy-button {fill ? 'styled-hover-fill' : 'styled-hover'} {$$restProps.class || ''}"
+  {...$$restProps} type="button" class="snovy-button {fill ? 'styled-hover-fill' : 'styled-hover'} {$$restProps.class || ''}"
   class:icon class:circular class:border class:color={$$props.style?.backgroundColor}
   bind:this={self} disabled={disabled}
   on:click
