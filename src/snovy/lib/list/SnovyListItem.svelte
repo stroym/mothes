@@ -1,11 +1,11 @@
 <script lang="ts">
 
-  import type {GenericItem} from "../../../util/types"
+  import type {Listable} from "../../../util/types"
   import SnovyInput from "../input/SnovyInput.svelte"
   import {createEventDispatcher} from "svelte"
   import type {ItemPart} from "./SnovyList.svelte"
 
-  type T = $$Generic<GenericItem>
+  type T = $$Generic<Listable>
 
   export let preset: "editable" | "simple" = "simple"
 
@@ -43,9 +43,9 @@
     {#if customItem}
       <svelte:component this={customItem.part} {...customItem.props} item={item}></svelte:component>
     {:else if preset === "editable"}
-      <SnovyInput placeholder="Title" mode="managed" on:input={e => onInput(e.target.value)} value={item.toString()}/>
+      <SnovyInput placeholder="Title" mode="managed" on:input={e => onInput(e.target.value)} value={item.displayValue}/>
     {:else if preset === "simple"}
-      <div class="li-simple-content" tabIndex={0}>{item.toString()}</div>
+      <div class="li-simple-content" tabIndex={0}>{item.displayValue}</div>
     {/if}
   </div>
 

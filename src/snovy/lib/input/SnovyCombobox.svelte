@@ -19,14 +19,14 @@
   import SnovyInput from "./SnovyInput.svelte"
   import SnovyButton from "./SnovyButton.svelte"
   import SnovyToggle from "./SnovyToggle.svelte"
-  import type {GenericItem} from "../../../util/types"
+  import type {Listable} from "../../../util/types"
   import {useDropdown} from "../../../util/hooks/positional-hooks"
   import {hideAbsoluteOnMovement} from "../../../util/hooks/misc-hooks"
   import type {ItemPart} from "../list/SnovyList.svelte"
   import {areStringsSimilar, findStringSimilarityIndex, type KeyMapping, useKey} from "../../../util/utils"
   import {Key} from "ts-key-enum"
 
-  type T = $$Generic<GenericItem>
+  type T = $$Generic<Listable>
 
   // TODO multiselect
   export let border = true
@@ -36,9 +36,9 @@
 
   let expanded: boolean = false
 
-  export let inputValue = ""
-  export let placeholderValue = ""
-  let selectedItem: T
+  export let selectedItem: T
+  export let inputValue = selectedItem?.displayValue ?? ""
+  export let placeholderValue = selectedItem?.displayValue ?? ""
   let highlightedIndex: number = 0
 
   export let items: Array<T> | undefined = []
@@ -56,7 +56,7 @@
     let tempItems = []
 
     if (inputValue) {
-      tempItems = items.filter(it => areStringsSimilar(it?.toString(), inputValue))
+      tempItems = items.filter(it => areStringsSimilar(it?.displayValue, inputValue))
     } else {
       tempItems = [...items]
     }
@@ -84,7 +84,7 @@
       key: Key.Escape,
       handler: () => {
         expanded = false
-        inputValue = selectedItem?.toString()
+        inputValue = selectedItem?.displayValue
       }
     },
     {
@@ -136,8 +136,8 @@
 
   function selectItem(item: T) {
     selectedItem = item
-    inputValue = selectedItem?.toString() //TODO this would ideally be set reactively on select/blur-like actions
-    placeholderValue = selectedItem?.toString()
+    inputValue = selectedItem?.displayValue //TODO this would ideally be set reactively on select/blur-like actions
+    placeholderValue = selectedItem?.displayValue
     expanded = false
   }
 
@@ -192,7 +192,7 @@
 
     {#each dropdownItems as item, index}
       <li class="snovy-dropdown-item" tabIndex={0}
-          data-active={item.toString() === selectedItem?.toString()} data-highlighted={index === highlightedIndex}
+          data-active={item.itemId === selectedItem?.itemId} data-highlighted={index === highlightedIndex}
           on:mouseenter={e => highlightedIndex = index} on:focusin={e => highlightedIndex = index}
           on:click={e => selectItem(item)}
       >
@@ -202,7 +202,7 @@
           <svelte:component this={customItem.part} {...customItem.props} item={item}></svelte:component>
         {:else}
           <!--TODO debounce-->
-          {@const text = item.toString()}
+          {@const text = item.displayValue}
           {@const position = findStringSimilarityIndex(text, inputValue)}
           <div class="li-simple-content">
             <span>

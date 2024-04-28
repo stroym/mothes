@@ -39,7 +39,7 @@ export default class Theme extends Titled implements TextColorPair {
   }
 
   setCss() {
-    let root = document.documentElement;
+    let root = document.documentElement
 
     root.style.setProperty(Theme.VAR_NAMES.get("textPrimary"), this.textPrimary)
     root.style.setProperty(Theme.VAR_NAMES.get("textSecondary"), this.textSecondary)
@@ -94,10 +94,6 @@ export default class Theme extends Titled implements TextColorPair {
     return dexie.transaction("rw", dexie.themes, async () => {
       dexie.themes.put(this, this.id)
     }).then(_it => this)
-  }
-
-  toString(): string {
-    return this.title
   }
 
   clone() {

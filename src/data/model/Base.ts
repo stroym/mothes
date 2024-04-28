@@ -1,5 +1,5 @@
 import {isArray, isDefined} from "../../util/utils"
-import type {WithColor, WithTitle} from "../../util/types"
+import type {Listable, WithColor} from "../../util/types"
 
 export abstract class Table {
 
@@ -25,7 +25,7 @@ export abstract class Table {
 
 }
 
-export abstract class Titled extends Table implements WithTitle {
+export abstract class Titled extends Table implements Listable {
 
   title: string
 
@@ -38,8 +38,12 @@ export abstract class Titled extends Table implements WithTitle {
     return a.title.localeCompare(b.title, navigator.language)
   }
 
-  toString(): string {
+  get displayValue(): string {
     return this.title
+  }
+
+  get itemId(): string {
+    return `${this.id}-${this.title.toLowerCase().normalize("NFKD").replaceAll(/\s/g,"_")}`
   }
 
   async updateTitle(newTitle: string) {

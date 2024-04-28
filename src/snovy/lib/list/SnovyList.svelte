@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
 
-  import type {SnovyIconOption} from "../helper/SnovyIcon.svelte";
+  import type {SnovyIconOption} from "../helper/SnovyIcon.svelte"
 
   export type ListPresets = "simple" | "editable"
 
@@ -24,11 +24,11 @@
   import SnovyToggle from "../input/SnovyToggle.svelte"
   import SnovyButton from "../input/SnovyButton.svelte"
   import {useMultiSelect} from "../../../util/hooks/misc-hooks"
-  import type {GenericItem} from "../../../util/types"
+  import type {Listable} from "../../../util/types"
   import type {KeyMapping} from "../../../util/utils"
   import {isArray, useKey} from "../../../util/utils"
 
-  type T = $$Generic<GenericItem>
+  type T = $$Generic<Listable>
 
   export let preset: ListPresets = "simple"
   export let customItem: ItemPart<T> = undefined

@@ -64,8 +64,8 @@ export default class Tag extends Colored {
     return this.category == tag.category && this.title == tag.title
   }
 
-  toString(): string {
-    return this.category ? this.category.toColonString() + this.title : super.toString()
+  get displayValue(): string {
+    return this.category ? this.category.toColonString() + this.title : super.displayValue
   }
 
 }
