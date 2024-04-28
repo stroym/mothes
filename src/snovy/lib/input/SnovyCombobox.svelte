@@ -66,7 +66,7 @@
 
   $: {
     if (expanded) {
-      const computeOverflowStyle = useDropdown(dropdownRef, comboRef, expanded, () => expanded = false, dropdownItems.length,
+      const computeOverflowStyle = useDropdown(dropdownRef, comboRef, expanded, () => toggleDropdown(false), dropdownItems.length,
         {itemNesting: 1, maxItems: 12, offset: border ? 1 : 0, useParentWidth: options.wideDropdown}
       )
 
@@ -77,15 +77,12 @@
     }
   }
 
-  hideAbsoluteOnMovement(() => expanded = false)
+  hideAbsoluteOnMovement(() => toggleDropdown(false))
 
   const keyMap: Array<KeyMapping> = [
     {
       key: Key.Escape,
-      handler: () => {
-        expanded = false
-        inputValue = selectedItem?.displayValue
-      }
+      handler: () => toggleDropdown(false)
     },
     {
       key: Key.Enter,
@@ -126,24 +123,32 @@
     },
     {
       key: [Key.Enter, Key.ArrowDown],
-      handler: () => {
-        expanded = true
-        inputValue = ""
-      },
+      handler: () => toggleDropdown(true),
       condition: () => !expanded
     }
   ]
 
   function selectItem(item: T) {
     selectedItem = item
-    inputValue = selectedItem?.displayValue //TODO this would ideally be set reactively on select/blur-like actions
-    placeholderValue = selectedItem?.displayValue
-    expanded = false
+    toggleDropdown(false)
   }
 
   function handleFocusOut(e: FocusEvent) {
     if (!dropdownRef.contains(e.relatedTarget as Node)) {
-      expanded = false
+      toggleDropdown(false)
+    }
+  }
+
+  //TODO ideally this'd be in an effect-like function, but I guess this is it (for now?)
+  function toggleDropdown(newValue?: boolean) {
+    expanded = newValue ?? !expanded
+
+    if (expanded) {
+      inputValue = ""
+      placeholderValue = selectedItem?.displayValue
+    } else {
+      inputValue = selectedItem?.displayValue
+      placeholderValue = ""
     }
   }
 
@@ -155,13 +160,7 @@
 >
   <SnovyInput
     id={$$restProps.id ? $$restProps.id + "-input" : null}
-    on:input on:change on:click={e => {
-        expanded = !expanded
-
-        if (expanded) {
-            inputValue = ""
-        }
-    }}
+    on:input on:change on:click={e => toggleDropdown()}
     bind:value={inputValue} placeholder={placeholderValue}
   />
 
@@ -179,8 +178,9 @@
 </div>
 
 <div
-  {...$$restProps} style={dropdownStyle} data-visible={expanded}
+  {...$$restProps} id={$$restProps.id ? $$restProps.id + "-dropdown" : null}
   class="snovy-dropdown snovy-absolute snovy-scroll {$$restProps.class || ''}" class:border
+  style={dropdownStyle} data-visible={expanded}
   bind:this={dropdownRef} on:focusout={handleFocusOut}
 >
   <ol class="snovy-dropdown-content">
