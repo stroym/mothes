@@ -101,7 +101,7 @@ export default class Theme extends Titled implements TextColorPair {
   }
 
   clone() {
-    return Object.assign(Object.create(Theme), this)
+    return Object.assign(Theme.makeEmpty(), this)
   }
 
 }

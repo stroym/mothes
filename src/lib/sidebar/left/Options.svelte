@@ -90,7 +90,7 @@
     theme.setCss()
   }
 
-  let root = document.documentElement;
+  let root = document.documentElement
 
   const updateThemeVar = (name: string, e: any) => {
     theme[name] = e.target.value
@@ -130,8 +130,11 @@
         <!--        borders={{main: true, dropdown: true}}-->
         <!--        />-->
 
+        <SnovyLabel for="theme-combo" value="Active theme"/>
+        <SnovyCombobox id="theme-combo" items={themes} selectedItem={theme}/>
+
         <SnovyLabel for="theme-title-input" value="Theme title"/>
-        <SnovyCombobox id="theme-title" items={themes} value={theme.title} on:change={e => theme.title = e.target.value}/>
+        <SnovyInput id="theme-title-input" value={theme.title} on:change={e => theme.title = e.target.value}/>
 
         <SnovyLabel for="theme-text-color-1" value="Primary text color"/>
         <SnovyInput id="theme-text-color-1" mode="color" value={theme.textPrimary} on:change={e => updateThemeVar("textPrimary", e)}/>
