@@ -1,6 +1,6 @@
 <script lang="ts">
 
-  import Note from "../../data/model/Note"
+  import type Note from "../../data/model/Note"
 
   export let item: Note
 </script>

@@ -2,7 +2,8 @@
   import "./util/augments.ts"
   import SnovySidebar from "./snovy/lib/layout/SnovySidebar.svelte"
   import SnovyTabMenu from "./snovy/lib/layout/SnovyTabMenu.svelte"
-  import Selector from "./lib/sidebar/left/Selector.svelte"
+  import NoteSelector from "./lib/sidebar/left/NoteSelector.svelte"
+  import NotebookSelector from "./lib/sidebar/left/NotebookSelector.svelte"
   import NoteDetail from "./lib/sidebar/right/NoteDetail.svelte"
   import Options from "./lib/sidebar/left/Options.svelte"
   import {loadDexie} from "./lib/stores/options-store"
@@ -42,8 +43,10 @@
                 tabs={[tabs.notebooks, tabs.notes, tabs.favorites, tabs.search, tabs.archive, tabs.options]}
   />
   <SnovySidebar id="left-sidebar" style="grid-area: left;" data-collapsed={leftCollapsed}>
-    {#if leftTab === tabs.notes.id}
-      <Selector/>
+    {#if leftTab === tabs.notebooks.id}
+      <NotebookSelector/>
+    {:else if leftTab === tabs.notes.id}
+      <NoteSelector/>
     {/if}
   </SnovySidebar>
   <div id="editor" style="grid-area: centre;"></div>
