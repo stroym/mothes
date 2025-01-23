@@ -4,13 +4,15 @@ import type Section from "../data/model/Section"
 import type Note from "../data/model/Note"
 import type Tag from "../data/model/Tag"
 import {Table} from "../data/model/Base"
+import {dexie} from "../index"
+import {liveQuery} from "dexie"
 
 // export const notebooks = liveQuery(() => dexie.notebooks.toArray().then(it => loadNotebooks(it)))
-// export const tags = liveQuery(() => dexie.tags.toArray().then(it => loadTags(it)))
-// export const categories = liveQuery(() => dexie.categories.toArray())
-// export const states = liveQuery(() => dexie.states.toArray())
 
 export const notebooks = writable<Array<Notebook> | undefined>()
+export const tags = liveQuery(() => dexie.tags.toArray().then(it => loadTags(it)))
+export const categories = liveQuery(() => dexie.categories.toArray())
+export const states = liveQuery(() => dexie.states.toArray())
 
 export const activeNotebook = writable<Notebook | undefined>()
 export const activeSection = writable<Section | undefined>()

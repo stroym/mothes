@@ -15,6 +15,7 @@
 
   //TODO this fells a bit excessive
   const [editable, toggle] = watchOutsideClick(self, {watch: mode === "managed"})
+  // const [editable, toggle] = [false, () => {}]
   const keyMap: Array<KeyMapping> = []
 
   if (mode === "managed") {

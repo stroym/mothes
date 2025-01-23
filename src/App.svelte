@@ -21,7 +21,7 @@
     manager: {id: "manager", title: "Manager", icon: "manager"}
   }
 
-  let leftTab = tabs.options.id
+  let leftTab = tabs.notes.id
   let rightTab = tabs.detail.id
   let leftCollapsed = false
   let rightCollapsed = false

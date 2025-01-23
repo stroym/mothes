@@ -109,6 +109,24 @@ export default class Note extends Ordered implements Toggleable {
     return this.favorite
   }
 
+  collectTagsDummy(): [Number | undefined, Array<Tag>][] {
+    const grouped = new Map<Number | undefined, Array<Tag>>()
+
+    sortTags(this.tags).forEach(item => {
+      const key = item?.categoryId
+      const kk = Array.from(grouped.keys()).find(it => it == key)
+
+      if (kk || (grouped.get(key) && key == undefined)) {
+        grouped.get(kk ?? key)?.push(item)
+      } else {
+        grouped.set(key, [item])
+      }
+    })
+
+    return Array.from(grouped.entries())
+  }
+
+
   collectTags(allTags: Array<Tag>): [Category | undefined, Array<Tag>][] {
     const grouped = new Map<Category | undefined, Array<Tag>>()
 

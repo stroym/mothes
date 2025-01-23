@@ -18,11 +18,14 @@ export function watchOutsideClick(
   } = {}
 ): [Writable<boolean>, () => void] {
 
+  console.log(element)
+
   const [toggled, toggle] = useToggle(!watch || initialState)
 
   onMount(
     () => {
       if (watch) {
+        console.log(eventType)
         document.addEventListener(eventType, handleOutsideClick)
         document.addEventListener("keydown", handleKey)
       }
@@ -42,6 +45,9 @@ export function watchOutsideClick(
   }
 
   const handleOutsideClick = (e: MouseEvent) => {
+    console.log(element)
+    console.log(otherElements)
+
     if (!element?.contains(e.target as Node) && !otherElements?.find(it => it?.contains((e.target as Node)))) {
       toggleOff()
     }
